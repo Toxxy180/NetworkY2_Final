@@ -1,0 +1,751 @@
+[
+  {
+    "id": 1,
+    "refs": [
+      "chapter1_lecture (2).pdf · หน้า 4–35",
+      "chapter2 Switched Network.pdf · หน้า 2–29",
+      "week1_lab_sheet (1).pdf · ส่วน 1–4",
+      "lab/คำสั่งสำคัญ และ show running config.pdf · หน้า 1–3"
+    ],
+    "theory": [
+      {
+        "title": "Hub, Bridge และ Switch แบ่งเครือข่ายอย่างไร",
+        "body": [
+          "Hub เป็นอุปกรณ์ Layer 1 ที่ทวนสัญญาณ ทุกเครื่องแบ่งแบนด์วิดท์และ collision domain เดียวกัน ส่วน bridge เรียนรู้ MAC เพื่อกรองเฟรมระหว่าง segment และ switch ทำหน้าที่เหมือน bridge หลายพอร์ต เมื่อใช้ full duplex ปลายทั้งสองส่งและรับพร้อมกันได้โดยไม่มี collision",
+          "ถ้า PC สี่เครื่องเสียบคนละพอร์ตของสวิตช์และอยู่ VLAN เดียวกัน ให้นับสี่ลิงก์แยกกัน แต่ ARP Request หนึ่งครั้งยังถูกกระจายภายใน broadcast domain เดียว Router จะแยกขอบเขตนี้เมื่อส่งต่อข้าม subnet"
+        ]
+      },
+      {
+        "title": "อ่าน Ethernet frame จากสายถึง FCS",
+        "body": [
+          "Preamble 7 ไบต์และ SFD 1 ไบต์ช่วยให้ผู้รับจับจังหวะและรู้จุดเริ่มเฟรม จากนั้นอ่าน Destination MAC และ Source MAC อย่างละ 6 ไบต์ ตามด้วย Type/Length, payload และ FCS 4 ไบต์ที่ใช้ตรวจความเสียหายด้วย CRC เฟรมปกติขนาด 64–1518 ไบต์นับจาก Destination MAC ถึง FCS",
+          "Fragment-free รอ 64 ไบต์แรกเพื่อลดการส่งต่อเศษเฟรม ส่วน store-and-forward รอจนตรวจ FCS ได้ MAC flooding อาศัยการส่งหลาย Source MAC ให้ตารางเต็ม จึงอาจทำให้ unknown unicast ถูก flood มากขึ้น",
+          "ตัวอย่างมาตรฐาน IEEE 802.3 ที่ต่างกันที่อัตราส่งคือ 10BASE-T (10 Mbps), 100BASE-TX (100 Mbps) และ 1000BASE-T (1 Gbps) ทั้งหมดส่ง Ethernet frame และใช้ MAC เหมือนกัน สำหรับ MAC แบบ globally administered ช่วง OUI ช่วยระบุองค์กรที่ได้รับการจัดสรรหมายเลข"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "ตั้งค่า SW1 และ SW2 จากหน้า console",
+        "body": [
+          "เริ่มที่ Switch> บน SW1 คำสั่ง enable เข้าโหมด # และ configure terminal เข้า (config)# ส่วน line กับ interface เป็นโหมดย่อย ใช้ exit ย้อนหนึ่งระดับ และ end กลับ #"
+        ],
+        "steps": [
+          {
+            "device": "SW1 · Cisco IOS",
+            "code": "enable\nconfigure terminal\nhostname SW1\nenable secret cisco123\nline console 0\n password cisco\n login\n exec-timeout 5 0\n exit\nline vty 0 4\n password cisco\n login\n exit\ninterface vlan 1\n ip address 192.168.1.2 255.255.255.0\n no shutdown\n exit\nip default-gateway 192.168.1.1\nend\nshow ip interface brief\nshow running-config\ncopy running-config startup-config\nshow version"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ทำซ้ำบน SW2 โดยใช้ hostname SW2 และ IP 192.168.1.3/24 ตรวจว่า Vlan1 เป็น up/up เมื่อมีพอร์ต VLAN 1 ที่ใช้งานอยู่ และ running-config แสดง IP ของแต่ละเครื่องถูกตัว เมื่อ copy ถามชื่อปลายทาง ให้กด Enter เพื่อรับค่าเดิม",
+            "รหัสผ่านเป็นตัวอย่างในแลบ VTY ใช้รับการเชื่อมต่อระยะไกล Telnet ส่งข้อมูลอ่านได้บนสาย ส่วน SSH เข้ารหัส ให้ตรวจ image และความสามารถด้าน crypto ด้วย show version"
+          ]
+        }
+      },
+      {
+        "title": "พิสูจน์ MAC learning จากเฟรมที่สวิตช์ได้รับ",
+        "body": [
+          "ต่อ Kali-1 ที่ Fa0/1 และ Kali-2 ที่ Fa0/2 อยู่ VLAN 1 เริ่มจากตารางว่าง แล้วแยกคำสั่งตามอุปกรณ์"
+        ],
+        "steps": [
+          {
+            "device": "SW1 · Privileged EXEC",
+            "code": "show interfaces status\nclear mac address-table dynamic\nshow mac address-table dynamic"
+          },
+          {
+            "device": "Kali-1 · terminal",
+            "code": "ping -c 4 192.168.1.20"
+          },
+          {
+            "device": "SW1 · หลัง ping",
+            "code": "show mac address-table dynamic\nshow mac address-table aging-time\nconfigure terminal\nmac address-table static 0011.2233.4455 vlan 1 interface fastEthernet 0/1\nend\nshow mac address-table static"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "หา MAC ของทั้งสองเครื่องตามพอร์ตขาเข้า เครื่องหลัง SW2 จะปรากฏก็ต่อเมื่อมีเฟรมจากเครื่องนั้นมาถึง SW1 จึงควรตอบจากรายการที่สังเกตได้จริง Static entry ระบุพอร์ตไว้เองและอยู่ต่อหลัง dynamic entry หมดอายุ",
+            "ฝึกอ่านจากภาพหน้า 1 ของไฟล์คำสั่งสำคัญฯ ตาราง dynamic มี 3 รายการ โดย 2 รายการชี้ Fa0/24 และ 1 รายการชี้ Fa0/2 จึงนับจำนวนเครื่องจากจำนวนพอร์ตที่มีรายการอย่างเดียวไม่ได้ ส่วนตาราง aging แสดง 300 วินาทีใน VLAN 1, 10, 20 และ 30 ของเครื่องที่จับภาพ"
+          ]
+        }
+      },
+      {
+        "title": "ทำให้เกิด Port Security violation แล้วกู้พอร์ต",
+        "body": [
+          "ตั้ง maximum 2 และ sticky บนพอร์ตผู้ใช้สามพอร์ต ทดลองทีละพอร์ตให้สวิตช์เรียนรู้ครบสอง MAC ก่อน แล้วส่งเฟรมจาก MAC ที่สาม"
+        ],
+        "steps": [
+          {
+            "device": "SW1 · เริ่มที่ #",
+            "code": "configure terminal\ninterface range fastEthernet 0/1 - 3\n switchport mode access\n switchport port-security\n switchport port-security maximum 2\n switchport port-security mac-address sticky\n exit\ninterface fa0/1\n switchport port-security violation protect\n exit\ninterface fa0/2\n switchport port-security violation restrict\n exit\ninterface fa0/3\n switchport port-security violation shutdown\nend"
+          },
+          {
+            "device": "Kali ที่ต่อพอร์ตทดสอบ · เปลี่ยน MAC แล้วสร้าง traffic",
+            "code": "sudo ip link set eth0 down\nsudo macchanger -r eth0\nsudo ip link set eth0 up\nping -c 2 192.168.1.2"
+          },
+          {
+            "device": "SW1 · ตรวจพอร์ตที่ทดลองและกู้ Fa0/3 หลังนำ MAC ที่ละเมิดออก",
+            "code": "show port-security address\nshow port-security interface fa0/2\nshow interfaces status err-disabled\nconfigure terminal\ninterface fa0/3\n shutdown\n no shutdown\nend\nshow port-security interface fa0/3"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "Protect ทิ้งเฟรมจาก MAC เกินจำนวน โดย MAC เดิมยังผ่านได้ Restrict ทิ้งเฟรมเช่นกันและนับ violation ส่วน Shutdown ทำให้ทั้งพอร์ต err-disabled จึงกระทบ MAC เดิมด้วย ถ้าเปลี่ยน MAC ครั้งแรกแล้วยังผ่าน ให้ตรวจจำนวน secure MAC ก่อนสรุปผล",
+            "ในภาพหน้า 2 ของไฟล์เดียวกัน Fa0/3 แสดง Violation Mode = Shutdown แต่ Port Status = Secure-up และ Security Violation Count = 0 คำว่า Shutdown ในช่อง Mode จึงบอกว่าจะทำอะไรเมื่อเกิดเหตุ ส่วนช่อง Status บอกสภาพจริงขณะนั้น"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "refs": [
+      "chapter2_lecture (4)  -  Repaired.pdf · หน้า 7–40",
+      "chapter2 Switched Network.pdf · หน้า 30–51",
+      "week2_lab_sheet (2).pdf · ส่วน 1–6",
+      "คำถามท้ายบทที่ 2.pdf · การทดลอง VTP และความปลอดภัยของพอร์ต"
+    ],
+    "theory": [
+      {
+        "title": "VTP revision, pruning และ allowed list",
+        "body": [
+          "ใน VTP v1/v2 สวิตช์ใน domain เดียวกันอาจรับฐานข้อมูลที่มี revision สูงกว่า การนำ switch เก่าเข้าระบบจึงต้องตรวจ domain และ revision ก่อนต่อ trunk ฝั่ง server สร้าง VLAN ส่วน client รับฐานข้อมูล แต่ยังต้องกำหนด access port ให้สมาชิกเอง",
+          "VTP pruning ลดการ flood ของ VLAN ที่ไม่มีผู้ใช้ปลายทางบนกิ่งนั้น ส่วน allowed list ระบุด้วยมือว่า VLAN ใดมีสิทธิ์ผ่าน trunk แม้ปลายทางจะมีผู้ใช้ก็ตาม VTP v3 เพิ่มแนวคิด primary server ที่มีสิทธิ์แก้ฐานข้อมูล"
+        ]
+      },
+      {
+        "title": "Private VLAN กับ Protected Port แยกผู้ใช้อย่างไร",
+        "body": [
+          "ใน Private VLAN เต็มรูปแบบ primary VLAN ครอบ secondary VLAN พอร์ต isolated ติดต่อ promiscuous port เช่น gateway ได้ ส่วนพอร์ต community ติดต่อกันได้ภายใน community เดียวกันและติดต่อ gateway ได้",
+          "Catalyst 2950 ในใบงานใช้ switchport protected บนสองพอร์ตของ switch ตัวเดียว การแยกไม่ติดตามผู้ใช้ข้าม trunk และไม่มีการแบ่ง community จึงต้องทดสอบด้วยเครื่องที่เสียบ switch เดียวกัน"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "กระจาย VLAN จาก SW1 ไปยัง SW2 และ SW3",
+        "body": [
+          "ต่อ SW1 Gi0/1 ไป SW2 และ Gi0/2 ไป SW3 โดยฝั่ง client ใช้ Gi0/1 ตรวจเพื่อนบ้านก่อน เริ่มบล็อก IOS ที่ privileged EXEC"
+        ],
+        "steps": [
+          {
+            "device": "SW1 · VTP server",
+            "code": "show cdp neighbors\nconfigure terminal\nvtp domain LABCORP\nvtp mode server\nvtp version 2\nvtp password vtp123\ninterface range gi0/1 - 2\n switchport mode trunk\n exit\nvlan 10\n name SALES\n exit\nvlan 20\n name IT\n exit\nvlan 30\n name HR\n exit\nvlan 999\n name NATIVE_UNUSED\nend"
+          },
+          {
+            "device": "SW2 และ SW3 · ทำทั้งสองเครื่อง",
+            "code": "configure terminal\nvtp domain LABCORP\nvtp mode client\nvtp password vtp123\ninterface gi0/1\n switchport mode trunk\nend\nshow vtp status\nshow vlan brief\nshow interfaces trunk"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ตรวจ domain, version และ revision ร่วมกับรายการ VLAN 10, 20, 30, 999 บน client ถ้าไม่มาให้ไล่ trunk → domain/password → version บน image ที่รองรับให้สั่ง vtp pruning ใน global config ของ server แล้วตรวจ show vtp status | include Pruning"
+          ]
+        }
+      },
+      {
+        "title": "ทดสอบ Native VLAN mismatch และ Protected Ports",
+        "body": [
+          "ปรับ native VLAN เป็น 999 ที่ปลายทั้งสองของทุก trunk รวม Gi0/2 ของ SW1 ทดลองเปลี่ยน SW2 ด้านเดียวกลับ VLAN 1 แล้วคืน 999 ก่อนขั้นถัดไป"
+        ],
+        "steps": [
+          {
+            "device": "ปลาย trunk แต่ละฝั่ง · เลือกพอร์ตตามสาย",
+            "code": "configure terminal\ninterface gi0/1\n switchport trunk native vlan 999\nend\nshow interfaces trunk\nshow cdp neighbors detail"
+          },
+          {
+            "device": "SW1 · Kali สองเครื่องที่ Fa0/1 และ Fa0/2",
+            "code": "configure terminal\ninterface range fa0/1 - 2\n switchport mode access\n switchport access vlan 10\n switchport protected\n exit\ninterface fa0/4\n switchport mode access\n switchport access vlan 10\nend\nshow interfaces fa0/1 switchport"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ตรวจ Native VLAN ใน show interfaces trunk ที่ปลายทั้งสอง การตีความเฟรม untagged ต่างกันอาจทำให้เฟรมไปผิด VLAN สำหรับ protected port ให้ทั้งสามเครื่องอยู่ subnet เดียวกัน ตั้ง IP ไม่ซ้ำกัน แล้ว ping ระหว่าง Fa0/1 กับ Fa0/2 ควรถูกกัน แต่ Fa0/1 ไปเครื่องที่ Fa0/4 ควรผ่าน",
+            "ภาพคำตอบท้ายบทที่ 2 หน้า 2 ใช้ Fa0/1 และ Fa0/2 เป็น trunk จริงและแสดง Native vlan 999 ทั้งคู่ ส่วนใบงานยกตัวอย่าง Gi0/1 และ Gi0/2 ในห้องสอบให้อ่าน Local Interface ที่ต่อเพื่อนบ้านจาก show cdp neighbors ก่อนเลือกพอร์ตที่จะตั้งค่า"
+          ]
+        }
+      },
+      {
+        "title": "พิสูจน์ผลการปิด DTP บนพอร์ตผู้ใช้",
+        "body": [
+          "ในเครือข่ายแลบทดลอง ต่อ Kali ที่ SW2 Fa0/2 บันทึก Administrative Mode และ Operational Mode ด้วย show interfaces fa0/2 switchport ก่อนและหลังส่ง DTP จาก Kali"
+        ],
+        "steps": [
+          {
+            "device": "Kali · เฉพาะวงทดสอบ VLAN hopping",
+            "code": "sudo yersinia dtp -attack 1 -interface eth0"
+          },
+          {
+            "device": "SW2 · กำหนดพอร์ตผู้ใช้และจำกัด trunk",
+            "code": "configure terminal\ninterface fa0/2\n switchport mode access\n switchport nonegotiate\n exit\ninterface gi0/1\n switchport trunk allowed vlan remove 999\nend\nshow interfaces fa0/2 switchport\nshow interfaces trunk"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ทดสอบซ้ำ พอร์ตที่ล็อกเป็น access ต้องยังเป็น access การขอ trunk รอบแรกจะสำเร็จได้เฉพาะเมื่อโหมดเดิมยอมเจรจา ส่วน double tagging ใช้แท็กซ้อน จึงต้องแยก native VLAN ออกจาก VLAN ผู้ใช้และตรวจ allowed list ด้วย"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "refs": [
+      "Spanning Tree Protocol Presentation (1).pdf · หน้า 3–28",
+      "chapter2 Switched Network.pdf · หน้า 52–74",
+      "lab/LAb 3.pdf และ LAb 3(1).pdf · Part 1–4"
+    ],
+    "theory": [
+      {
+        "title": "อ่าน Role, State และเวลา convergence แยกกัน",
+        "body": [
+          "Role ตอบว่าพอร์ตทำหน้าที่ใดบนต้นไม้ เช่น root port เป็นทางที่ดีที่สุดไป root ส่วน state ตอบว่าขณะนั้นพอร์ตเรียนรู้ MAC หรือส่งเฟรมได้หรือยัง ใน STP แบบดั้งเดิม listening ฟัง BPDU, learning เริ่มเรียน MAC และ forwarding จึงส่งข้อมูลผู้ใช้",
+          "เมื่อรอ Max Age 20 วินาที แล้วผ่าน listening และ learning อย่างละ 15 วินาที เวลารวมอาจถึงประมาณ 50 วินาที บางเหตุการณ์ตรวจลิงก์ขาดได้ทันทีจึงสั้นกว่า RSTP ใช้ proposal/agreement บนลิงก์ point-to-point และมีสถานะ discarding, learning, forwarding"
+        ]
+      },
+      {
+        "title": "ทำไม loop ทำให้ MAC เดียวปรากฏสลับพอร์ต",
+        "body": [
+          "Ethernet frame ไม่มี TTL แบบ IP เฟรม broadcast จึงวนซ้ำได้ในวง Layer 2 สวิตช์เห็น Source MAC เดิมย้อนเข้ามาคนละพอร์ตจึงอัปเดตตารางไปมา เรียก MAC flapping ผลร่วมคือ broadcast storm และเฟรมซ้ำที่ปลายทาง",
+          "BPDU บอก Root ID ที่ผู้ส่งเชื่อ, Root Path Cost และ Bridge ID ของผู้ส่ง ในกรณีใช้ short path cost ลิงก์ 100 Mbps มี cost 19 ส่วน 1 Gbps มี cost 4 ให้รวม cost แล้วค่อยตัดสิน tie-break"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "อ่าน BPDU และดูพอร์ตสำรองในสามเหลี่ยม SW1–SW2–SW3",
+        "body": [
+          "ทำตาม Lab 3 ในวงแยก เริ่มจากเปิด STP แล้วต่อสายเป็นสามเหลี่ยม บันทึก Root ID, Bridge ID และพอร์ตที่กั้นวงก่อนเปลี่ยนค่า หากทำช่วงปิด STP ของใบงาน ให้ปลดลิงก์สำรองไว้จนพร้อมสังเกตและคืน STP ทันทีหลังจบช่วงทดลอง"
+        ],
+        "steps": [
+          {
+            "device": "SW1–SW3 · ตรวจแต่ละเครื่อง",
+            "code": "show spanning-tree vlan 1\nshow mac address-table dynamic\nshow interfaces counters"
+          },
+          {
+            "device": "SW1–SW3 · เฉพาะขั้นทดสอบ loop ใน topology ที่แยกไว้",
+            "code": "configure terminal\nno spanning-tree vlan 1\nend"
+          },
+          {
+            "device": "SW1–SW3 · ปลดลิงก์ที่ปิดวงและคืน STP ก่อนต่อครบสามด้าน",
+            "code": "configure terminal\nspanning-tree vlan 1\nend\nshow spanning-tree vlan 1"
+          },
+          {
+            "device": "SW1 · กำหนด root แล้วเปรียบเทียบสามเครื่อง",
+            "code": "configure terminal\nspanning-tree vlan 1 root primary\nend\nshow spanning-tree vlan 1"
+          },
+          {
+            "device": "Wireshark บน Kali · Display filter สำหรับ Configuration BPDU",
+            "code": "stp.type == 0x00"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "บน root ให้หา This bridge is the root และ Root ID ที่ตรง Bridge ID ใน topology ที่ลิงก์ทำงานครบ สวิตช์อื่นมี root port ของ VLAN 1 หนึ่งพอร์ต อ่าน Role คู่กับ Sts เช่น Root/FWD และ Altn/BLK แล้วเทียบกับ Root Path Cost ใน BPDU"
+          ]
+        }
+      },
+      {
+        "title": "ทดสอบ BPDU Spoofing ก่อนและหลังเปิด BPDU Guard",
+        "body": [
+          "ใน Lab 3 ใช้ Yersinia บน Kali เลือก STP → Claiming Root Role เพื่อส่ง superior BPDU จากพอร์ตปลายทาง บันทึก Root ID ที่สวิตช์เห็น หยุดการทดสอบก่อนตั้งค่าด้านล่าง ตรวจว่า Gi0/1 เป็นพอร์ตไป Kali จริง"
+        ],
+        "steps": [
+          {
+            "device": "Kali · เปิดเครื่องมือในวงแลบ",
+            "code": "sudo yersinia -G"
+          },
+          {
+            "device": "SW2 · ป้องกันพอร์ตปลายทางแล้วทดสอบซ้ำ",
+            "code": "configure terminal\ninterface gi0/1\n switchport mode access\n spanning-tree portfast\n spanning-tree bpduguard enable\nend\nshow interfaces status err-disabled\nshow spanning-tree vlan 1"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "เมื่อได้รับ BPDU พอร์ตที่เปิด BPDU Guard จะเข้า err-disabled หยุดต้นทาง BPDU ก่อนสั่ง shutdown และ no shutdown ที่ Gi0/1 ส่วน Root Guard ใช้กับทางลงที่ยังต้องรับ BPDU ปกติ เมื่อได้รับ superior BPDU พอร์ตจะเป็น root-inconsistent และกลับได้หลัง BPDU ดังกล่าวหยุด"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "refs": [
+      "มาตรฐานและเทคโนโลยีเครือข่าย (2).pdf · หน้า 2–21",
+      "advanced_inter_vlan_lab_sheet.docx และ lab/advanced_inter_vlan_lab_sheet.pdf · ข้อ 1–4",
+      "week1_lab_sheet (1).pdf · Management SVI"
+    ],
+    "theory": [
+      {
+        "title": "แท็ก 802.1Q ผ่านเราเตอร์อย่างไร",
+        "body": [
+          "บน trunk สวิตช์แทรกแท็ก 4 ไบต์หลัง Source MAC ประกอบด้วย TPID 0x8100 และ TCI ที่แบ่งเป็น PCP 3 บิต, DEI 1 บิต และ VID 12 บิต เฟรม Ethernet ปกติที่บรรทุก payload 1500 ไบต์จึงยาวจาก 1518 เป็น 1522 ไบต์รวม FCS โดย IP MTU ยังคงเดิม",
+          "R1 รับเฟรม VLAN 10 ผ่าน sub-interface .10 ถอดหัว Layer 2 เลือกทางจาก Destination IP แล้วสร้างเฟรมใหม่ออก .20 พร้อม MAC ปลายทางของ Web Server การรับและส่งใช้ physical trunk เดียวกัน ทราฟฟิกหลาย VLAN จึงแย่งความจุในแต่ละทิศทาง"
+        ]
+      },
+      {
+        "title": "อ่าน Extended ACL จากมุมพอร์ตที่รับแพ็กเก็ต",
+        "body": [
+          "Extended ACL ตรวจต้นทาง ปลายทาง โปรโตคอล และพอร์ต TCP/UDP จากบนลงล่างแล้วใช้บรรทัดแรกที่ตรง ท้ายรายการมี implicit deny การผูก in บน Gi0/0.10 กรองแพ็กเก็ตที่ R1 รับจาก Staff ก่อนเลือกทางออก",
+          "ถ้าย้าย ACL ไปขาออก Gi0/0.20 กฎที่กัน Staff ไป Kali VLAN 99 จะไม่เห็นแพ็กเก็ตนั้นเพราะใช้คนละทางออก การทดสอบต้องระบุทั้งต้นทางและบริการ เช่น ping สำเร็จยังสรุปไม่ได้ว่า SSH ผ่าน"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "ต่อ trunk และสร้าง gateway ของ VLAN 10, 20, 99",
+        "body": [
+          "ผังใบงานใช้ R1 และ R2 ต่อสวิตช์สองตัวผ่าน trunk ใช้ native VLAN 666 และอนุญาต 10,20,99 ตั้ง PC-Staff 192.168.10.10/24, Web-Svr 192.168.20.10/24 และ Kali 192.168.99.100/24 ให้แต่ละเครื่องใช้ .1 ใน subnet ตัวเองเป็น gateway"
+        ],
+        "steps": [
+          {
+            "device": "SW1/SW2 · สร้าง VLAN และกำหนด uplink ตามผัง",
+            "code": "configure terminal\nvlan 10\n exit\nvlan 20\n exit\nvlan 99\n exit\nvlan 666\n name Unused_Native_VLAN\n exit\ninterface range gi0/0, gi0/4\n switchport mode trunk\n switchport trunk native vlan 666\n switchport trunk allowed vlan 10,20,99\n switchport nonegotiate\n no shutdown\n exit\ninterface fa0/1\n switchport mode access\n switchport access vlan 10\n no shutdown\nend\nshow vlan brief\nshow interfaces trunk"
+          },
+          {
+            "device": "R1 · สร้าง sub-interface และ transit ไป R2",
+            "code": "configure terminal\ninterface gi0/0\n no shutdown\n exit\ninterface gi0/0.10\n encapsulation dot1Q 10\n ip address 192.168.10.1 255.255.255.0\n exit\ninterface gi0/0.20\n encapsulation dot1Q 20\n ip address 192.168.20.1 255.255.255.0\n exit\ninterface gi0/0.99\n encapsulation dot1Q 99\n ip address 192.168.99.1 255.255.255.0\n exit\ninterface gi0/1\n ip address 10.0.0.1 255.255.255.252\n no shutdown\n exit\nrouter ospf 1\n router-id 1.1.1.1\n network 192.168.0.0 0.0.255.255 area 0\n network 10.0.0.0 0.0.0.3 area 0\nend\nshow ip interface brief\nshow ip route connected"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "กำหนด access port ของ Web-Svr เป็น VLAN 20 และ Kali เป็น VLAN 99 ตามตำแหน่งสาย ส่วน R2 ใช้คำสั่งแบบ R1 แต่แทน .1 ด้วย .2 ในทั้งสาม VLAN และ transit ใช้ router-id 2.2.2.2 ถ้ารุ่นอุปกรณ์ให้เลือก encapsulation บนสวิตช์ ให้ตั้ง switchport trunk encapsulation dot1q ก่อนสั่ง mode trunk",
+            "ทดสอบเครื่องละสองขั้น เริ่ม ping gateway ตัวเองแล้วจึง ping ข้าม VLAN ถ้าขั้นแรกตก ให้เทียบ access VLAN, allowed VLAN, tag บน sub-interface และสถานะ physical port ก่อนดู ACL"
+          ]
+        }
+      },
+      {
+        "title": "ตั้ง FILTER_STAFF_TRAFFIC และพิสูจน์ว่า ACL จับแพ็กเก็ต",
+        "body": [
+          "อนุญาตให้ Staff เข้า Web Server เฉพาะ HTTP, HTTPS และ ICMP Echo กัน Staff ไป Kali และเปิดให้ Kali เริ่มตรวจระบบได้ ACL ของใบงานผูกเฉพาะขาเข้าจาก VLAN 10"
+        ],
+        "steps": [
+          {
+            "device": "R1 · เริ่มที่ #",
+            "code": "configure terminal\nip access-list extended FILTER_STAFF_TRAFFIC\n deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443\n permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo\n deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255\n permit ip any any\n exit\ninterface gi0/0.10\n ip access-group FILTER_STAFF_TRAFFIC in\nend\nshow ip interface gi0/0.10\nshow access-lists FILTER_STAFF_TRAFFIC"
+          },
+          {
+            "device": "PC-Staff · ทดสอบจากต้นทางที่ ACL ครอบคลุม",
+            "code": "ping 192.168.20.10\nssh 192.168.20.10\nping 192.168.99.100"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ตรวจ match counter หลังแต่ละรายการ Ping ไป Web ควรผ่าน ส่วน SSH ไป Web และ ping ไป Kali ควรตรง deny เมื่อมีบริการ Web เปิดจริงให้ทดสอบ HTTP/HTTPS เพิ่ม การที่ SSH ไม่ตอบเพียงอย่างเดียวแยกไม่ได้ว่า ACL บล็อกหรือปลายทางปิดบริการ",
+            "ACL เป็นแบบ stateless ถ้า Kali เริ่มคุยกับ Staff แพ็กเก็ตตอบจาก Staff กลับ Kali อาจถูกกฎแรกทิ้ง ให้แยกการทดสอบ Kali → Web ออกจาก Kali ↔ Staff และบันทึกทิศที่ counter เพิ่ม"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "refs": [
+      "OSPF_Single_Area_Advanced.pdf · หน้า 2–12",
+      "Lab_Sheet_OSPF_Single_Area_Advanced.docx และ lab/Lab_Sheet_OSPF_Single_Area_Advanced.pdf · Part A–E",
+      "Advanced_Routing_WAN_Lecture_Lab.pdf · หน้า 4–16",
+      "แลบ EIGRP/OSPF สามเราเตอร์และ redistribution ดูภาคปฏิบัติบท 8"
+    ],
+    "theory": [
+      {
+        "title": "คำนวณ Cost ไปถึง LAN ของ R4",
+        "body": [
+          "ใช้ reference bandwidth 10000 Mbps และสมมติ Gi0/1 กับ Gi0/2 เป็น Gigabit ตามผัง Cost ต่อพอร์ต = 10000 / 1000 = 10 ส่วน Gi0/3 ตั้ง bandwidth 1544 kbps ได้ 10000 / 1.544 ≈ 6476.68 ตัดเศษเป็น 6476 คำสั่ง bandwidth ระบุแบนด์วิดท์อ้างอิงให้โปรโตคอล ไม่ได้เปลี่ยนความเร็วสาย",
+          "ปลายทางคือ 10.0.4.0/24 จึงรวม cost ขาออกของ R1 และ cost จาก R4 ออก LAN เส้นผ่าน switch ได้ 10 + 10 = 20 ส่วนเส้นตรงได้ 6476 + 10 = 6486 ขากลับของสายเส้นเดียวกันไม่ถูกนับซ้ำ ถ้า cost รวมเท่ากันอาจเห็นหลาย next hop ด้วย ECMP"
+        ]
+      },
+      {
+        "title": "DUAL ใช้ทางสำรองเมื่อใด",
+        "body": [
+          "EIGRP เก็บรายชื่อเพื่อนบ้านใน neighbor table และข้อมูลปลายทางกับระยะทางใน topology table เส้นทางที่เลือกใช้เรียก successor ส่วน feasible successor ต้องผ่านเงื่อนไข reported distance ของเพื่อนบ้าน < feasible distance ของเรา เช่น FD 100 กับ RD 80 ผ่าน แต่ RD 100 ไม่ผ่าน",
+          "ถ้า successor หายและมี feasible successor จึงสลับได้ทันที หากไม่มีจะเข้าสถานะ Active แล้วส่ง Query รอ Reply เพื่อหาเส้นทางใหม่ Hello ใช้ค้นหาเพื่อนบ้าน Update ส่งข้อมูลเส้นทาง ส่วน ACK ยืนยันการรับข้อความที่ส่งแบบเชื่อถือได้"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "ตั้ง OSPF Area 0 ของ R1–R4",
+        "body": [
+          "บนวง broadcast ใช้ Gi0/1 = 192.168.100.N/24 ส่วน LAN ใช้ Gi0/2 = 10.0.N.1/24 โดย N คือหมายเลข router กำหนด Loopback0 และ Router ID เป็น N.N.N.N ลิงก์ Gi0/3 มีเฉพาะ R1 กับ R4"
+        ],
+        "steps": [
+          {
+            "device": "R1 · ค่าอ้างอิงสำหรับ Part A–C",
+            "code": "configure terminal\ninterface loopback0\n ip address 1.1.1.1 255.255.255.255\n exit\ninterface gi0/1\n ip address 192.168.100.1 255.255.255.0\n ip ospf priority 100\n no shutdown\n exit\ninterface gi0/2\n ip address 10.0.1.1 255.255.255.0\n no shutdown\n exit\ninterface gi0/3\n ip address 172.16.14.1 255.255.255.252\n bandwidth 1544\n ip ospf network point-to-point\n no shutdown\n exit\nrouter ospf 1\n router-id 1.1.1.1\n network 192.168.100.0 0.0.0.255 area 0\n network 10.0.1.0 0.0.0.255 area 0\n network 172.16.14.0 0.0.0.3 area 0\n passive-interface gi0/2\n auto-cost reference-bandwidth 10000\nend\nshow ip ospf neighbor\nshow ip ospf interface brief"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "R2 ตั้ง priority 100, R3 ใช้ค่าเริ่มต้น และ R4 ตั้ง 0 บน Gi0/1 สำหรับ R2/R3 ตัดบล็อก Gi0/3 และ network 172.16.14.0 ออก สำหรับ R4 ใช้ 172.16.14.2/30 รูปแบบ point-to-point เหมือน R1 เปลี่ยน LAN network statement ให้ตรงแต่ละเครื่อง",
+            "ถ้าเลือกพร้อมกัน R2 ชนะ R1 เพราะ Router ID สูงกว่าเมื่อ priority เท่ากัน แต่ DR เดิมยังอยู่ได้เมื่ออีกตัวมาทีหลัง บน broadcast เพื่อน DROTHER สองตัวอาจเห็น 2-WAY ได้ตามปกติ ส่วนลิงก์ Gi0/3 ควรเห็น FULL โดยไม่มี DR/BDR"
+          ]
+        }
+      },
+      {
+        "title": "เปิด MD5 และทดลองตัดเส้นทางหลัก",
+        "body": [
+          "ใช้ Key ID และ secret สำหรับแลบให้ตรงที่ Gi0/1 ทุกเครื่องและที่ Gi0/3 ทั้งสองฝั่ง ทำขั้นตอนตรวจเส้นทางหลังทุกคู่กลับมาเป็น neighbor แล้ว"
+        ],
+        "steps": [
+          {
+            "device": "Router ทุกตัว · ทำส่วน interface ซ้ำที่ Gi0/3 ของ R1/R4 ด้วย",
+            "code": "configure terminal\ninterface gi0/1\n ip ospf authentication message-digest\n ip ospf message-digest-key 1 md5 CCNAlab#2024\n exit\nrouter ospf 1\n area 0 authentication message-digest\nend\nshow ip ospf interface gi0/1\nshow ip ospf neighbor"
+          },
+          {
+            "device": "R1 · บันทึกก่อนตัด ระหว่างตัด และหลังคืนลิงก์",
+            "code": "show ip route 10.0.4.0\nshow ip route ospf\nshow ip ospf interface gi0/3"
+          },
+          {
+            "device": "R4 · ตัดเส้นทางผ่านสวิตช์ชั่วคราว",
+            "code": "configure terminal\ninterface gi0/1\n shutdown\nend"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "อ่าน [110/metric] และ next hop บน R1 ปกติควรไปทาง 192.168.100.4 เมื่อตัดแล้วควรเปลี่ยนเป็น 172.16.14.2 คืนลิงก์ด้วย no shutdown บน Gi0/1 ของ R4 แล้วตรวจอีกครั้ง",
+            "ถ้า neighbor ไม่ขึ้น ให้ไล่ interface up/up → IP/mask → area และ wildcard → hello/dead → network type → authentication ทั้งสองด้าน ถ้ามี neighbor แล้วแต่ไม่มี LAN route ให้ตรวจ network ที่ครอบ Gi0/2 แม้พอร์ตนั้นตั้ง passive"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "refs": [
+      "Default Gateway คือจุดเปราะบางของเครือข่าย.pdf · HSRP, VRRP, GLBP และ failover",
+      "Lab Sheet  Gateway Redundancy — HSRP   VRRP   GLBP_260826_142251.pdf · Part A",
+      "Lab_Sheet__Gateway_Redundancy VRRP(1).pdf และ Assignment/Lab_Sheet__Gateway_Redundancy VRRP.pdf · Part B",
+      "Lab_Sheet__Gateway_RedundancyGLBP_1.pdf และฉบับ DOCX ใน lab · Part C",
+      "มาตรฐานและเทคโนโลยีเครือข่าย (2).pdf · หน้า 28–34"
+    ],
+    "theory": [
+      {
+        "title": "Preempt, tracking และปัญหาขา LAN ยังดีแต่ WAN ขาด",
+        "body": [
+          "Preempt อนุญาตให้ router ที่มี priority สูงกว่าเข้ารับบทบาทเมื่อพร้อม Tracking ตรวจวัตถุที่กระทบการส่งต่อ เช่น line protocol ของ uplink ถ้า R1 มี priority 120 แล้ว track ลด 30 จะเหลือ 90 ต่ำกว่า R2 ที่มี 100 จึงให้ R2 ที่เปิด preempt เข้ารับช่วงได้",
+          "ถ้าปิดเฉพาะ uplink ของ R1 แต่ยังส่ง Hello บน LAN ได้ การเฝ้ารอ Hello อย่างเดียวจะมองไม่เห็นความเสียหายนี้ ให้ทดสอบด้วยการ ping เครื่องหลัง gateway ด้วย เพราะตอบ VIP ได้ยังไม่พิสูจน์ว่าออก WAN ได้"
+        ]
+      },
+      {
+        "title": "GLBP เลือกคนตอบ ARP กับคนส่ง packet อย่างไร",
+        "body": [
+          "AVG เป็นผู้ตอบ ARP ของ virtual IP และเลือก virtual MAC ของ AVF ให้ client แต่ละเครื่อง ส่วน AVF ส่งต่อเฟรมที่จ่าถึง MAC ที่ตนรับผิดชอบ Round-robin สลับการแจก MAC ตามคำขอ, weighted แบ่งตามน้ำหนัก และ host-dependent ผูกการเลือกกับตัวตนของ client",
+          "ARP cache ทำให้การ ping หลายครั้งจากเครื่องเดิมมักใช้ AVF เดิม จึงต้องเปรียบเทียบหลาย client และดู ARP Reply ก่อนสรุปการกระจายโหลด จำนวน client ต่อ AVF และจำนวนไบต์ที่แต่ละตัวส่งเป็นคนละตัวชี้วัด"
+        ]
+      },
+      {
+        "title": "แยก State ของ HSRP, VRRP และหมายเลขกลุ่ม",
+        "body": [
+          "HSRP มี Initial, Learn, Listen, Speak, Standby และ Active ช่วง Learn ยังรอเรียน virtual IP ส่วน Speak ใช้แลก Hello และเข้าร่วมเลือกบทบาท เมื่อกลุ่มนิ่ง Active รับส่งให้ client และ Standby เตรียมรับช่วง",
+          "VRRP ในใบงานใช้ Initialize, Backup และ Master โดยเจ้าของ IP จริงที่ตรงกับ virtual IP ใช้ priority 255 ส่วนค่า 0 ใน advertisement เป็นสัญญาณสละบทบาท HSRPv2 group 1 ใช้ virtual MAC 0000.0c9f.f001 ขณะที่ VRRP IPv4 VRID 1 ใช้ 0000.5e00.0101 จึงอ่าน group และ protocol ย้อนจากรูปแบบ MAC ได้"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "ตั้ง HSRPv2 บน R1 และ R2",
+        "body": [
+          "ใช้วง 192.168.10.0/24 ให้ R1 และ R2 ต่อ Gi0/1 เข้าสวิตช์ VLAN เดียวกัน ตั้ง gateway ของ client เป็น 192.168.10.1 ทำบล็อกแยกตามชื่ออุปกรณ์"
+        ],
+        "steps": [
+          {
+            "device": "R1 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.10.2 255.255.255.0\n no shutdown\n standby version 2\n standby 1 ip 192.168.10.1\n standby 1 priority 110\n standby 1 preempt\n standby 1 timers 1 4\nend\nshow standby brief"
+          },
+          {
+            "device": "R2 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.10.3 255.255.255.0\n no shutdown\n standby version 2\n standby 1 ip 192.168.10.1\n standby 1 priority 100\n standby 1 preempt\n standby 1 timers 1 4\nend\nshow standby brief"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "R1 ควรแสดง Active และ R2 แสดง Standby ตรวจ group 1, virtual IP และ P ซึ่งหมายถึงเปิด preempt ค่า 1 และ 4 คือ Hello และ Hold หน่วยวินาที HSRPv2 ใช้ UDP 1985 ไป 224.0.0.102",
+            "ตัวอย่างจากสไลด์เรื่อง tracking ใช้คนละ group กับ Part A หากใช้ HSRP group 10 บน Gi0/0/0.10 ที่ priority 120 ให้สร้าง track 1 interface GigabitEthernet0/0/1 line-protocol ใน global config แล้วใส่ standby 10 track 1 decrement 30 ใน sub-interface เมื่อ uplink down ให้เทียบ priority 90 กับเครื่องสำรอง 100 ใน show standby"
+          ]
+        }
+      },
+      {
+        "title": "ตั้ง VRRP บน R1 และ R2",
+        "body": [
+          "ใช้วง 192.168.20.0/24 ให้ R1 และ R2 ต่อ Gi0/1 เข้าสวิตช์ VLAN เดียวกัน ตั้ง gateway ของ client เป็น 192.168.20.1 ทำบล็อกแยกตามชื่ออุปกรณ์"
+        ],
+        "steps": [
+          {
+            "device": "R1 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.20.2 255.255.255.0\n no shutdown\n vrrp 1 ip 192.168.20.1\n vrrp 1 priority 110\n vrrp 1 preempt\n vrrp 1 timers advertise 1\nend\nshow vrrp brief"
+          },
+          {
+            "device": "R2 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.20.3 255.255.255.0\n no shutdown\n vrrp 1 ip 192.168.20.1\n vrrp 1 priority 100\n vrrp 1 preempt\n vrrp 1 timers advertise 1\nend\nshow vrrp brief"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "R1 ควรเป็น Master ตามคำเรียกในชีท และ R2 เป็น Backup ค่า 1 วินาทีคือ advertisement interval เมื่อ priority ของ Backup เป็น 100 สูตร Master Down ของ VRRPv2 คือ 3 × 1 + (256 − 100)/256 ≈ 3.61 วินาที ใช้ Wireshark filter vrrp ดู advertisement ไป 224.0.0.18"
+          ]
+        }
+      },
+      {
+        "title": "ตั้ง GLBP บน R1 และ R2",
+        "body": [
+          "ใช้วง 192.168.30.0/24 ให้ R1 และ R2 ต่อ Gi0/1 เข้าสวิตช์ VLAN เดียวกัน ตั้ง gateway ของ client เป็น 192.168.30.1 ทำบล็อกแยกตามชื่ออุปกรณ์"
+        ],
+        "steps": [
+          {
+            "device": "R1 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.30.2 255.255.255.0\n no shutdown\n glbp 1 ip 192.168.30.1\n glbp 1 priority 110\n glbp 1 preempt\n glbp 1 load-balancing round-robin\nend\nshow glbp brief"
+          },
+          {
+            "device": "R2 · Cisco IOS",
+            "code": "configure terminal\ninterface gi0/1\n ip address 192.168.30.3 255.255.255.0\n no shutdown\n glbp 1 ip 192.168.30.1\n glbp 1 priority 100\n glbp 1 preempt\n glbp 1 load-balancing round-robin\nend\nshow glbp brief"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "R1 ควรเป็น AVG ดูบรรทัด group เทียบกับบรรทัด Fwd ของแต่ละ AVF ใช้ client สองเครื่องล้าง ARP ของ VIP แล้ว ping VIP และดู ip neigh จับคู่ virtual MAC กับ show glbp ก่อนทดลองเปลี่ยน load-balancing เป็น weighted หรือ host-dependent ทั้งสอง router สำหรับ weighted ให้พิจารณาค่า weighting ของแต่ละเครื่องด้วย"
+          ]
+        }
+      },
+      {
+        "title": "วัด failover จาก ping, บทบาท และไฟล์ capture",
+        "body": [
+          "ตัวอย่างใช้ HSRP ให้ PC ping IP ที่อยู่หลัง router ต่อเนื่องเพื่อทดสอบ forwarding และให้ Kali ที่ต่อพอร์ต mirror บันทึกแพ็กเก็ต เริ่มบันทึกก่อนตัด Gi0/1 ของ R1"
+        ],
+        "steps": [
+          {
+            "device": "Kali · บันทึก pcap",
+            "code": "sudo tcpdump -ni eth0 -w hsrp-failover.pcap 'udp port 1985 or icmp or arp'"
+          },
+          {
+            "device": "PC ฝั่ง LAN · อีกหน้าต่างหนึ่ง ทดสอบการเข้าถึง VIP",
+            "code": "ping -i 0.2 192.168.10.1"
+          },
+          {
+            "device": "R1 · ทดสอบเมื่อระบบพร้อม",
+            "code": "configure terminal\ninterface gi0/1\n shutdown\nend"
+          },
+          {
+            "device": "R2 · ระหว่างขัดข้อง",
+            "code": "show standby brief"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "จดเวลาของ Echo Reply สุดท้ายก่อนขาดและ Reply แรกหลังกลับมา ตัวอย่าง 12.0 ถึง 15.2 วินาทีมีช่วงห่าง 3.2 วินาที ค่านี้รวมช่วงส่ง ping และอาจต่างจากเวลาสลับบทบาท ดู sequence ที่หายและ Hello ประกอบ แล้วคืน Gi0/1 ของ R1 ด้วย no shutdown",
+            "ทำซ้ำในวงของ VRRP โดยใช้ ip proto 112 และ show vrrp brief ส่วน GLBP ใช้ udp port 3222 และ show glbp brief ตรวจทั้ง AVG, AVF และ client ที่ได้รับผล บันทึกผลก่อนล้ม ระหว่างล้ม และหลังคืนลิงก์"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "refs": [
+      "week1_lab_sheet (1).pdf · MAC learning, ARP และ Kali Network Discovery",
+      "lab/advanced_inter_vlan_lab_sheet.pdf · ข้อ 4 การตรวจ ACL และ VLAN tag",
+      "สรุปเนื้อหาข้อสอบปลายภาค_Internetworking_2569.pdf · หน้า 4",
+      "lab/---------------_Advanced_Routing_WAN_3Routers.docx.pdf · หน้า 7–8"
+    ],
+    "theory": [
+      {
+        "title": "เมื่อผลจาก arp-scan, nmap และตาราง MAC มีจำนวนต่างกัน",
+        "body": [
+          "arp-scan ถามหา IP ผ่าน ARP ภายใน broadcast domain เดียวกัน สวิตช์เก็บเฉพาะ source MAC ของเฟรมที่มาถึงพอร์ตของมัน ส่วน nmap -sn ตรวจ host discovery ซึ่งการตอบขึ้นกับทางเดินและการกรอง ความต่างของจำนวนรายการจึงต้องอธิบายด้วย VLAN, ตำแหน่งเครื่องมือ และเวลาที่เก็บ",
+          "802.1X ควบคุมการเปิดสิทธิ์บนพอร์ต supplicant ส่ง EAPOL ไป authenticator และ authenticator ติดต่อ authentication server ซึ่งมักใช้ RADIUS ถ้าทดสอบการยืนยันตัวตนให้จับ eapol ที่ฝั่งผู้ใช้ ส่วนการหา VLAN tag ต้องเลือกจุดจับที่มองเห็น trunk"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "ระบุ IP → MAC → พอร์ต และพิสูจน์ขอบเขต ARP",
+        "body": [
+          "ใช้วงสัปดาห์ที่ 1 ตั้งหน้าต่างรับ capture บน Kali-2 และ Kali-3 ก่อนให้ Kali-1 ping IP ที่ไม่มีเครื่องใช้งาน"
+        ],
+        "steps": [
+          {
+            "device": "Kali-2 / Kali-3 · จับ ARP",
+            "code": "sudo tcpdump -i eth0 -nn arp"
+          },
+          {
+            "device": "Kali-1 · สำรวจวงที่กำลังทำแลบ",
+            "code": "ip addr show\nping -c 2 192.168.1.99\nsudo arp-scan --interface=eth0 --localnet\nsudo nmap -sn 192.168.1.0/24\nip neigh"
+          },
+          {
+            "device": "SW1 · เทียบ MAC จาก Kali กับพอร์ต",
+            "code": "show mac address-table dynamic\nshow interfaces status\nshow cdp neighbors"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "จับคู่ IP กับ MAC จาก ARP แล้วค้น MAC ในตารางของ SW1 ถ้ารายการชี้ไป trunk ให้ตามไปเช็ก switch ถัดไป ควรเห็น ARP Request ที่เครื่องอื่นใน VLAN เดียวกันแม้ไม่มี ARP Reply จาก .99"
+          ]
+        }
+      },
+      {
+        "title": "ตรวจ Web Server และแท็กจากแลบ ROAS",
+        "body": [
+          "บน Kali ใน VLAN 99 ตรวจ Web-Svr 192.168.20.10 เมื่อทดสอบกฎของ Staff ให้ย้ายจุดกำเนิดการทดสอบไป PC-Staff ใน VLAN 10 จึงจะผ่าน ACL ขาเข้าที่ตั้งไว้"
+        ],
+        "steps": [
+          {
+            "device": "Kali · ดูเส้นทางและบริการ",
+            "code": "fping -a -g 192.168.10.0/24\nfping -a -g 192.168.20.0/24\nsudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10\ntraceroute -n 192.168.20.10"
+          },
+          {
+            "device": "Kali · รับสำเนา trunk ที่คง VLAN tag",
+            "code": "sudo tshark -i eth0 -Y vlan -T fields -e frame.number -e vlan.id -e ip.src -e ip.dst"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "สถานะ open แปลว่าบริการรับการเชื่อมต่อ closed แปลว่าปลายทางตอบว่าพอร์ตปิด ส่วน filtered หมายถึงเครื่องมือบอกสถานะพอร์ตไม่ได้เนื่องจากการกรองหรือไม่ได้รับคำตอบ จาก access port ปกติมักไม่เห็นแท็ก หากไม่มี vlan.id ให้ตรวจ source ของ SPAN การคง tag และจุดจับก่อนสรุปว่า trunk เสีย"
+          ]
+        }
+      },
+      {
+        "title": "จับ control plane ให้ถูก segment",
+        "body": [
+          "Kali ต่อ SW3 ในวง R2–R3 จะเห็น OSPF ส่วน EIGRP อยู่ลิงก์ R1–R2 จึงต้อง mirror ที่ SW2 มายัง Kali บันทึกตำแหน่ง sensor คู่กับชื่อไฟล์เสมอ"
+        ],
+        "steps": [
+          {
+            "device": "Kali · ตรวจ interface แล้วเริ่มจับ",
+            "code": "ip -br addr\nsudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap"
+          },
+          {
+            "device": "Wireshark · Display filter เมื่อเปิดไฟล์",
+            "code": "ip.proto == 88 || ip.proto == 89"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "หา Hello และบันทึก source, destination และเวลา เมื่อเปลี่ยน topology ค่อยหา EIGRP Query/Reply หรือ OSPF LS Update ตามเหตุการณ์ หมายเลข 88 และ 89 เป็นค่าใน IP header การกรองด้วย tcp.port จะหาแพ็กเก็ตเหล่านี้ไม่พบ"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "refs": [
+      "Advanced_Routing_WAN_Lecture_Lab.pdf · หน้า 8–20",
+      "lab/---------------_Advanced_Routing_WAN_3Routers.docx.pdf · หน้า 2–11",
+      "สรุปเนื้อหาข้อสอบปลายภาค_Internetworking_2569.pdf · หน้า 4–5"
+    ],
+    "theory": [
+      {
+        "title": "ออกแบบ WAN จากเส้นทางที่สาขาใช้จริง",
+        "body": [
+          "ถ้าสาขาคุยกับศูนย์กลางเป็นหลัก hub-and-spoke ใช้ลิงก์น้อย แต่สาขาที่ส่งหากันต้องผ่าน hub และต้องเผื่อความจุที่ศูนย์กลาง ถ้ามีสองสาขาที่ส่งข้อมูลหากันมาก ให้เพิ่มลิงก์ตรงเป็น partial mesh ส่วน full mesh ของ n จุดต้องใช้ n(n−1)/2 ลิงก์ เช่น 5 จุดต้องใช้ 10 ลิงก์",
+          "ในกรณีศึกษาของสไลด์ องค์กรอาจใช้ MPLS ของผู้ให้บริการเป็นทางหลัก ใช้ site-to-site VPN ผ่านอินเทอร์เน็ตเป็นทางสำรอง และให้พนักงานนอกสำนักงานต่อด้วย remote-access VPN การแยกเส้นทางด้วย label และการเข้ารหัสเพื่อรักษาความลับทำคนละหน้าที่"
+        ]
+      },
+      {
+        "title": "รวมสี่ /24 ให้เป็น /22 แล้วตรวจขอบเขต",
+        "body": [
+          "10.10.0.0/24 ถึง 10.10.3.0/24 มีสองบิตท้ายของ octet ที่สามเปลี่ยนได้ (00, 01, 10, 11) จึงมี prefix ร่วม 22 บิต ได้ 10.10.0.0/22 หรือ mask 255.255.252.0 ครอบคลุมถึง 10.10.3.255 การเริ่มที่ 10.10.1.0 แล้วรวมสี่วงจะข้ามขอบเขต /22 นี้",
+          "Summarization ลดจำนวน prefix ที่ประกาศ ส่วน redistribution นำ route ข้ามระหว่าง routing protocol ต้องแปลง metric และควบคุมทิศทาง ถ้าประกาศ summary ที่ครอบ subnet ที่ไปไม่ถึง แพ็กเก็ตของ subnet นั้นอาจถูกส่งมาทิ้งที่ผู้ประกาศ"
+        ]
+      }
+    ],
+    "labs": [
+      {
+        "title": "สร้างสอง routing domain ตามผังสามเราเตอร์",
+        "body": [
+          "PC1 = 192.168.10.10/24 gateway .1 และ PC2 = 192.168.30.30/24 gateway .1 ต่อ R1–R2 ผ่าน 10.0.12.0/30 และ R2–R3 ผ่าน 10.0.23.0/29 โดย Kali ใช้ 10.0.23.3/29"
+        ],
+        "steps": [
+          {
+            "device": "R1 · ฝั่ง EIGRP",
+            "code": "configure terminal\ninterface g0/0\n ip address 192.168.10.1 255.255.255.0\n no shutdown\n exit\ninterface g0/1\n ip address 10.0.12.1 255.255.255.252\n no shutdown\n exit\nrouter eigrp 100\n eigrp router-id 1.1.1.1\n network 192.168.10.0 0.0.0.255\n network 10.0.12.0 0.0.0.3\n passive-interface g0/0\n no auto-summary\nend\nshow ip eigrp neighbors"
+          },
+          {
+            "device": "R2 · boundary router",
+            "code": "configure terminal\ninterface g0/0\n ip address 10.0.12.2 255.255.255.252\n no shutdown\n exit\ninterface g0/1\n ip address 10.0.23.1 255.255.255.248\n no shutdown\n exit\nrouter eigrp 100\n eigrp router-id 2.2.2.2\n network 10.0.12.0 0.0.0.3\n no auto-summary\n exit\nrouter ospf 1\n router-id 2.2.2.2\n network 10.0.23.0 0.0.0.7 area 0\nend\nshow ip protocols"
+          },
+          {
+            "device": "R3 · ฝั่ง OSPF",
+            "code": "configure terminal\ninterface g0/0\n ip address 10.0.23.2 255.255.255.248\n no shutdown\n exit\ninterface g0/1\n ip address 192.168.30.1 255.255.255.0\n no shutdown\n exit\nrouter ospf 1\n router-id 3.3.3.3\n network 10.0.23.0 0.0.0.7 area 0\n network 192.168.30.0 0.0.0.255 area 0\n passive-interface g0/1\nend\nshow ip ospf neighbor\nshow ip route"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ก่อนเชื่อมสอง domain ให้ R1 เห็น R2 เป็น EIGRP neighbor และ R3 เห็น R2 เป็น OSPF neighbor แม้แต่ละลิงก์ ping ได้ R1 กับ R3 ยังไม่รู้จัก LAN ฝั่งตรงข้าม ตรวจ show ip route บน R2 ว่าเห็นทั้งสอง LAN ก่อนทำขั้นต่อไป"
+          ]
+        }
+      },
+      {
+        "title": "ให้ R2 แลกเส้นทางด้วย metric และ route tag",
+        "body": [
+          "ทำเฉพาะ R2 ให้ tag 100 ตาม route จาก EIGRP เข้า OSPF และ tag 200 ตาม route ย้อนอีกทิศ ปฏิเสธ tag ของ domain ปลายทางก่อน permit เพื่อกันการส่ง route กลับไปยังต้นทาง"
+        ],
+        "steps": [
+          {
+            "device": "R2 · route-map และ redistribution",
+            "code": "configure terminal\nroute-map EIGRP-TO-OSPF deny 10\n match tag 200\n exit\nroute-map EIGRP-TO-OSPF permit 20\n set tag 100\n exit\nroute-map OSPF-TO-EIGRP deny 10\n match tag 100\n exit\nroute-map OSPF-TO-EIGRP permit 20\n set tag 200\n exit\nrouter ospf 1\n redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF\n exit\nrouter eigrp 100\n redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP\nend\nshow route-map\nshow ip protocols"
+          },
+          {
+            "device": "R1 · ตรวจเส้นทางที่นำเข้า",
+            "code": "show ip eigrp topology\nshow ip route 192.168.30.0"
+          },
+          {
+            "device": "R3 · ตรวจเส้นทางกลับ",
+            "code": "show ip route 192.168.10.0"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "R1 ควรเห็น D EX ไป 192.168.30.0/24 และ R3 เห็น O E2 ไป 192.168.10.0/24 เมื่อใช้ external type เริ่มต้น ค่า seed metric ฝั่ง EIGRP เรียงเป็น bandwidth, delay, reliability, load, MTU ตรวจว่าจาก PC1 ping 192.168.30.30 และจาก PC2 ping 192.168.10.10 ได้ทั้งสองทาง"
+          ]
+        }
+      },
+      {
+        "title": "ตัด R1–R2 แล้ววัดเวลาที่กลับมาส่งข้อมูลได้",
+        "body": [
+          "เริ่มจับไฟล์ routing_control.pcap ตามบท 7 และ ping ต่อเนื่องจาก PC1 ไป PC2 เก็บ neighbor กับ route ก่อนทดลอง ใน topology นี้ R2 เป็นทางผ่านเพียงเส้นเดียว"
+        ],
+        "steps": [
+          {
+            "device": "PC1 · Linux",
+            "code": "ping -i 1 192.168.30.30"
+          },
+          {
+            "device": "R1 · ระหว่างขัดข้อง",
+            "code": "configure terminal\ninterface g0/1\n shutdown\nend\nshow ip eigrp neighbors\nshow ip route"
+          },
+          {
+            "device": "R1 · ครบ 20 วินาทีแล้วเปิดลิงก์คืน",
+            "code": "configure terminal\ninterface g0/1\n no shutdown\nend\nshow ip eigrp neighbors\nshow ip route 192.168.30.0"
+          }
+        ],
+        "example": {
+          "title": "ตรวจผลและอธิบาย",
+          "body": [
+            "ช่วงปิดสาย การสื่อสารต้องหยุดเพราะไม่มีทางสำรอง บันทึกเวลาตั้งแต่ no shutdown จน neighbor กลับมา, D EX ปรากฏ และ ping ตอบอีกครั้ง จึงแยกช่วงรอเปิดสาย 20 วินาทีออกจากเวลาฟื้นตัวของ routing ได้ ปิดท้ายด้วย traceroute จาก PC1 และอธิบายบทบาท R1 → R2 → R3"
+          ]
+        }
+      }
+    ]
+  }
+]

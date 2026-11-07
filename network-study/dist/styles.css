@@ -9,3 +9,9 @@
 @media print{#sidebar,.topbar,footer,.toc,.tabs,.actions,.chapter-end,.code-header button,#toast{display:none!important}.workspace{margin:0}body{background:white}main{padding:0;max-width:none}.reading{border:0;padding:0}.reading-layout{display:block}.lesson-section{break-inside:avoid}.diagram{break-inside:avoid}pre{white-space:pre-wrap;color:#111;background:#f1f1f1}.page-head h1{font-size:24px}.reading p,.reading li{font-size:11pt}.sources{display:block}}
 
 @media(max-width:580px){.diagram-canvas{overflow-x:auto;overscroll-behavior-x:contain}.diagram-canvas svg{min-width:560px}.diagram figcaption:before{content:"เลื่อนภาพแนวนอนเพื่อดูรายละเอียด · "}}
+
+.lab-answer > summary {cursor:pointer;color:var(--blue);font-weight:600;padding:.6em 0}
+.command-block .code-header {gap:1em;font-size:.85rem}
+.command-block .code-header button {flex-shrink:0}
+.sources li {overflow-wrap:anywhere}
+@media (max-width:480px) {.tabs {flex-wrap:wrap}.tab {padding-inline:10px}}
