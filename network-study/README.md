@@ -2,6 +2,10 @@
 
 Thai self-study website based on the five-page instructor final-exam scope and the lecture slides and lab sheets in `network_files/`. Each of the eight chapters has theory, guided CLI practice, a revision summary, and 15 practice questions.
 
+The main navigation has separate theory lessons, theory quizzes, practical lessons, and practical exam sets. Practical exams contain five command-entry questions per set across eight sets. Answers are checked against the authored answer variants, with results and explanations shown after submission. Drafts, best scores, and practical reading progress use a separate localStorage key ending in `-practical`.
+
+Author practical questions in `content/practical-exams.json`. Each question supplies a prompt, device or CLI mode, canonical answer, accepted alternatives, an explanation, and an input type (`ios`, `shell`, or `filter`). IOS keywords accept the displayed abbreviations and case variations. Named identifiers retain case, as do shell commands and display filters. The validator checks all eight sets and includes them in both generated entry points.
+
 ## Preview
 
 Run `node serve.mjs` from this directory and open `http://127.0.0.1:4173`.

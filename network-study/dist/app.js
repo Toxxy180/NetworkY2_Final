@@ -18,38 +18,49 @@
  const main=document.getElementById('main');
  const toast=text=>{const el=document.getElementById('toast');el.textContent=text;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2600)};
  const logo=`<svg width="40" height="44" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.5" aria-hidden="true"><path d="m22 7-16 30h32L22 7Z"/><circle cx="22" cy="7" r="5" fill="white"/><circle cx="6" cy="37" r="5" fill="white"/><circle cx="38" cy="37" r="5" fill="white"/></svg>`;
- function sidebar(active='home',cid){document.getElementById('sidebar').innerHTML=`<a href="#/" class="brand">${logo}<span><strong>Network</strong><small>FINAL LAB</small></span></a><nav aria-label="ส่วนหลัก">${[['home','ภาพรวม','#/'],['book','บทเรียน','#/chapters'],['quiz','ข้อสอบฝึก','#/practice'],['review','ทบทวนจุดที่พลาด','#/review']].map(([key,title,url])=>`<a class="nav-item ${key===active?'active':''}" href="${url}" ${key===active?'aria-current="page"':''}>${icon(key)}${title}${key==='review'&&wrongIds().length?` <small>(${wrongIds().length})</small>`:''}</a>`).join('')}</nav><hr class="nav-divider"><p class="nav-label">8 บทเรียน · FINAL EXAM</p><nav aria-label="รายการบทเรียน">${chapters.map(c=>`<a class="nav-item chapter-nav ${cid===c.id?'active':''}" href="#/chapter/${c.id}" ${cid===c.id?'aria-current="page"':''}><span class="chapter-num ${state.done.includes(c.id)?'done':''}">${state.done.includes(c.id)?icon('check',14):c.id}</span>${esc(c.shortTitle)}</a>`).join('')}</nav><div class="sidebar-bottom"><a href="exam-scope.pdf" target="_blank" rel="noopener">${icon('download',16)}แนวข้อสอบอาจารย์ (PDF)</a><span>${icon('grad',16)} รายวิชา 01076040</span></div>`;}
+ function sidebar(active = 'home', cid) {
+  const practical = ['labs','labQuiz'].includes(active);
+  const navigation = [
+   ['home','ภาพรวม','#/'],
+   ['book','บทเรียนทฤษฎี','#/chapters'],
+   ['quiz','ข้อสอบทฤษฎี','#/practice'],
+   ['labs','บทเรียนปฏิบัติ','#/labs'],
+   ['labQuiz','ข้อสอบปฏิบัติ','#/lab-exams'],
+   ['review','ทบทวนข้อทฤษฎีที่พลาด','#/review']
+  ];
+  document.getElementById('sidebar').innerHTML = `<a href="#/" class="brand">${logo}<span><strong>Network</strong><small>FINAL LAB</small></span></a>
+   <nav aria-label="ส่วนหลัก">${navigation.map(([key,title,url])=>`<a class="nav-item ${key===active?'active':''}" href="${url}" ${key===active?'aria-current="page"':''}>${icon(key==='labQuiz'?'quiz':key==='labs'?'book':key)}${title}</a>`).join('')}</nav>
+   <hr class="nav-divider"><p class="nav-label">${practical?'8 ชุดภาคปฏิบัติ':'8 บทภาคทฤษฎี'}</p>
+   <nav aria-label="รายการบทเรียน">${chapters.map(c=>{
+    const done=(practical?labState.done:state.done).includes(c.id);
+    const url=practical?`#/${active==='labQuiz'?'lab-exam':'lab'}/${c.id}`:`#/chapter/${c.id}`;
+    return `<a class="nav-item chapter-nav ${cid===c.id?'active':''}" href="${url}" ${cid===c.id?'aria-current="page"':''}><span class="chapter-num ${done?'done':''}">${done?icon('check',14):c.id}</span>${esc(c.shortTitle)}</a>`;
+   }).join('')}</nav><div class="sidebar-bottom"><a href="exam-scope.pdf" target="_blank" rel="noopener">${icon('download',16)}แนวข้อสอบอาจารย์ (PDF)</a><span>${icon('grad',16)} รายวิชา 01076040</span></div>`;
+ }
  function breadcrumb(label='ภาพรวม'){document.getElementById('breadcrumb').innerHTML=`<a href="#/"><b>Network</b></a><span>/</span><span class="crumb-detail">${esc(label)}</span>`;document.title=`${label} · Network Final Lab`;}
  function chapterCard(c){return `<a href="#/chapter/${c.id}" class="chapter-card"><span class="num">${state.done.includes(c.id)?icon('check',20):String(c.id).padStart(2,'0')}</span><div class="detail"><h3>${esc(c.shortTitle)}</h3><p>${esc(c.subtitle)}</p></div><span class="count">15 ข้อ</span>${icon('arrow',18)}</a>`}
  function scopeNote(){return `<details class="scope-note"><summary>ขอบเขตและที่มาของเนื้อหา</summary><p>ยึดไฟล์ “แนวเนื้อหาข้อสอบปลายภาค_Network.pdf” ทั้ง 5 หน้าเป็นขอบเขตหลัก แบ่งตามหัวข้อ 1–8 และเสริมจากสไลด์ ใบงาน Cisco IOS และการทดลองบน Kali ใน Network_Files ดูชื่อเอกสารที่ท้ายแต่ละบท</p><ul><li>ข้อสอบฝึก 120 ข้อในเว็บนี้สร้างขึ้นเพื่อทบทวน ไม่ใช่ข้อสอบจริงหรือข้อสอบที่อาจารย์รับรอง</li><li>WLAN อยู่ในคำอธิบายรายวิชา แต่ไม่ได้แยกเป็นหัวข้อในแนวปลายภาคฉบับนี้ จึงเน้น 8 บทตามไฟล์ ส่วน IP Telephony ครอบคลุม Voice VLAN ตามแนว</li><li>ตัวอย่างคำสั่งอ้างอิง Cisco IOS ทั่วไป รายละเอียดอาจต่างตามรุ่นและเวอร์ชัน ตรวจชื่อ interface และ IP ให้ตรงกับแลป</li><li>เลขบทกับตำแหน่งใน PDF: บท 1–2 หน้า 1–2, บท 3 หน้า 2–3, บท 4–5 หน้า 3–4, บท 6–7 หน้า 4, บท 8 หน้า 4–5</li></ul><a href="exam-scope.pdf" target="_blank" rel="noopener">เปิดไฟล์แนวข้อสอบต้นฉบับ ${icon('arrow',14)}</a></details>`}
- function dashboard(){sidebar('home');breadcrumb();const answered=Object.keys(state.answers).filter(id=>qmap[id]).length;const percent=Math.round(state.done.length/8*100);const next=chapters.find(c=>!state.done.includes(c.id))||chapters[0];main.innerHTML=`<section class="hero"><div><h1>เชื่อมความเข้าใจ<br>ก่อนเข้าสอบ</h1><p>สรุปและฝึกทำข้อสอบวิชาเครือข่ายครบ 8 บทเรียน<br>ฝึกอธิบายหลักการ ซ้อมคำสั่งจากใบงาน และทดสอบด้วยโจทย์ 120 ข้อ</p><div class="actions"><a class="btn primary" href="#/chapter/${next.id}">${icon('play',17)}${state.done.length?'เรียนบทถัดไป':'อ่านภาคทฤษฎี'}</a><a class="btn" href="#/chapter/${next.id}?lab">ซ้อมภาคปฏิบัติ</a><a class="btn" href="#/practice">${icon('quiz',18)}ฝึกทำข้อสอบ</a></div></div><div class="hero-art">${Diagrams.hero()}</div></section><div class="progress-strip"><span>อ่านแล้ว: <strong>${state.done.length} / 8</strong> บท</span><span class="divider"></span><span>ข้อที่เคยทำ: <strong>${answered} / 120</strong></span><div class="progress-track" role="progressbar" aria-label="บทเรียนที่อ่านแล้ว" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:${percent}%"></div></div><b>${percent}%</b></div><div class="section-heading"><h2>เส้นทางทบทวน</h2><small>เรียงจากพื้นฐาน → ประยุกต์</small></div><div class="chapter-grid">${chapters.map(chapterCard).join('')}</div><div class="note">${icon('info',21)}<div><strong>เริ่มจาก Switching แล้วเชื่อมต่อไปจนถึง WAN</strong><br>แต่ละบทมีคำอธิบาย แผนภาพ ตัวอย่าง และข้อสอบ 15 ข้อพร้อมเหตุผลของเฉลย</div></div>${scopeNote()}<p class="tiny-note">${storageOK?'ความคืบหน้าบันทึกในเบราว์เซอร์นี้โดยอัตโนมัติ ไม่ซิงก์ข้ามอุปกรณ์':'เบราว์เซอร์ไม่อนุญาตให้บันทึก ความคืบหน้าจะอยู่เฉพาะหน้านี้'}</p>`;}
- function chapterIndex(){sidebar('book');breadcrumb('บทเรียน');main.innerHTML=`<div class="page-head"><div><h1>อ่านให้เข้าใจทีละบท</h1><p class="lead">เรียนรู้ว่าแต่ละส่วนทำงานอย่างไร แล้วเชื่อมโยงเข้ากับสถานการณ์ในแลป</p></div></div><div class="chapter-grid">${chapters.map(chapterCard).join('')}</div>${scopeNote()}`;}
+ function dashboard(){sidebar('home');breadcrumb();const answered=Object.keys(state.answers).filter(id=>qmap[id]).length;const percent=Math.round(state.done.length/8*100);const next=chapters.find(c=>!state.done.includes(c.id))||chapters[0];main.innerHTML=`<section class="hero"><div><h1>เชื่อมความเข้าใจ<br>ก่อนเข้าสอบ</h1><p>สรุปและฝึกทำข้อสอบวิชาเครือข่ายครบ 8 บทเรียน<br>ฝึกอธิบายหลักการ ซ้อมคำสั่งจากใบงาน และทดสอบด้วยโจทย์ 120 ข้อ</p><div class="actions"><a class="btn primary" href="#/chapter/${next.id}">${icon('play',17)}${state.done.length?'เรียนบทถัดไป':'อ่านภาคทฤษฎี'}</a><a class="btn" href="#/labs">บทเรียนปฏิบัติ</a><a class="btn" href="#/lab-exams">ข้อสอบปฏิบัติ 8 ชุด</a><a class="btn" href="#/practice">${icon('quiz',18)}ฝึกทำข้อสอบ</a></div></div><div class="hero-art">${Diagrams.hero()}</div></section><div class="progress-strip"><span>อ่านแล้ว: <strong>${state.done.length} / 8</strong> บท</span><span class="divider"></span><span>ข้อที่เคยทำ: <strong>${answered} / 120</strong></span><div class="progress-track" role="progressbar" aria-label="บทเรียนที่อ่านแล้ว" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:${percent}%"></div></div><b>${percent}%</b></div><div class="section-heading"><h2>เส้นทางทบทวน</h2><small>เรียงจากพื้นฐาน → ประยุกต์</small></div><div class="chapter-grid">${chapters.map(chapterCard).join('')}</div><div class="note">${icon('info',21)}<div><strong>เริ่มจาก Switching แล้วเชื่อมต่อไปจนถึง WAN</strong><br>แต่ละบทมีคำอธิบาย แผนภาพ ตัวอย่าง และข้อสอบ 15 ข้อพร้อมเหตุผลของเฉลย</div></div>${scopeNote()}<p class="tiny-note">${storageOK?'ความคืบหน้าบันทึกในเบราว์เซอร์นี้โดยอัตโนมัติ ไม่ซิงก์ข้ามอุปกรณ์':'เบราว์เซอร์ไม่อนุญาตให้บันทึก ความคืบหน้าจะอยู่เฉพาะหน้านี้'}</p>`;}
+ function chapterIndex(){sidebar('book');breadcrumb('บทเรียนทฤษฎี');main.innerHTML=`<div class="page-head"><div><h1>บทเรียนภาคทฤษฎี</h1><p class="lead">เรียนรู้ว่าแต่ละส่วนทำงานอย่างไร แล้วเชื่อมโยงเข้ากับสถานการณ์ในแลป</p></div></div><div class="chapter-grid">${chapters.map(chapterCard).join('')}</div>${scopeNote()}`;}
  function sectionHTML(s,i){return `<section class="lesson-section" id="section-${i}"><h2>${esc(s.title)}</h2>${(s.body||[]).map(p=>`<p>${fmt(p)}</p>`).join('')}${s.diagram?Diagrams.render(s.diagram,true):''}${s.bullets?`<ul>${s.bullets.map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}${s.table?`<div class="table-scroll"><table><thead><tr>${s.table.headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${s.table.rows.map(r=>`<tr>${r.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}${s.code?`<div class="code-header"><span>ตัวอย่างคำสั่ง / ผลลัพธ์</span><button class="btn small" data-copy="${i}">${icon('copy',13)}คัดลอก</button></div><pre><code>${esc(s.code)}</code></pre>`:''}${s.example?`<div class="example"><h3>${esc(s.example.title)}</h3>${s.example.body.map(p=>`<p>${fmt(p)}</p>`).join('')}</div>`:''}${s.pitfall?`<div class="pitfall"><strong>จุดที่มักสับสน</strong>${fmt(s.pitfall)}</div>`:''}</section>`}
  function lesson(id, tab = 'lesson') {
+  if (tab === 'lab') { practicalLesson(id); return; }
   const c = chapters.find(chapter => chapter.id === id);
   if (!c) { location.hash = '#/'; return; }
   const summary = tab === 'summary';
-  const lab = tab === 'lab';
-  const sections = lab ? c.labs : c.sections;
-  const tabs = [['lesson', 'ภาคทฤษฎี'], ['lab', 'ภาคปฏิบัติ'], ['summary', 'สรุปก่อนสอบ']];
+  const tabs = [['lesson', 'ภาคทฤษฎี'], ['summary', 'สรุปก่อนสอบ']];
   sidebar('book', id);
-  breadcrumb(`บท ${id} · ${c.shortTitle}`);
-  const intro = lab
-   ? '<div class="objectives"><strong>ซ้อมจากใบงาน</strong><p>ลองทำตามโจทย์ก่อนเปิดดูคำสั่ง เลือกพอร์ตให้ตรงกับสายที่ต่อ แล้วอธิบายผลจากเครื่องของตัวเอง</p></div>'
-   : `<div class="objectives"><strong>อ่านจบแล้ว คุณจะอธิบายได้ว่า…</strong><ul>${c.objectives.map(o => `<li>${fmt(o)}</li>`).join('')}</ul></div>`;
-  const sectionsHTML = summary
-   ? `<h2>สรุปหลักการก่อนสอบ</h2><ul class="summary-list">${c.summary.map(s => `<li>${fmt(s)}</li>`).join('')}</ul><a class="btn" href="#/chapter/${id}?lab">ไปซ้อมภาคปฏิบัติ ${icon('arrow',15)}</a>`
-   : intro + sections.map(lab ? labSection : sectionHTML).join('');
-  const next = id < chapters.length
-   ? `<a class="btn" href="#/chapter/${id+1}${lab ? '?lab' : ''}">บทถัดไป ${icon('arrow',16)}</a>`
-   : `<a class="btn" href="#/practice">ฝึกทำข้อสอบ ${icon('arrow',16)}</a>`;
-  main.innerHTML = `<div class="page-head"><div><div class="chapter-label">บท ${String(id).padStart(2,'0')} / 08</div><h1>${esc(c.title)}</h1><p class="lead">${esc(c.subtitle)}</p></div><button class="btn primary" data-start="${id}">${icon('quiz',17)}ฝึกทำข้อสอบ 15 ข้อ</button></div>
-   <div class="tabs" role="tablist" aria-label="รูปแบบบทเรียน">${tabs.map(([key,label]) => `<button class="tab ${tab===key?'active':''}" role="tab" aria-selected="${tab===key}" data-tab="${key}" data-chapter="${id}">${label}</button>`).join('')}</div>
-   <div class="reading-layout"><article class="reading">${sectionsHTML}
-    ${lab && id===5 ? `<a class="btn" href="#/chapter/8?lab">ซ้อม EIGRP และ redistribution บน R1–R3 ${icon('arrow',16)}</a>` : ''}
-    <div class="chapter-end"><button class="btn ${state.done.includes(id)?'success':'primary'}" data-done="${id}">${icon('check',17)}${state.done.includes(id)?'อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button>${next}</div>
-    <details class="sources"><summary>เอกสารประกอบบทนี้</summary><p>ชีทและใบงานใน Network_Files</p><ul>${c.courseFiles.map(ref => `<li>${esc(ref)}</li>`).join('')}</ul><a href="exam-scope.pdf" target="_blank" rel="noopener">แนวข้อสอบต้นฉบับ (PDF 5 หน้า)</a>${c.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`).join('')}</details>
-   </article><aside class="toc" aria-label="สารบัญในบท"><h3>${lab?'งานปฏิบัติในบทนี้':'เนื้อหาในบทนี้'}</h3>${summary?'<p class="tiny-note">สรุปหลักการของบทนี้</p>':sections.map((s,i)=>`<a href="#/chapter/${id}${lab?'?lab':''}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<button class="btn primary" data-start="${id}">${icon('quiz',15)}ฝึกทำข้อสอบ</button></aside></div>`;
+  breadcrumb(`ทฤษฎี · บท ${id} · ${c.shortTitle}`);
+  const content = summary
+   ? `<h2>สรุปหลักการก่อนสอบ</h2><ul class="summary-list">${c.summary.map(s=>`<li>${fmt(s)}</li>`).join('')}</ul>`
+   : `<div class="objectives"><strong>อ่านจบแล้ว คุณจะอธิบายได้ว่า…</strong><ul>${c.objectives.map(o=>`<li>${fmt(o)}</li>`).join('')}</ul></div>${c.sections.map(sectionHTML).join('')}`;
+  main.innerHTML = `<div class="page-head"><div><div class="chapter-label">ภาคทฤษฎี · บท ${id} / 8</div><h1>${esc(c.title)}</h1><p class="lead">${esc(c.subtitle)}</p></div><button class="btn primary" data-start="${id}">${icon('quiz',17)}ฝึกทำข้อสอบ 15 ข้อ</button></div>
+   <div class="tabs" role="tablist" aria-label="รูปแบบบทเรียน">${tabs.map(([key,label])=>`<button class="tab ${tab===key?'active':''}" role="tab" aria-selected="${tab===key}" data-tab="${key}" data-chapter="${id}">${label}</button>`).join('')}</div>
+   <div class="reading-layout"><article class="reading">${content}
+    <a class="btn" href="#/lab/${id}">เรียนภาคปฏิบัติของเรื่องนี้ ${icon('arrow',16)}</a>
+    <div class="chapter-end"><button class="btn ${state.done.includes(id)?'success':'primary'}" data-done="${id}">${icon('check',17)}${state.done.includes(id)?'อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button>${id<8?`<a class="btn" href="#/chapter/${id+1}">บทถัดไป ${icon('arrow',16)}</a>`:'<a class="btn" href="#/practice">ฝึกทำข้อสอบทฤษฎี</a>'}</div>
+    <details class="sources"><summary>เอกสารประกอบบทนี้</summary><p>ชีทและใบงานใน Network_Files</p><ul>${c.courseFiles.map(ref=>`<li>${esc(ref)}</li>`).join('')}</ul><a href="exam-scope.pdf" target="_blank" rel="noopener">แนวข้อสอบต้นฉบับ (PDF 5 หน้า)</a>${c.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`).join('')}</details>
+   </article><aside class="toc" aria-label="สารบัญในบท"><h3>เนื้อหาในบทนี้</h3>${summary?'<p class="tiny-note">สรุปหลักการของบทนี้</p>':c.sections.map((s,i)=>`<a href="#/chapter/${id}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<button class="btn primary" data-start="${id}">${icon('quiz',15)}ฝึกทำข้อสอบ</button></aside></div>`;
  }
  function labSection(s, i) {
   return `<section class="lesson-section" id="section-${i}"><h2>${esc(s.title)}</h2>${s.body.map(p=>`<p>${fmt(p)}</p>`).join('')}
@@ -57,7 +68,7 @@
     ${s.steps.map(step=>`<div class="command-block"><div class="code-header"><span>${esc(step.device)}</span><button class="btn small" data-copy>${icon('copy',13)}คัดลอก</button></div><pre><code>${esc(step.code)}</code></pre></div>`).join('')}
     <div class="example"><h3>${esc(s.example.title)}</h3>${s.example.body.map(p=>`<p>${fmt(p)}</p>`).join('')}</div></details></section>`;
  }
- function practice(){sidebar('quiz');breadcrumb('ข้อสอบฝึก');main.innerHTML=`<div class="page-head"><div><h1>ทดสอบความเข้าใจ</h1><p class="lead">เลือกฝึกพร้อมเฉลยทีละข้อ หรือทำครบชุดแล้วตรวจคะแนน<br>โจทย์แต่งขึ้นตามขอบเขตอาจารย์ มีทั้งพื้นฐาน การอ่านคำสั่ง และวิเคราะห์ภาพ</p></div></div>${session&&!session.finished?`<div class="note">${icon('info')}<div>คุณมีชุดที่กำลังทำอยู่: ${esc(session.title)}<br><a href="#/quiz">กลับไปทำต่อ ${icon('arrow',14)}</a></div></div>`:''}<div class="mock-banner"><div><h3>ชุดทบทวนรวม 30 ข้อ</h3><p>สุ่มจากคลังทั้ง 8 บท · ตรวจคะแนนเมื่อทำครบ · ไม่จำกัดเวลา</p></div><button class="btn" data-start="mock" data-mode="exam">เริ่มชุดรวม ${icon('arrow',17)}</button></div><div class="quiz-chooser">${chapters.map(c=>{const results=state.history.filter(h=>h.chapter===c.id);const best=results.length?Math.max(...results.map(r=>r.score)):null;return `<section class="quiz-choice"><span class="label">บท ${String(c.id).padStart(2,'0')} · 15 ข้อ</span><h3>${esc(c.shortTitle)}</h3><p>${esc(c.subtitle)}</p><div class="actions"><button class="btn primary small" data-start="${c.id}">ฝึกพร้อมเฉลย</button><button class="btn small" data-start="${c.id}" data-mode="exam">ทำครบแล้วตรวจ</button></div><p class="tiny-note">${best===null?'ยังไม่เคยทำครบชุด':`คะแนนสูงสุด ${best}/15 · ทำครบ ${results.length} ครั้ง`}</p></section>`}).join('')}</div>`;}
+ function practice(){sidebar('quiz');breadcrumb('ข้อสอบทฤษฎี');main.innerHTML=`<div class="page-head"><div><h1>ข้อสอบภาคทฤษฎี</h1><p class="lead">เลือกฝึกพร้อมเฉลยทีละข้อ หรือทำครบชุดแล้วตรวจคะแนน<br>โจทย์แต่งขึ้นตามขอบเขตอาจารย์ มีทั้งพื้นฐาน การอ่านคำสั่ง และวิเคราะห์ภาพ</p></div></div>${session&&!session.finished?`<div class="note">${icon('info')}<div>คุณมีชุดที่กำลังทำอยู่: ${esc(session.title)}<br><a href="#/quiz">กลับไปทำต่อ ${icon('arrow',14)}</a></div></div>`:''}<div class="mock-banner"><div><h3>ชุดทบทวนรวม 30 ข้อ</h3><p>สุ่มจากคลังทั้ง 8 บท · ตรวจคะแนนเมื่อทำครบ · ไม่จำกัดเวลา</p></div><button class="btn" data-start="mock" data-mode="exam">เริ่มชุดรวม ${icon('arrow',17)}</button></div><div class="quiz-chooser">${chapters.map(c=>{const results=state.history.filter(h=>h.chapter===c.id);const best=results.length?Math.max(...results.map(r=>r.score)):null;return `<section class="quiz-choice"><span class="label">บท ${String(c.id).padStart(2,'0')} · 15 ข้อ</span><h3>${esc(c.shortTitle)}</h3><p>${esc(c.subtitle)}</p><div class="actions"><button class="btn primary small" data-start="${c.id}">ฝึกพร้อมเฉลย</button><button class="btn small" data-start="${c.id}" data-mode="exam">ทำครบแล้วตรวจ</button></div><p class="tiny-note">${best===null?'ยังไม่เคยทำครบชุด':`คะแนนสูงสุด ${best}/15 · ทำครบ ${results.length} ครั้ง`}</p></section>`}).join('')}</div>`;}
  const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b};
  function startQuiz(target,mode='practice'){let ids,title,chapter=null;if(target==='mock'){ids=shuffle(chapters.flatMap(c=>shuffle(c.questions).slice(0,4).map(q=>q.id))).slice(0,30);title='ชุดทบทวนรวม 30 ข้อ';}else if(target==='wrong'){ids=shuffle(wrongIds().filter(id=>reviewFilter==='all'||qmap[id].chapterId===Number(reviewFilter)));title='ทบทวนข้อที่เคยพลาด';if(!ids.length){toast('ยังไม่มีข้อที่ต้องทบทวน');return}}else{chapter=Number(target);const c=chapters.find(c=>c.id===chapter);if(!c)return;ids=c.questions.map(q=>q.id);title=c.shortTitle;}
  session={ids,title,chapter,mode,index:0,choices:{},checked:{},orders:Object.fromEntries(ids.map(id=>[id,shuffle([0,1,2,3])])),startedAt:Date.now(),finished:false};saveSession();if(location.hash==='#/quiz')render();else location.hash='#/quiz';}
@@ -67,10 +78,126 @@
  function resultReview(q,choice){const correct=choice===q.answer;return `<details class="review-item"><summary><span class="mark ${correct?'good':''}">${icon(correct?'check':'close',13)}</span><span>${fmt(q.prompt)}</span></summary><div class="review-body">${q.diagram?Diagrams.render(q.diagram):''}<p>คุณตอบ: <strong>${fmt(q.options[choice]??'ไม่ได้ตอบ')}</strong></p><p>คำตอบที่ถูก: <strong>${fmt(q.options[q.answer])}</strong></p><p>${fmt(q.explanation)}</p><a href="#/chapter/${q.chapterId}">กลับไปอ่านบท ${q.chapterId} ${icon('arrow',13)}</a></div></details>`}
  function results(){sidebar('quiz');breadcrumb('ผลการฝึก');const score=session.score,total=session.ids.length,percent=Math.round(score/total*100);main.innerHTML=`<div class="quiz-shell"><section class="result-head"><div class="score-circle"><b>${percent}%</b><span>${score} / ${total} ข้อ</span></div><h1>${percent>=80?'เข้าใจภาพรวมได้ดีแล้ว':percent>=50?'เริ่มเชื่อมโยงได้แล้ว ค่อย ๆ เก็บจุดที่พลาด':'กลับไปอ่านหลักการ แล้วลองใหม่ได้เสมอ'}</h1><p class="lead" style="margin:auto">${esc(session.title)} · คะแนนนี้ใช้ประเมินการฝึก ไม่ใช่การคาดการณ์คะแนนสอบจริง</p><div class="actions"><button class="btn primary" data-retry>ลองทำชุดเดิมอีกครั้ง</button><a class="btn" href="#/review">ทบทวนจุดที่พลาด</a><a class="btn" href="#/practice">เลือกบทอื่น</a></div></section><div class="section-heading"><h2>เฉลยพร้อมเหตุผล</h2><small>กดแต่ละข้อเพื่ออ่าน</small></div>${session.ids.map(id=>resultReview(qmap[id],session.choices[id])).join('')}</div>`;}
  function review(){sidebar('review');breadcrumb('ทบทวนจุดที่พลาด');const ids=wrongIds(),filtered=ids.filter(id=>reviewFilter==='all'||qmap[id].chapterId===Number(reviewFilter));main.innerHTML=`<div class="page-head"><div><h1>กลับมาเก็บจุดที่พลาด</h1><p class="lead">รวมข้อที่คำตอบล่าสุดยังไม่ถูก เมื่อตอบถูกในครั้งถัดไป ข้อนั้นจะออกจากรายการนี้</p></div>${filtered.length?'<button class="btn primary" data-start="wrong">ฝึกข้อเหล่านี้อีกครั้ง</button>':''}</div>${ids.length?`<div class="review-toolbar"><span class="muted">${filtered.length} ข้อที่ต้องทบทวน</span><select id="review-filter" aria-label="กรองข้อที่ผิดตามบท"><option value="all">ทุกบท</option>${chapters.map(c=>`<option value="${c.id}" ${String(c.id)===reviewFilter?'selected':''}>${c.id}. ${esc(c.shortTitle)}</option>`).join('')}</select></div>${filtered.length?filtered.map(id=>resultReview(qmap[id],state.answers[id].choice)).join(''):'<div class="empty-state"><h2>บทนี้ไม่มีข้อที่ค้างทบทวน</h2><p>เลือกบทอื่น หรือกลับไปฝึกชุดใหม่ได้เลย</p></div>'}`:`<div class="empty-state">${icon('check',42)}<h2>${Object.keys(state.answers).length?'ไม่มีข้อผิดที่ค้างทบทวน':'เริ่มฝึก แล้วเราจะช่วยเก็บจุดที่พลาด'}</h2><p>${Object.keys(state.answers).length?'ลองชุดรวมเพื่อเชื่อมความเข้าใจข้ามบท':'ตอบผิดได้เต็มที่ ทุกข้อมีเหตุผลให้เรียนรู้ต่อ'}</p><a class="btn primary" href="#/practice">เลือกข้อสอบฝึก ${icon('arrow',16)}</a></div>`}`;}
- function render(){document.body.classList.remove('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false');const route=location.hash.replace(/^#\/?/,'').split('?')[0].split('/');if(route[0]==='chapter')lesson(Number(route[1]),['summary','lab'].includes(location.hash.split('?')[1]) ? location.hash.split('?')[1] : 'lesson');else if(route[0]==='chapters')chapterIndex();else if(route[0]==='practice')practice();else if(route[0]==='quiz')quiz();else if(route[0]==='review')review();else dashboard();}
+ function render(){document.body.classList.remove('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false');const route=location.hash.replace(/^#\/?/,'').split('?')[0].split('/');if(route[0]==='chapter')lesson(Number(route[1]),['summary','lab'].includes(location.hash.split('?')[1]) ? location.hash.split('?')[1] : 'lesson');else if(route[0]==='labs')practicalIndex();else if(route[0]==='lab-exams')practicalIndex(true);else if(route[0]==='lab')practicalLesson(Number(route[1]));else if(route[0]==='lab-exam')practicalExam(Number(route[1]));else if(route[0]==='chapters')chapterIndex();else if(route[0]==='practice')practice();else if(route[0]==='quiz')quiz();else if(route[0]==='review')review();else dashboard();}
+
+ const practicalExams = window.PRACTICAL_EXAMS;
+ const LAB_KEY = KEY + '-practical';
+ let labState = {done: [], runs: {}, best: {}};
+ try {
+  const saved = JSON.parse(localStorage.getItem(LAB_KEY));
+  if (saved && Array.isArray(saved.done) && saved.runs && saved.best) labState = saved;
+ } catch { storageOK = false; }
+ function saveLabState() {
+  try { localStorage.setItem(LAB_KEY, JSON.stringify(labState)); }
+  catch { storageOK = false; toast('เบราว์เซอร์ไม่อนุญาตให้บันทึก คำตอบจะอยู่จนกว่าจะปิดหน้านี้'); }
+ }
+ function normalizeCommand(value, inputType = 'ios') {
+  const command = value.trim().replace(/^[\w()./-]+[#$>]\s*/, '').replace(/\s+/g, ' ');
+  if (inputType !== 'ios') return command;
+  const aliases = {sh:'show',conf:'configure',t:'terminal',int:'interface',shut:'shutdown'};
+  return command
+   .split(' ').map(word => aliases[word.toLowerCase()] || (
+    /^(LABCORP|FILTER_STAFF_TRAFFIC|EIGRP-TO-OSPF|OSPF-TO-EIGRP)$/.test(word.toUpperCase())
+     ? word : word.toLowerCase()
+   )).join(' ');
+ }
+ function commandMatches(question, answer) {
+  return question.accept.some(value => normalizeCommand(value, question.inputType) === normalizeCommand(answer, question.inputType));
+ }
+ function practicalCard(exam, exams) {
+  const chapter = chapters.find(c => c.id === exam.id);
+  const run = labState.runs[exam.id];
+  const status = exams
+   ? (labState.best[exam.id] === undefined ? 'ยังไม่ได้ตรวจคำตอบ' : `คะแนนสูงสุด ${labState.best[exam.id]} / ${exam.questions.length}`)
+   : (labState.done.includes(exam.id) ? 'อ่านบทเรียนนี้แล้ว' : `${chapter.labs.length} งานจากใบงาน`);
+  return `<section class="quiz-choice"><span class="label">${exams?'ชุดสอบ':'บทเรียนปฏิบัติ'} ${exam.id} · ${exams?exam.questions.length+' ข้อ':chapter.labs.length+' งาน'}</span>
+   <h2>${esc(exam.title)}</h2><p>${esc(exam.scenario)}</p>
+   <div class="actions"><a class="btn primary small" href="#/${exams?'lab-exam':'lab'}/${exam.id}">${exams?(run&&!run.finished?'ทำชุดนี้ต่อ':'ทำข้อสอบชุดนี้'):'อ่านบทเรียน'}</a>
+   <a class="btn small" href="#/${exams?'lab':'lab-exam'}/${exam.id}">${exams?'อ่านบทเรียนประกอบ':'ไปทำข้อสอบ'}</a></div><p class="tiny-note">${status}</p></section>`;
+ }
+ function practicalIndex(exams = false) {
+  sidebar(exams ? 'labQuiz' : 'labs');
+  const title = exams ? 'ข้อสอบภาคปฏิบัติ' : 'บทเรียนภาคปฏิบัติ';
+  breadcrumb(title);
+  main.innerHTML = `<div class="page-head"><div><h1>${title}</h1><p class="lead">${exams
+   ? '8 ชุดตามเรื่อง · ชุดละ 5 ข้อ · พิมพ์คำสั่งแล้วตรวจพร้อมเฉลยเมื่อทำครบ'
+   : 'เลือกเรียนตามงานที่เคยทำ ดูขั้นตอนบนแต่ละอุปกรณ์ แล้วตรวจผลด้วยคำสั่ง show และเครื่องมือในแลบ'}</p></div>
+   <a class="btn" href="#/${exams?'labs':'lab-exams'}">${exams?'อ่านบทเรียนปฏิบัติ':'เลือกชุดข้อสอบปฏิบัติ'} ${icon('arrow',16)}</a></div>
+   <div class="quiz-chooser">${practicalExams.map(exam=>practicalCard(exam,exams)).join('')}</div>`;
+ }
+ function practicalLesson(id) {
+  const c = chapters.find(chapter=>chapter.id===id);
+  const exam = practicalExams.find(item=>item.id===id);
+  if (!c || !exam) { location.hash = '#/labs'; return; }
+  sidebar('labs', id);
+  breadcrumb('ปฏิบัติ · ' + exam.title);
+  main.innerHTML = `<div class="page-head"><div><p class="chapter-label">บทเรียนภาคปฏิบัติ ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div>
+   <a class="btn primary" href="#/lab-exam/${id}">ทำข้อสอบชุดนี้ ${icon('arrow',16)}</a></div>
+   <div class="actions lab-links"><a class="btn small" href="#/labs">บทเรียนปฏิบัติทั้งหมด</a><a class="btn small" href="#/chapter/${id}">อ่านทฤษฎีประกอบ</a></div>
+   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกจากโจทย์ไปถึงการตรวจผล</strong><p>ระบุอุปกรณ์และโหมดก่อนพิมพ์คำสั่ง ลองทำตามโจทย์ แล้วเปิดดูขั้นตอนเพื่อตรวจการตั้งค่าและผลที่ควรพบ</p></div>
+   ${c.labs.map(labSection).join('')}
+   ${id===5?'<a class="btn" href="#/lab/8">ฝึก EIGRP และ redistribution ต่อในบท 8</a>':''}
+   <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ 5 ข้อ</a></div>
+   <details class="sources"><summary>ใบงานประกอบบทนี้</summary><ul>${c.courseFiles.map(ref=>`<li>${esc(ref)}</li>`).join('')}</ul></details></article>
+   <aside class="toc"><h2>งานในบทนี้</h2>${c.labs.map((s,i)=>`<a href="#/lab/${id}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<a href="#/lab-exam/${id}">ทำข้อสอบชุดนี้</a></aside></div>`;
+ }
+ function practicalExam(id) {
+  const exam = practicalExams.find(item=>item.id===id);
+  if (!exam) { location.hash = '#/lab-exams'; return; }
+  let run = labState.runs[id];
+  if (!run || !run.answers || typeof run.answers !== 'object') {
+   run = {answers: {}, finished: false};
+   labState.runs[id] = run;
+  }
+  sidebar('labQuiz', id);
+  breadcrumb('ข้อสอบปฏิบัติ · ชุด ' + id);
+  const score = exam.questions.filter(q=>commandMatches(q,run.answers[q.id]||'')).length;
+  main.innerHTML = `<div class="quiz-shell"><div class="page-head"><div><p class="chapter-label">ข้อสอบภาคปฏิบัติ ชุด ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div></div>
+   <div class="actions lab-links"><a class="btn small" href="#/lab-exams">เลือกชุดข้อสอบ</a><a class="btn small" href="#/lab/${id}">บทเรียนประกอบชุดนี้</a></div>
+   ${run.finished ? `<div class="result-head"><h2>ผลชุดที่ ${id}</h2><p class="lab-score">${score} / ${exam.questions.length}</p><p>ดูคำตอบและเหตุผลของแต่ละข้อด้านล่าง</p><button class="btn primary" data-lab-retry="${id}">ทำชุดนี้ใหม่</button></div>`
+    : '<div class="note"><div>พิมพ์คำสั่งเดียวตามโหมดที่กำหนด ใช้คำเต็มหรือคำย่อ sh, conf t, int, shut ระบบตรวจเทียบเฉลยและคำตอบทางเลือก ชื่อ ACL และ domain ให้ตรงโจทย์ คำตอบบันทึกอัตโนมัติเมื่อเบราว์เซอร์อนุญาต</div></div>'}
+   ${exam.questions.map((q,i)=>{
+    const correct=commandMatches(q,run.answers[q.id]||'');
+    return `<section class="question-panel" id="lab-question-${i}"><p class="chapter-label">ข้อ ${i+1} / ${exam.questions.length}</p><h2>${esc(q.prompt)}</h2><p class="command-context">${esc(q.context)}</p>
+     <label class="answer-label" for="${q.id}">คำสั่งของคุณ</label><textarea class="cli-answer" id="${q.id}" data-lab-answer="${q.id}" data-set="${id}" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" ${run.finished?'readonly':''}>${esc(run.answers[q.id]||'')}</textarea>
+     ${run.finished?`<div class="feedback ${correct?'':'wrong'}"><strong>${correct?'ตอบถูก':'ทบทวนคำสั่งนี้อีกครั้ง'}</strong><pre><code>${esc(q.answer)}</code></pre><p>${esc(q.explanation)}</p>${q.accept.length>1?`<p>คำตอบทางเลือกที่รับได้</p><ul>${q.accept.slice(1).map(value=>`<li><code>${esc(value)}</code></li>`).join('')}</ul>`:''}</div>`:''}</section>`;
+   }).join('')}
+   <div class="quiz-bottom">${run.finished
+    ? `<button class="btn" data-lab-retry="${id}">ทำชุดนี้ใหม่</button><a class="btn primary" href="#/${id<8?'lab-exam/'+(id+1):'lab-exams'}">${id<8?'ไปชุดถัดไป':'ดูชุดข้อสอบทั้งหมด'}</a>`
+    : `<p id="lab-answer-count" role="status">ตอบแล้ว ${exam.questions.filter(q=>run.answers[q.id]?.trim()).length} / ${exam.questions.length} ข้อ</p><button class="btn primary" data-lab-submit="${id}">ส่งคำตอบและตรวจทั้งชุด</button>`}</div>
+   <p class="tiny-note">${storageOK?'บันทึกคำตอบและคะแนนในเบราว์เซอร์นี้อัตโนมัติ':'เบราว์เซอร์ไม่อนุญาตให้บันทึก เก็บคำตอบได้เฉพาะขณะเปิดหน้านี้'}</p></div>`;
+ }
+ function submitPractical(id) {
+  const exam = practicalExams.find(item=>item.id===id);
+  const run = labState.runs[id];
+  if (!exam || !run || run.finished) return;
+  const missing=exam.questions.findIndex(q=>!run.answers[q.id]?.trim());
+  if (missing>=0) {
+   toast('กรุณาตอบข้อ ' + (missing+1) + ' ก่อนส่งทั้งชุด');
+   document.getElementById(exam.questions[missing].id)?.focus();
+   return;
+  }
+  run.finished=true;
+  const score=exam.questions.filter(q=>commandMatches(q,run.answers[q.id])).length;
+  labState.best[id]=Math.max(labState.best[id]||0,score);
+  saveLabState();
+  practicalExam(id);
+  window.scrollTo({top:0});
+ }
  document.getElementById('menu-toggle').innerHTML=icon('menu');document.getElementById('search-icon').innerHTML=icon('search',16);
  document.getElementById('menu-toggle').addEventListener('click',()=>{const open=document.body.classList.toggle('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded',String(open))});document.getElementById('scrim').addEventListener('click',()=>{document.body.classList.remove('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false')});
  main.addEventListener('click',async e=>{const b=e.target.closest('button,a');if(!b)return;
+ if(b.hasAttribute('data-lab-done')) {
+  const id=Number(b.dataset.labDone);
+  if(!labState.done.includes(id)) labState.done.push(id);
+  saveLabState(); practicalLesson(id); toast('บันทึกบทปฏิบัติที่อ่านแล้ว');
+ }
+ if(b.hasAttribute('data-lab-submit')) submitPractical(Number(b.dataset.labSubmit));
+ if(b.hasAttribute('data-lab-retry')) {
+  const id=Number(b.dataset.labRetry);
+  labState.runs[id]={answers:{},finished:false};
+  saveLabState(); practicalExam(id); window.scrollTo({top:0});
+ }
  if(b.hasAttribute('data-start')){startQuiz(b.dataset.start,b.dataset.mode||'practice');window.scrollTo({top:0});}
  if(b.hasAttribute('data-scroll')){e.preventDefault();document.getElementById(b.dataset.scroll)?.scrollIntoView({behavior:'smooth'});}
  if(b.hasAttribute('data-tab')){const id=Number(b.dataset.chapter);location.hash=`#/chapter/${id}${b.dataset.tab==='lesson'?'':'?'+b.dataset.tab}`;}
@@ -84,6 +211,17 @@
  if(b.hasAttribute('data-jump')){session.index=Number(b.dataset.jump);saveSession();quiz();window.scrollTo({top:0});}
  if(b.hasAttribute('data-finish'))finish();
  if(b.hasAttribute('data-retry')){session={...session,index:0,choices:{},checked:{},orders:Object.fromEntries(session.ids.map(id=>[id,shuffle([0,1,2,3])])),startedAt:Date.now(),finished:false,score:undefined};saveSession();quiz();window.scrollTo({top:0});}
+ });
+ main.addEventListener('input', e => {
+  const input=e.target.closest('[data-lab-answer]');
+  if(!input) return;
+  const id=Number(input.dataset.set);
+  const exam=practicalExams.find(item=>item.id===id);
+  const run=labState.runs[id];
+  if(!exam || !run || run.finished) return;
+  run.answers[input.dataset.labAnswer]=input.value;
+  saveLabState();
+  document.getElementById('lab-answer-count').textContent='ตอบแล้ว '+exam.questions.filter(q=>run.answers[q.id]?.trim()).length+' / '+exam.questions.length+' ข้อ';
  });
  main.addEventListener('change',e=>{if(e.target.id==='review-filter'){reviewFilter=e.target.value;review()}});
  const search = document.getElementById('search'), searchResults = document.getElementById('search-results');
@@ -101,7 +239,7 @@
    }
   }
   searchResults.hidden = false;
-  searchResults.innerHTML = found.length ? found.slice(0,10).map(r=>`<a class="search-result" href="#/chapter/${r.c.id}${r.tab==='lab'?'?lab':''}" ${r.i!==undefined?`data-search-section="${r.i}"`:''}>${esc(r.title)}<small>บท ${r.c.id} · ${r.tab==='lab'?'ภาคปฏิบัติ':'ภาคทฤษฎี'}</small></a>`).join('') : '<div class="search-empty">ไม่พบหัวข้อนี้ ลองคำว่า VLAN, Cost หรือ Gateway</div>';
+  searchResults.innerHTML = found.length ? found.slice(0,10).map(r=>`<a class="search-result" href="#/${r.tab==='lab'?'lab':'chapter'}/${r.c.id}" ${r.i!==undefined?`data-search-section="${r.i}"`:''}>${esc(r.title)}<small>บท ${r.c.id} · ${r.tab==='lab'?'ภาคปฏิบัติ':'ภาคทฤษฎี'}</small></a>`).join('') : '<div class="search-empty">ไม่พบหัวข้อนี้ ลองคำว่า VLAN, Cost หรือ Gateway</div>';
  });
  let searchTarget;
  function revealSearchTarget() {

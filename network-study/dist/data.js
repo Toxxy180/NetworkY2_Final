@@ -3832,3 +3832,507 @@ window.CHAPTERS = [
     ]
   }
 ];
+window.PRACTICAL_EXAMS = [
+  {
+    "id": 1,
+    "title": "Switch พื้นฐานและ Port Security",
+    "scenario": "SW1 ต่อ PC ที่ Fa0/1 และ Fa0/3 ใช้ VLAN 1 สำหรับบริหารจัดการ",
+    "questions": [
+      {
+        "id": "lab-1-1",
+        "prompt": "เข้าโหมดตั้งค่าหลัก",
+        "context": "SW1#",
+        "answer": "configure terminal",
+        "accept": [
+          "configure terminal",
+          "conf t"
+        ],
+        "explanation": "จาก privileged EXEC ใช้ configure terminal เพื่อเข้าสู่ (config)#",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-1-2",
+        "prompt": "ตั้ง IP สำหรับบริหารจัดการ",
+        "context": "SW1(config-if)# อยู่ที่ interface vlan 1 กำหนด IP 192.168.1.2/24",
+        "answer": "ip address 192.168.1.2 255.255.255.0",
+        "accept": [
+          "ip address 192.168.1.2 255.255.255.0"
+        ],
+        "explanation": "Management IP ตั้งบน SVI และ /24 ใช้ mask 255.255.255.0",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-1-3",
+        "prompt": "แสดงรายการ MAC ที่เรียนรู้แบบ dynamic",
+        "context": "SW1#",
+        "answer": "show mac address-table dynamic",
+        "accept": [
+          "show mac address-table dynamic"
+        ],
+        "explanation": "ดู MAC ที่เรียนรู้จากเฟรม แล้วเทียบ VLAN และพอร์ตขาเข้ากับสายจริง",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-1-4",
+        "prompt": "จำกัด secure MAC สูงสุดสองรายการ",
+        "context": "SW1(config-if)# อยู่ที่ Fa0/1 ซึ่งเปิด port-security แล้ว",
+        "answer": "switchport port-security maximum 2",
+        "accept": [
+          "switchport port-security maximum 2"
+        ],
+        "explanation": "Maximum นับจำนวน MAC ที่อนุญาตบนพอร์ต เมื่อเต็มจึงเกิด violation เมื่อมี MAC ใหม่",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-1-5",
+        "prompt": "นำพอร์ตที่ shutdown ไว้กลับมาเปิด",
+        "context": "SW1(config-if)# อยู่ที่ Fa0/3 นำ MAC ที่ละเมิดออกแล้ว และสั่ง shutdown ไปแล้ว",
+        "answer": "no shutdown",
+        "accept": [
+          "no shutdown"
+        ],
+        "explanation": "หลังแก้สาเหตุและ shutdown แล้ว ให้ no shutdown เพื่อเปิดพอร์ต ตรวจสถานะและ violation counter ซ้ำ",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "VLAN, VTP และ Trunk",
+    "scenario": "SW1 เป็น VTP server ของ LABCORP ใช้ Gi0/1 เป็น trunk และ Fa0/2 เป็นพอร์ตผู้ใช้",
+    "questions": [
+      {
+        "id": "lab-2-1",
+        "prompt": "ตั้ง VTP domain",
+        "context": "SW1(config)#",
+        "answer": "vtp domain LABCORP",
+        "accept": [
+          "vtp domain LABCORP"
+        ],
+        "explanation": "ชื่อ domain ต้องสอดคล้องกับ switch ที่จะรับฐานข้อมูล VLAN",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-2-2",
+        "prompt": "ล็อกพอร์ตเป็น trunk",
+        "context": "SW1(config-if)# อยู่ที่ Gi0/1 อุปกรณ์รองรับ dot1q อยู่แล้ว",
+        "answer": "switchport mode trunk",
+        "accept": [
+          "switchport mode trunk"
+        ],
+        "explanation": "กำหนด trunk เพื่อให้หลาย VLAN ผ่านลิงก์เดียวกัน",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-2-3",
+        "prompt": "ตั้ง native VLAN ตามใบงานสัปดาห์ที่ 2",
+        "context": "SW1(config-if)# อยู่ที่ Gi0/1 สร้าง VLAN 999 แล้ว",
+        "answer": "switchport trunk native vlan 999",
+        "accept": [
+          "switchport trunk native vlan 999"
+        ],
+        "explanation": "ตั้งปลาย trunk ทั้งสองฝั่งให้ตรงกัน และแยก native VLAN ออกจากพอร์ตผู้ใช้",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-2-4",
+        "prompt": "ปิดการเจรจา DTP",
+        "context": "SW1(config-if)# อยู่ที่ Fa0/2 ซึ่งตั้งเป็น access แล้ว",
+        "answer": "switchport nonegotiate",
+        "accept": [
+          "switchport nonegotiate"
+        ],
+        "explanation": "ปิดการส่ง DTP ร่วมกับล็อก access mode เพื่อป้องกันการเจรจาเป็น trunk",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-2-5",
+        "prompt": "ตรวจ trunk และ native VLAN",
+        "context": "SW1# ต้องการดูรายการ trunk ทุกพอร์ต",
+        "answer": "show interfaces trunk",
+        "accept": [
+          "show interfaces trunk"
+        ],
+        "explanation": "ผลแสดงพอร์ตที่ trunking, native VLAN และ allowed VLAN",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "STP และการป้องกัน BPDU",
+    "scenario": "SW1–SW3 ต่อเป็นสามเหลี่ยม โดย SW1 เป็น root ที่กำหนดไว้ และ SW2 Gi0/1 ต่อ PC",
+    "questions": [
+      {
+        "id": "lab-3-1",
+        "prompt": "กำหนด SW1 เป็น root หลักของ VLAN 1",
+        "context": "SW1(config)#",
+        "answer": "spanning-tree vlan 1 root primary",
+        "accept": [
+          "spanning-tree vlan 1 root primary"
+        ],
+        "explanation": "คำสั่งปรับ priority เพื่อให้ switch เป็น root หลักตามเงื่อนไขที่ตรวจพบ",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-3-2",
+        "prompt": "ดู Root ID และบทบาทพอร์ต",
+        "context": "SW2# ให้ระบุ VLAN 1",
+        "answer": "show spanning-tree vlan 1",
+        "accept": [
+          "show spanning-tree vlan 1"
+        ],
+        "explanation": "เทียบ Root ID กับ Bridge ID แล้วอ่าน Role คู่กับ State ของแต่ละพอร์ต",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-3-3",
+        "prompt": "ให้พอร์ต PC เข้า forwarding เร็ว",
+        "context": "SW2(config-if)# อยู่ที่ Gi0/1 ซึ่งเป็น access port ไป PC",
+        "answer": "spanning-tree portfast",
+        "accept": [
+          "spanning-tree portfast"
+        ],
+        "explanation": "PortFast ใช้กับปลายทางเพื่อข้ามการรอ listening/learning ตอนเปิดพอร์ต",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-3-4",
+        "prompt": "ป้องกัน PC ส่ง BPDU เข้าพอร์ต",
+        "context": "SW2(config-if)# อยู่ที่ Gi0/1",
+        "answer": "spanning-tree bpduguard enable",
+        "accept": [
+          "spanning-tree bpduguard enable"
+        ],
+        "explanation": "เมื่อพอร์ตรับ BPDU จะเข้าสู่ err-disabled ต้องแก้ต้นทางก่อนกู้พอร์ต",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-3-5",
+        "prompt": "ตรวจรายการพอร์ตที่ถูกปิดจากเหตุผิดปกติ",
+        "context": "SW2#",
+        "answer": "show interfaces status err-disabled",
+        "accept": [
+          "show interfaces status err-disabled"
+        ],
+        "explanation": "ดูว่าพอร์ตใด err-disabled หลังทดสอบ BPDU Guard",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Router-on-a-Stick และ ACL",
+    "scenario": "R1 เชื่อม trunk ที่ Gi0/0 และให้ VLAN 10 เข้าทาง Gi0/0.10",
+    "questions": [
+      {
+        "id": "lab-4-1",
+        "prompt": "ผูก sub-interface กับ VLAN 10",
+        "context": "R1(config-subif)# อยู่ที่ Gi0/0.10",
+        "answer": "encapsulation dot1Q 10",
+        "accept": [
+          "encapsulation dot1Q 10"
+        ],
+        "explanation": "เลขหลัง dot1Q ต้องตรง VLAN tag ที่รับจาก trunk",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-4-2",
+        "prompt": "ตั้ง gateway ของ VLAN 10",
+        "context": "R1(config-subif)# อยู่ที่ Gi0/0.10 ใช้ 192.168.10.1/24",
+        "answer": "ip address 192.168.10.1 255.255.255.0",
+        "accept": [
+          "ip address 192.168.10.1 255.255.255.0"
+        ],
+        "explanation": "PC ใน VLAN 10 ใช้ IP นี้เป็น default gateway",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-4-3",
+        "prompt": "อนุญาต HTTPS จาก Staff ไป Web Server",
+        "context": "R1(config-ext-nacl)# ต้นทาง 192.168.10.0/24 ปลายทาง 192.168.20.10 ระบุ host และเลขพอร์ต",
+        "answer": "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443",
+        "accept": [
+          "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443"
+        ],
+        "explanation": "HTTPS ใช้ TCP 443 ส่วน wildcard ของ /24 คือ 0.0.0.255",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-4-4",
+        "prompt": "ติด ACL ขาเข้าจาก Staff",
+        "context": "R1(config-subif)# อยู่ที่ Gi0/0.10 ชื่อ ACL FILTER_STAFF_TRAFFIC",
+        "answer": "ip access-group FILTER_STAFF_TRAFFIC in",
+        "accept": [
+          "ip access-group FILTER_STAFF_TRAFFIC in"
+        ],
+        "explanation": "ทิศ in ตรวจแพ็กเก็ตที่เข้ามาจาก VLAN 10 ก่อนเลือกทางออก",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-4-5",
+        "prompt": "ดู counter ของ ACL ที่ตั้ง",
+        "context": "R1# ให้ระบุชื่อ FILTER_STAFF_TRAFFIC",
+        "answer": "show access-lists FILTER_STAFF_TRAFFIC",
+        "accept": [
+          "show access-lists FILTER_STAFF_TRAFFIC",
+          "show ip access-lists FILTER_STAFF_TRAFFIC"
+        ],
+        "explanation": "เทียบจำนวน match ที่เพิ่มกับการ ping หรือเรียกบริการจาก Staff",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "OSPF Single Area",
+    "scenario": "R1–R4 อยู่บนวง 192.168.100.0/24 และมีลิงก์ตรง R1–R4 ที่ 172.16.14.0/30",
+    "questions": [
+      {
+        "id": "lab-5-1",
+        "prompt": "ประกาศ subnet /24 เข้า Area 0",
+        "context": "R1(config-router)# อยู่ใน router ospf 1 ใช้ network address ของวง 192.168.100.0/24",
+        "answer": "network 192.168.100.0 0.0.0.255 area 0",
+        "accept": [
+          "network 192.168.100.0 0.0.0.255 area 0"
+        ],
+        "explanation": "Wildcard /24 คือ 0.0.0.255 เลือก interface ในวงนี้เข้าร่วม Area 0",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-5-2",
+        "prompt": "ทำให้ R4 ไม่มีสิทธิ์เป็น DR/BDR",
+        "context": "R4(config-if)# อยู่ที่ Gi0/1",
+        "answer": "ip ospf priority 0",
+        "accept": [
+          "ip ospf priority 0"
+        ],
+        "explanation": "Priority 0 บน interface ทำให้ไม่เข้าร่วมการเลือก DR/BDR ของ segment นี้",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-5-3",
+        "prompt": "ตั้ง network type ของลิงก์ตรง",
+        "context": "R1(config-if)# อยู่ที่ Gi0/3 ซึ่งต่อ R4 โดยตรง",
+        "answer": "ip ospf network point-to-point",
+        "accept": [
+          "ip ospf network point-to-point"
+        ],
+        "explanation": "Point-to-point ไม่มีการเลือก DR/BDR ให้ตั้งทั้งสองฝั่ง",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-5-4",
+        "prompt": "ปรับ reference bandwidth",
+        "context": "R1(config-router)# อยู่ใน OSPF ใช้ 10000 Mbps",
+        "answer": "auto-cost reference-bandwidth 10000",
+        "accept": [
+          "auto-cost reference-bandwidth 10000"
+        ],
+        "explanation": "ใช้ค่าเดียวกันทุก router เพื่อให้การคำนวณ cost สอดคล้องกัน",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-5-5",
+        "prompt": "ตรวจเพื่อนบ้าน OSPF",
+        "context": "R1#",
+        "answer": "show ip ospf neighbor",
+        "accept": [
+          "show ip ospf neighbor"
+        ],
+        "explanation": "อ่าน Neighbor ID, State และ Interface เพื่อตรวจ adjacency",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "HSRP, VRRP และ GLBP",
+    "scenario": "R1 กับ R2 เป็นคู่ gateway ในแต่ละวงตามใบงาน ใช้กลุ่ม 1",
+    "questions": [
+      {
+        "id": "lab-6-1",
+        "prompt": "ตั้ง Virtual IP ของ HSRP",
+        "context": "R1(config-if)# อยู่ที่ interface วง 192.168.10.0/24 ใช้ VIP 192.168.10.1",
+        "answer": "standby 1 ip 192.168.10.1",
+        "accept": [
+          "standby 1 ip 192.168.10.1"
+        ],
+        "explanation": "Client ใช้ virtual IP เป็น gateway ส่วน router แต่ละตัวมี IP จริงคนละหมายเลข",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-6-2",
+        "prompt": "ให้ HSRP ที่ priority สูงกว่ากลับมารับบทบาทได้",
+        "context": "R1(config-if)# กลุ่ม 1",
+        "answer": "standby 1 preempt",
+        "accept": [
+          "standby 1 preempt"
+        ],
+        "explanation": "Preempt อนุญาตให้เครื่องที่พร้อมและ priority สูงกว่าเข้ารับบทบาท",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-6-3",
+        "prompt": "ตั้ง Virtual IP ของ VRRP",
+        "context": "R1(config-if)# อยู่ที่ interface วง 192.168.20.0/24 ใช้ VIP 192.168.20.1",
+        "answer": "vrrp 1 ip 192.168.20.1",
+        "accept": [
+          "vrrp 1 ip 192.168.20.1"
+        ],
+        "explanation": "ให้ทั้งสอง router ใช้ VRID และ virtual IP ตรงกัน",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-6-4",
+        "prompt": "ตั้ง GLBP กระจายด้วย round-robin",
+        "context": "R1(config-if)# กลุ่ม 1",
+        "answer": "glbp 1 load-balancing round-robin",
+        "accept": [
+          "glbp 1 load-balancing round-robin"
+        ],
+        "explanation": "AVG สลับแจก virtual MAC ของ AVF ตามคำขอ ARP และ client ใช้ MAC นั้นส่งข้อมูล",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-6-5",
+        "prompt": "ตรวจบทบาท HSRP ของทุกกลุ่มแบบย่อ",
+        "context": "R2#",
+        "answer": "show standby brief",
+        "accept": [
+          "show standby brief"
+        ],
+        "explanation": "ดู State, Active, Standby, Virtual IP และ priority หลังทดสอบ failover",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "ตรวจเครือข่ายและจับแพ็กเก็ต",
+    "scenario": "ใช้ Kali ที่มี interface eth0 ในวงแลบ และเลือกจุดจับให้เห็น traffic ที่ต้องการ",
+    "questions": [
+      {
+        "id": "lab-7-1",
+        "prompt": "ดู IP และชื่อ interface ของ Kali แบบย่อ",
+        "context": "Kali $ ใช้คำสั่ง ip",
+        "answer": "ip -br addr",
+        "accept": [
+          "ip -br addr",
+          "ip -br address"
+        ],
+        "explanation": "ตรวจชื่อ interface และ IP ก่อนระบุ eth0 ในเครื่องมือจับ packet",
+        "inputType": "shell"
+      },
+      {
+        "id": "lab-7-2",
+        "prompt": "ค้นหาเครื่องใน broadcast domain เดียวกัน",
+        "context": "Kali $ ใช้ arp-scan ระบุ interface eth0 และ localnet",
+        "answer": "sudo arp-scan --interface=eth0 --localnet",
+        "accept": [
+          "sudo arp-scan --interface=eth0 --localnet",
+          "sudo arp-scan --interface eth0 --localnet"
+        ],
+        "explanation": "ARP scan ส่งคำขอใน Layer 2 จึงขึ้นกับ VLAN ที่ Kali ต่ออยู่",
+        "inputType": "shell"
+      },
+      {
+        "id": "lab-7-3",
+        "prompt": "จับเฉพาะ ARP แบบไม่ resolve ชื่อ",
+        "context": "Kali $ ใช้ tcpdump ที่ eth0 พร้อม -nn",
+        "answer": "sudo tcpdump -i eth0 -nn arp",
+        "accept": [
+          "sudo tcpdump -i eth0 -nn arp",
+          "sudo tcpdump -nn -i eth0 arp",
+          "sudo tcpdump -nni eth0 arp"
+        ],
+        "explanation": "แสดง ARP Request/Reply ที่จุดจับมองเห็น โดยใช้เลขที่อยู่และพอร์ตตรง ๆ",
+        "inputType": "shell"
+      },
+      {
+        "id": "lab-7-4",
+        "prompt": "กรอง OSPF ใน Wireshark",
+        "context": "กรอกเฉพาะ display filter ด้วยชื่อโปรโตคอล",
+        "answer": "ospf",
+        "accept": [
+          "ospf"
+        ],
+        "explanation": "ชื่อ ospf เป็น display filter ส่วน capture filter ของ tcpdump ใช้ ip proto 89",
+        "inputType": "filter"
+      },
+      {
+        "id": "lab-7-5",
+        "prompt": "ตรวจเพื่อนบ้านจาก Cisco switch",
+        "context": "SW1# ต้องการดูชื่ออุปกรณ์และ Local Interface แบบย่อ",
+        "answer": "show cdp neighbors",
+        "accept": [
+          "show cdp neighbors"
+        ],
+        "explanation": "ใช้ Local Interface ระบุ uplink แล้วตาม MAC ไปตรวจ switch ถัดไป",
+        "inputType": "ios"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "EIGRP และ Redistribution",
+    "scenario": "R2 เป็น boundary router ระหว่าง EIGRP AS 100 และ OSPF process 1",
+    "questions": [
+      {
+        "id": "lab-8-1",
+        "prompt": "เข้า EIGRP process",
+        "context": "R2(config)# AS 100",
+        "answer": "router eigrp 100",
+        "accept": [
+          "router eigrp 100"
+        ],
+        "explanation": "AS ต้องตรงกับเพื่อนบ้านใน EIGRP domain ที่จะเชื่อมต่อ",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-8-2",
+        "prompt": "ประกาศลิงก์ /30 เข้า EIGRP",
+        "context": "R1(config-router)# ใช้ network address 10.0.12.0/30",
+        "answer": "network 10.0.12.0 0.0.0.3",
+        "accept": [
+          "network 10.0.12.0 0.0.0.3"
+        ],
+        "explanation": "Wildcard /30 คือ 0.0.0.3 และตรงกับลิงก์ R1–R2",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-8-3",
+        "prompt": "นำ EIGRP เข้า OSPF ตาม route-map",
+        "context": "R2(config-router)# อยู่ใน OSPF process 1 ใช้ route-map EIGRP-TO-OSPF",
+        "answer": "redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF",
+        "accept": [
+          "redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF"
+        ],
+        "explanation": "subnets ให้นำ subnet routes เข้าได้ ส่วน route-map ใช้กรองและกำหนด tag",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-8-4",
+        "prompt": "นำ OSPF เข้า EIGRP พร้อม seed metric",
+        "context": "R2(config-router)# อยู่ใน EIGRP 100 ใช้ metric 10000 100 255 1 1500 และ route-map OSPF-TO-EIGRP",
+        "answer": "redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP",
+        "accept": [
+          "redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP"
+        ],
+        "explanation": "Metric เรียงเป็น bandwidth, delay, reliability, load, MTU เพื่อให้ EIGRP นำ route ไปคำนวณได้",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-8-5",
+        "prompt": "ตรวจเส้นทางไป LAN ฝั่ง R3",
+        "context": "R1# ระบุ network 192.168.30.0",
+        "answer": "show ip route 192.168.30.0",
+        "accept": [
+          "show ip route 192.168.30.0"
+        ],
+        "explanation": "หลัง redistribution ควรมี D EX ไป LAN ฝั่ง OSPF และต้องมีเส้นทางย้อนกลับด้วย",
+        "inputType": "ios"
+      }
+    ]
+  }
+];

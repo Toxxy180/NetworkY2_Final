@@ -22,7 +22,22 @@ for(const [i,c] of chapters.entries()){
  for(const q of c.questions){assert(!ids.has(q.id));ids.add(q.id);assert.equal(q.options.length,4);assert.equal(new Set(q.options).size,4);assert(Number.isInteger(q.answer)&&q.answer>=0&&q.answer<4);assert(q.explanation.length>30);assert(q.prompt.length>12);assert(['พื้นฐาน','ประยุกต์','วิเคราะห์'].includes(q.level));}
 }
 assert.equal(ids.size,120);
-const data = 'window.CHAPTERS = '+JSON.stringify(chapters,null,2)+';\n';
+const practicalExams = JSON.parse(fs.readFileSync('content/practical-exams.json', 'utf8'));
+assert.equal(practicalExams.length, chapters.length);
+const practicalIds = new Set();
+for (const [i, exam] of practicalExams.entries()) {
+ assert.equal(exam.id, chapters[i].id);
+ assert(exam.title && exam.scenario && exam.questions.length === 5);
+ for (const question of exam.questions) {
+  assert(!practicalIds.has(question.id));
+  practicalIds.add(question.id);
+  assert(question.prompt && question.context && question.answer && question.explanation);
+  assert(question.accept.includes(question.answer));
+  assert(['ios', 'shell', 'filter'].includes(question.inputType));
+ }
+}
+const data = 'window.CHAPTERS = '+JSON.stringify(chapters,null,2)+';\n'
+ + 'window.PRACTICAL_EXAMS = '+JSON.stringify(practicalExams,null,2)+';\n';
 fs.writeFileSync('dist/data.js', data);
 
 // Keep the offline page at the repository root in sync with the served app.
@@ -38,4 +53,4 @@ const offline = asset('index.html')
  .replace(/<script src="[^"]+" defer><\/script>/g, '')
  .replace('</body>', () => `<script>${script}</script></body>`);
 fs.writeFileSync('../index.html', offline);
-console.log(JSON.stringify({chapters:chapters.length,questions:ids.size,sections:chapters.reduce((n,c)=>n+c.sections.length,0),diagramQuestions:chapters.reduce((n,c)=>n+c.questions.filter(q=>q.diagram).length,0),status:'pass'}));
+console.log(JSON.stringify({chapters:chapters.length,questions:ids.size,practicalSets:practicalExams.length,practicalQuestions:practicalIds.size,sections:chapters.reduce((n,c)=>n+c.sections.length,0),diagramQuestions:chapters.reduce((n,c)=>n+c.questions.filter(q=>q.diagram).length,0),status:'pass'}));
