@@ -61,6 +61,7 @@
     <div class="chapter-end"><button class="btn ${state.done.includes(id)?'success':'primary'}" data-done="${id}">${icon('check',17)}${state.done.includes(id)?'อ่านบทนี้แล้ว':'ทำเครื่องหมายว่าอ่านแล้ว'}</button>${id<8?`<a class="btn" href="#/chapter/${id+1}">บทถัดไป ${icon('arrow',16)}</a>`:'<a class="btn" href="#/practice">ฝึกทำข้อสอบทฤษฎี</a>'}</div>
     <details class="sources"><summary>เอกสารประกอบบทนี้</summary><p>ชีทและใบงานใน Network_Files</p><ul>${c.courseFiles.map(ref=>`<li>${esc(ref)}</li>`).join('')}</ul><a href="exam-scope.pdf" target="_blank" rel="noopener">แนวข้อสอบต้นฉบับ (PDF 5 หน้า)</a>${c.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`).join('')}</details>
    </article><aside class="toc" aria-label="สารบัญในบท"><h3>เนื้อหาในบทนี้</h3>${summary?'<p class="tiny-note">สรุปหลักการของบทนี้</p>':c.sections.map((s,i)=>`<a href="#/chapter/${id}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<button class="btn primary" data-start="${id}">${icon('quiz',15)}ฝึกทำข้อสอบ</button></aside></div>`;
+  if (!summary) setupReading("theory", id, c.sections);
  }
  function labSection(s, i) {
   return `<section class="lesson-section" id="section-${i}"><h2>${esc(s.title)}</h2>${s.body.map(p=>`<p>${fmt(p)}</p>`).join('')}
@@ -78,10 +79,137 @@
  function resultReview(q,choice){const correct=choice===q.answer;return `<details class="review-item"><summary><span class="mark ${correct?'good':''}">${icon(correct?'check':'close',13)}</span><span>${fmt(q.prompt)}</span></summary><div class="review-body">${q.diagram?Diagrams.render(q.diagram):''}<p>คุณตอบ: <strong>${fmt(q.options[choice]??'ไม่ได้ตอบ')}</strong></p><p>คำตอบที่ถูก: <strong>${fmt(q.options[q.answer])}</strong></p><p>${fmt(q.explanation)}</p><a href="#/chapter/${q.chapterId}">กลับไปอ่านบท ${q.chapterId} ${icon('arrow',13)}</a></div></details>`}
  function results(){sidebar('quiz');breadcrumb('ผลการฝึก');const score=session.score,total=session.ids.length,percent=Math.round(score/total*100);main.innerHTML=`<div class="quiz-shell"><section class="result-head"><div class="score-circle"><b>${percent}%</b><span>${score} / ${total} ข้อ</span></div><h1>${percent>=80?'เข้าใจภาพรวมได้ดีแล้ว':percent>=50?'เริ่มเชื่อมโยงได้แล้ว ค่อย ๆ เก็บจุดที่พลาด':'กลับไปอ่านหลักการ แล้วลองใหม่ได้เสมอ'}</h1><p class="lead" style="margin:auto">${esc(session.title)} · คะแนนนี้ใช้ประเมินการฝึก ไม่ใช่การคาดการณ์คะแนนสอบจริง</p><div class="actions"><button class="btn primary" data-retry>ลองทำชุดเดิมอีกครั้ง</button><a class="btn" href="#/review">ทบทวนจุดที่พลาด</a><a class="btn" href="#/practice">เลือกบทอื่น</a></div></section><div class="section-heading"><h2>เฉลยพร้อมเหตุผล</h2><small>กดแต่ละข้อเพื่ออ่าน</small></div>${session.ids.map(id=>resultReview(qmap[id],session.choices[id])).join('')}</div>`;}
  function review(){sidebar('review');breadcrumb('ทบทวนจุดที่พลาด');const ids=wrongIds(),filtered=ids.filter(id=>reviewFilter==='all'||qmap[id].chapterId===Number(reviewFilter));main.innerHTML=`<div class="page-head"><div><h1>กลับมาเก็บจุดที่พลาด</h1><p class="lead">รวมข้อที่คำตอบล่าสุดยังไม่ถูก เมื่อตอบถูกในครั้งถัดไป ข้อนั้นจะออกจากรายการนี้</p></div>${filtered.length?'<button class="btn primary" data-start="wrong">ฝึกข้อเหล่านี้อีกครั้ง</button>':''}</div>${ids.length?`<div class="review-toolbar"><span class="muted">${filtered.length} ข้อที่ต้องทบทวน</span><select id="review-filter" aria-label="กรองข้อที่ผิดตามบท"><option value="all">ทุกบท</option>${chapters.map(c=>`<option value="${c.id}" ${String(c.id)===reviewFilter?'selected':''}>${c.id}. ${esc(c.shortTitle)}</option>`).join('')}</select></div>${filtered.length?filtered.map(id=>resultReview(qmap[id],state.answers[id].choice)).join(''):'<div class="empty-state"><h2>บทนี้ไม่มีข้อที่ค้างทบทวน</h2><p>เลือกบทอื่น หรือกลับไปฝึกชุดใหม่ได้เลย</p></div>'}`:`<div class="empty-state">${icon('check',42)}<h2>${Object.keys(state.answers).length?'ไม่มีข้อผิดที่ค้างทบทวน':'เริ่มฝึก แล้วเราจะช่วยเก็บจุดที่พลาด'}</h2><p>${Object.keys(state.answers).length?'ลองชุดรวมเพื่อเชื่อมความเข้าใจข้ามบท':'ตอบผิดได้เต็มที่ ทุกข้อมีเหตุผลให้เรียนรู้ต่อ'}</p><a class="btn primary" href="#/practice">เลือกข้อสอบฝึก ${icon('arrow',16)}</a></div>`}`;}
- function render(){document.body.classList.remove('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false');const route=location.hash.replace(/^#\/?/,'').split('?')[0].split('/');if(route[0]==='chapter')lesson(Number(route[1]),['summary','lab'].includes(location.hash.split('?')[1]) ? location.hash.split('?')[1] : 'lesson');else if(route[0]==='labs')practicalIndex();else if(route[0]==='lab-exams')practicalIndex(true);else if(route[0]==='lab')practicalLesson(Number(route[1]));else if(route[0]==='lab-exam')practicalExam(Number(route[1]));else if(route[0]==='chapters')chapterIndex();else if(route[0]==='practice')practice();else if(route[0]==='quiz')quiz();else if(route[0]==='review')review();else dashboard();}
+ function render(){readingContext = null;document.body.classList.remove('menu-open');document.getElementById('menu-toggle').setAttribute('aria-expanded','false');const route=location.hash.replace(/^#\/?/,'').split('?')[0].split('/');if(route[0]==='chapter')lesson(Number(route[1]),['summary','lab'].includes(location.hash.split('?')[1]) ? location.hash.split('?')[1] : 'lesson');else if(route[0]==='labs')practicalIndex();else if(route[0]==='lab-exams')practicalIndex(true);else if(route[0]==='lab')practicalLesson(Number(route[1]));else if(route[0]==='lab-exam')practicalExam(Number(route[1]));else if(route[0]==='chapters')chapterIndex();else if(route[0]==='practice')practice();else if(route[0]==='quiz')quiz();else if(route[0]==='review')review();else dashboard();}
 
  const practicalExams = window.PRACTICAL_EXAMS;
  const LAB_KEY = KEY + '-practical';
+ const READING_KEY = KEY + '-reading';
+ let readingState = {};
+ let readingContext = null;
+ let readingFrame = null;
+ try {
+  const saved = JSON.parse(localStorage.getItem(READING_KEY));
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) readingState = saved;
+ } catch { storageOK = false; }
+ function saveReading() {
+  try { localStorage.setItem(READING_KEY, JSON.stringify(readingState)); }
+  catch { storageOK = false; }
+ }
+ function readingLinks(sections) {
+  return sections.map((section, index) => `<div class="reading-toc-item" data-reading-item="${index}"><button class="reading-tick" data-toc-mark="${index}" aria-pressed="false" aria-label="มาร์คว่าอ่านแล้ว · ${esc(section.title)}"></button><a href="#section-${index}" data-scroll="section-${index}" data-reading-link="${index}"><span>${esc(section.title)}</span><span class="reading-location">กำลังอ่าน</span></a></div>`).join('');
+ }
+ function setupReading(kind, id, sections) {
+  const key = kind + ':' + id;
+  const saved = readingState[key];
+  const progress = {
+   last: typeof saved?.last === 'string' ? saved.last : '',
+   read: Array.isArray(saved?.read) ? saved.read.filter(title => sections.some(section => section.title === title)) : []
+  };
+  readingState[key] = progress;
+  readingContext = {key, sections, progress, index: 0, elements: Array.from(main.querySelectorAll('.lesson-section'))};
+  const lastIndex = sections.findIndex(section => section.title === progress.last);
+  const panel = document.createElement('div');
+  panel.className = 'reading-progress-panel';
+  panel.innerHTML = `<div class="reading-progress-heading"><strong>ความคืบหน้าในบทนี้</strong><span data-reading-count></span></div>
+   <p class="reading-current" data-reading-current></p>
+   ${lastIndex >= 0 ? `<div class="reading-resume"><p>ครั้งก่อนอ่านถึง ${esc(sections[lastIndex].title)}</p><button class="btn small" data-scroll="section-${lastIndex}">อ่านต่อจากหัวข้อล่าสุด ${icon('arrow',14)}</button></div>` : ''}
+   <p class="tiny-note">กดวงกลมในสารบัญหรือปุ่มท้ายหัวข้อเพื่อมาร์คว่าอ่านแล้ว ตำแหน่งที่อ่านบันทึกในเบราว์เซอร์นี้เมื่ออนุญาตให้จัดเก็บข้อมูล</p>
+   <details class="mobile-reading-toc"><summary>สารบัญและหัวข้อที่อ่านแล้ว</summary><nav aria-label="สารบัญสำหรับมือถือ">${readingLinks(sections)}</nav></details>`;
+  main.querySelector('.reading').prepend(panel);
+  const toc = main.querySelector('.toc');
+  toc.querySelectorAll('[data-scroll]').forEach(link => link.remove());
+  const navigation = document.createElement('nav');
+  navigation.setAttribute('aria-label', 'หัวข้อและความคืบหน้าการอ่าน');
+  navigation.innerHTML = readingLinks(sections);
+  toc.querySelector('h2, h3').after(navigation);
+  readingContext.elements.forEach((section, index) => {
+   const footer = document.createElement('div');
+   footer.className = 'section-reading-actions';
+   footer.innerHTML = `<button class="btn small" data-section-read="${index}" aria-pressed="false"></button>`;
+   section.append(footer);
+  });
+  updateReadingMarkers();
+ }
+ function updateReadingMarkers() {
+  if (!readingContext) return;
+  const {sections, progress, index} = readingContext;
+  for (const link of main.querySelectorAll('[data-reading-link]')) {
+   const sectionIndex = Number(link.dataset.readingLink);
+   const read = progress.read.includes(sections[sectionIndex].title);
+   const active = sectionIndex === index;
+   link.classList.toggle('reading-active', active);
+   link.classList.toggle('reading-complete', read);
+   const row = link.closest('.reading-toc-item');
+   row.classList.toggle('reading-active', active);
+   const mark = row.querySelector('.reading-tick');
+   mark.innerHTML = read ? icon('check',14) : '';
+   mark.setAttribute('aria-pressed', String(read));
+   mark.setAttribute('aria-label', (read ? 'ยกเลิกมาร์ค · ' : 'มาร์คว่าอ่านแล้ว · ') + sections[sectionIndex].title);
+   if (active) link.setAttribute('aria-current', 'location');
+   else link.removeAttribute('aria-current');
+  }
+  for (const button of main.querySelectorAll('[data-section-read]')) {
+   const read = progress.read.includes(sections[Number(button.dataset.sectionRead)].title);
+   button.setAttribute('aria-pressed', String(read));
+   button.classList.toggle('success', read);
+   button.innerHTML = icon('check',15) + (read ? 'อ่านหัวข้อนี้แล้ว · ยกเลิกมาร์ค' : 'อ่านหัวข้อนี้แล้ว');
+  }
+  main.querySelector('[data-reading-count]').textContent = `อ่านแล้ว ${progress.read.length} / ${sections.length} หัวข้อ`;
+  main.querySelector('[data-reading-current]').textContent = 'กำลังอ่าน · ' + sections[index].title;
+ }
+ function updateReadingPosition() {
+  readingFrame = null;
+  if (!readingContext) return;
+  const top = document.querySelector('.topbar').getBoundingClientRect().bottom + 24;
+  let index = 0;
+  readingContext.elements.forEach((section, sectionIndex) => {
+   if (section.getBoundingClientRect().top <= top) index = sectionIndex;
+  });
+  if (window.scrollY + innerHeight >= document.documentElement.scrollHeight - 2) index = readingContext.sections.length - 1;
+  const target = readingContext.scrollTarget;
+  if (target && Math.abs(window.scrollY - target.top) < 2) {
+   index = target.index;
+   target.reached = true;
+  } else if (target?.reached) readingContext.scrollTarget = null;
+  if (readingContext.index !== index) {
+   readingContext.index = index;
+   updateReadingMarkers();
+  }
+  if (window.scrollY > 0 && readingContext.progress.last !== readingContext.sections[index].title) {
+   readingContext.progress.last = readingContext.sections[index].title;
+   saveReading();
+  }
+ }
+ function markReadingSection(index) {
+  if (!readingContext || !readingContext.sections[index]) return;
+  const {progress, sections} = readingContext;
+  const title = sections[index].title;
+  if (progress.read.includes(title)) progress.read = progress.read.filter(value => value !== title);
+  else progress.read.push(title);
+  progress.last = sections[readingContext.index].title;
+  saveReading();
+  updateReadingMarkers();
+  toast(storageOK ? 'บันทึกเครื่องหมายการอ่านแล้ว' : 'บันทึกได้เฉพาะขณะเปิดหน้านี้ เบราว์เซอร์ไม่อนุญาตให้จัดเก็บข้อมูล');
+ }
+ function scrollToReadingSection(id, behavior = 'smooth') {
+  const section = document.getElementById(id);
+  if (!section) return;
+  const offset = document.querySelector('.topbar').offsetHeight + 20;
+  const top = Math.max(0, Math.min(
+   document.documentElement.scrollHeight - innerHeight,
+   window.scrollY + section.getBoundingClientRect().top - offset
+  ));
+  const index = readingContext?.elements.indexOf(section);
+  if (index >= 0) readingContext.scrollTarget = {index, top, reached: false};
+  window.scrollTo({
+   top,
+   behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : behavior
+  });
+  if (readingContext) updateReadingPosition();
+ }
+ window.addEventListener('scroll', () => {
+  if (readingContext && readingFrame === null) readingFrame = requestAnimationFrame(updateReadingPosition);
+ }, {passive: true});
  let labState = {done: [], runs: {}, best: {}};
  try {
   const saved = JSON.parse(localStorage.getItem(LAB_KEY));
@@ -140,6 +268,7 @@
    <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ 5 ข้อ</a></div>
    <details class="sources"><summary>ใบงานประกอบบทนี้</summary><ul>${c.courseFiles.map(ref=>`<li>${esc(ref)}</li>`).join('')}</ul></details></article>
    <aside class="toc"><h2>งานในบทนี้</h2>${c.labs.map((s,i)=>`<a href="#/lab/${id}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<a href="#/lab-exam/${id}">ทำข้อสอบชุดนี้</a></aside></div>`;
+  setupReading("lab", id, c.labs);
  }
  function practicalExam(id) {
   const exam = practicalExams.find(item=>item.id===id);
@@ -198,8 +327,10 @@
   labState.runs[id]={answers:{},finished:false};
   saveLabState(); practicalExam(id); window.scrollTo({top:0});
  }
+ if(b.hasAttribute('data-section-read')) markReadingSection(Number(b.dataset.sectionRead));
+ if(b.hasAttribute('data-toc-mark')) markReadingSection(Number(b.dataset.tocMark));
  if(b.hasAttribute('data-start')){startQuiz(b.dataset.start,b.dataset.mode||'practice');window.scrollTo({top:0});}
- if(b.hasAttribute('data-scroll')){e.preventDefault();document.getElementById(b.dataset.scroll)?.scrollIntoView({behavior:'smooth'});}
+ if(b.hasAttribute('data-scroll')){e.preventDefault();scrollToReadingSection(b.dataset.scroll);}
  if(b.hasAttribute('data-tab')){const id=Number(b.dataset.chapter);location.hash=`#/chapter/${id}${b.dataset.tab==='lesson'?'':'?'+b.dataset.tab}`;}
  if(b.hasAttribute('data-done')){const id=Number(b.dataset.done);if(!state.done.includes(id))state.done.push(id);save();b.classList.remove('primary');b.classList.add('success');b.innerHTML=icon('check',17)+'อ่านบทนี้แล้ว';sidebar('book',id);toast('บันทึกว่าอ่านบทนี้แล้ว');}
  if(b.hasAttribute('data-copy')){const code=b.closest('.code-header').nextElementSibling.textContent;try{await navigator.clipboard.writeText(code);toast('คัดลอกคำสั่งแล้ว')}catch(err){toast('คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความในช่องคำสั่ง')}}
@@ -247,7 +378,7 @@
   const section = document.getElementById('section-' + searchTarget);
   const solution = section?.querySelector('.lab-answer');
   if (solution) solution.open = true;
-  section?.scrollIntoView();
+  if (section) scrollToReadingSection(section.id, "auto");
   searchTarget = undefined;
  }
  searchResults.addEventListener('click', e => {

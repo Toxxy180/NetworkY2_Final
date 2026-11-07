@@ -25,4 +25,29 @@
 .lab-score {font-size:36px;font-weight:700;color:var(--blue);margin:12px 0}
 .question-panel {scroll-margin-top:95px}
 .feedback p:last-child {margin-bottom:0}
+.reading-progress-panel {padding:18px 20px;background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;margin-bottom:25px}
+.reading-progress-heading {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}
+.reading-progress-heading span {color:var(--blue);font-weight:600}
+.reading-progress-panel .reading-current {font-size:13px;margin:10px 0 0;line-height:1.8}
+.reading-progress-panel .tiny-note {font-size:11px;margin:12px 0 0}
+.reading-resume {margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.reading-resume p {font-size:13px;margin:0 0 10px}
+.reading-toc-item {display:grid;grid-template-columns:24px minmax(0,1fr);gap:5px;align-items:start;border-left:3px solid transparent;border-radius:6px;padding:6px 5px}
+.reading-toc-item.reading-active {background:var(--blue-wash);border-left-color:var(--blue);color:var(--blue);font-weight:600}
+.toc nav .reading-toc-item a,.mobile-reading-toc .reading-toc-item a {display:block;margin:0;padding:0;text-decoration:none}
+.toc nav .reading-active a {color:var(--blue)}
+.reading-tick {width:22px;height:22px;border:1px solid #718776;background:var(--surface);border-radius:50%;display:grid;place-items:center;padding:0;margin-top:1px}
+.reading-tick[aria-pressed="true"] {background:var(--green);border-color:var(--green);color:#fffefa}
+.reading-location {display:none;font-size:10px;margin-top:3px;color:var(--blue)}
+.reading-active .reading-location {display:block}
+.section-reading-actions {margin-top:22px}
+.mobile-reading-toc {display:none}
+@media(max-width:900px) {
+ .mobile-reading-toc {display:block;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+ .mobile-reading-toc summary {cursor:pointer;font-size:13px;font-weight:600;color:var(--blue)}
+ .mobile-reading-toc nav {margin-top:10px}
+ .mobile-reading-toc a {padding:10px 8px;font-size:13px;line-height:1.8;border-radius:6px}
+ .reading-progress-panel {padding:16px}
+}
+@media print {.reading-progress-panel,.section-reading-actions {display:none}}
 @media (max-width:480px) {.tabs {flex-wrap:wrap}.tab {padding-inline:10px}}
