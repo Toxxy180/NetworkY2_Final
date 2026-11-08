@@ -1,0 +1,123 @@
+
+/* Network Quest: playful lesson path and rewards using real local progress. */
+.quest-hud {
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  margin:0 0 24px; padding:0; color:var(--navy);
+}
+.quest-stat {
+  display:flex; align-items:center; gap:9px; background:var(--surface);
+  border:1px solid var(--line); border-bottom-width:3px; border-radius:13px;
+  padding:10px 15px; font-size:13px; font-weight:600; min-height:48px;
+}
+.quest-stat svg { color:var(--blue); }
+.quest-stat b { font-variant-numeric:tabular-nums; }
+.quest-stat.streak svg { color:#d9954f; }
+.quest-stat.goal svg { color:#72b9dc; }
+.quest-sound { margin-left:auto; padding:9px 12px; background:var(--surface); color:var(--muted); border:1px solid var(--line); border-radius:10px; font-size:12px; display:flex; align-items:center; gap:6px; }
+.quest-sound[aria-pressed="true"] { color:var(--blue); background:var(--blue-wash); }
+.quest-mascot { margin:0; display:grid; justify-items:center; gap:8px; }
+.quest-mascot img { display:block; width:min(100%,235px); height:235px; object-fit:contain; filter:drop-shadow(0 13px 14px #0002); }
+.quest-speech { position:relative; border:1px solid var(--line); border-radius:15px; padding:11px 18px; color:var(--navy); background:var(--surface); font-size:14px; text-align:center; }
+.quest-speech:after { content:""; position:absolute; bottom:-6px; left:calc(50% - 5px); width:10px; height:10px; background:var(--surface); border-right:1px solid var(--line); border-bottom:1px solid var(--line); transform:rotate(45deg); }
+.quest-layout { display:grid; grid-template-columns:minmax(0,1fr) 255px; gap:30px; align-items:start; }
+.quest-board { position:relative; min-width:0; padding:12px 0 36px; }
+.quest-road { position:relative; list-style:none; padding:0; margin:0; }
+.quest-trail { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:visible; }
+.quest-step { position:relative; min-height:145px; display:flex; align-items:center; gap:12px; padding:17px 0; }
+.quest-step:nth-child(4n+1) { margin-left:2%; }
+.quest-step:nth-child(4n+2) { margin-left:17%; }
+.quest-step:nth-child(4n+3) { margin-left:24%; }
+.quest-step:nth-child(4n) { margin-left:12%; }
+.quest-road .chapter-card {
+  display:flex; align-items:center; min-width:0; gap:15px; border:0;
+  padding:8px 0; background:none; border-radius:14px; transform:none; box-shadow:none; color:var(--navy); isolation:auto;
+}
+.quest-road .chapter-card:hover { transform:none; box-shadow:none; border:0; }
+.quest-road .chapter-card:after,.quest-road .chapter-card > svg,.quest-road .count { display:none; }
+.quest-road .chapter-card .num {
+  width:64px; height:64px; flex-shrink:0; border-radius:24px;
+  background:var(--blue-wash); color:var(--blue); border:2px solid var(--blue);
+  box-shadow:0 7px 0 color-mix(in srgb,var(--blue) 35%,var(--surface));
+  font-size:22px; transition:transform .16s,box-shadow .16s; position:relative; z-index:1;
+}
+.quest-road .chapter-card:hover .num { transform:translateY(-3px) rotate(-5deg); box-shadow:0 10px 0 color-mix(in srgb,var(--blue) 35%,var(--surface)); }
+.quest-road .chapter-card:active .num { transform:translateY(4px); box-shadow:0 3px 0 color-mix(in srgb,var(--blue) 35%,var(--surface)); }
+.quest-road .chapter-card .detail { max-width:220px; padding:7px 9px; background:var(--wash); border-radius:9px; }
+.quest-road .chapter-card h3 { font-size:15px; line-height:1.6; margin:0 0 4px; }
+.quest-road .chapter-card p { font-size:12px; line-height:1.7; }
+.quest-step.is-next .num { background:var(--blue); color:var(--surface); outline:6px solid var(--blue-wash); }
+.quest-step.is-done .num { background:var(--blue-wash); border-style:solid; }
+.quest-step.is-next:before { content:"เริ่มตรงนี้"; position:absolute; top:-7px; left:0; color:var(--blue); background:var(--surface); border:1px solid var(--line); padding:3px 7px; border-radius:7px; font-size:10px; font-weight:700; z-index:2; }
+.quest-quiz { font:600 11px/1.5 Inter,'Noto Sans Thai',sans-serif; border:1px solid var(--line); border-bottom-width:3px; border-radius:9px; background:var(--surface); color:var(--navy); padding:8px 10px; flex-shrink:0; }
+.quest-quiz:hover { color:var(--blue); border-color:var(--blue); }
+.quest-missions { position:sticky; top:100px; display:grid; gap:16px; }
+.quest-mission { border:1px solid var(--line); border-radius:15px; padding:22px; background:var(--surface); }
+.quest-mission h3 { font-size:17px; margin:0 0 9px; }
+.quest-mission p { color:var(--muted); font-size:13px; line-height:1.8; margin:0 0 14px; }
+.quest-mission .quest-count { color:var(--blue); font-size:28px; font-weight:800; line-height:1.5; }
+.quest-meter { height:12px; border-radius:10px; overflow:hidden; background:var(--line); margin:12px 0 18px; }
+.quest-meter > span { display:block; height:100%; background:var(--blue); border-radius:10px; transition:width .5s cubic-bezier(.2,.7,.2,1); }
+.quest-mission .btn { width:100%; }
+.quest-reward-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); max-width:calc(100vw - 28px); display:flex; gap:12px; align-items:center; z-index:95; border:1px solid var(--blue); border-bottom-width:4px; border-radius:16px; padding:15px 21px; background:var(--surface); color:var(--navy); box-shadow:0 12px 40px #0003; font-size:14px; line-height:1.7; }
+.quest-reward-toast img { width:50px; height:50px; object-fit:contain; }
+.quest-reward-toast strong { display:block; color:var(--blue); }
+.quest-answer-reward { color:var(--blue); font-size:13px; font-weight:700; margin-top:12px; }
+.quest-local { font-size:11px!important; margin-top:15px!important; margin-bottom:0!important; color:var(--muted); }
+.quest-level { display:flex; align-items:center; gap:12px; }
+.quest-level-medal { display:grid; place-items:center; width:42px; height:42px; background:var(--blue-wash); border:1px solid var(--blue); border-radius:14px; font-size:20px; color:var(--blue); }
+.quest-level small { color:var(--muted); display:block; margin-top:4px; }
+@media(max-width:1150px) {
+  .quest-layout { grid-template-columns:minmax(0,1fr) 215px; gap:18px; }
+  .quest-step:nth-child(n) { margin-left:0; }
+  .quest-step:nth-child(even) { margin-left:12%; }
+  .quest-road .chapter-card .detail { max-width:180px; }
+  .quest-step { gap:5px; }
+  .quest-road .chapter-card { gap:10px; }
+}
+@media(max-width:950px) {
+  .quest-layout { grid-template-columns:1fr; }
+  .quest-missions { position:static; grid-row:1; grid-template-columns:1fr 1fr; gap:12px; }
+  .quest-step:nth-child(4n+1) { margin-left:7%; }
+  .quest-step:nth-child(4n+2) { margin-left:25%; }
+  .quest-step:nth-child(4n+3) { margin-left:32%; }
+  .quest-step:nth-child(4n) { margin-left:17%; }
+  .quest-road .chapter-card .detail { max-width:250px; }
+}
+@media(max-width:760px) {
+  .quest-hud { gap:6px; margin-bottom:18px; }
+  .quest-stat { font-size:11px; gap:5px; padding:8px 10px; min-height:40px; }
+  .quest-stat svg { width:17px; height:17px; }
+  .quest-sound { margin-left:0; font-size:11px; padding:7px 9px; }
+  .hero:has(.quest-mascot) { display:grid; grid-template-columns:minmax(0,1fr) 100px; align-items:center; gap:8px; }
+  .hero:has(.quest-mascot) .hero-art { display:block; }
+  .hero:has(.quest-mascot) h1 { font-size:29px; }
+  .hero:has(.quest-mascot) p { font-size:12px; }
+  .hero:has(.quest-mascot) .actions { grid-column:1/-1; gap:8px; }
+  .quest-mascot img { width:100px; height:130px; }
+  .quest-speech { font-size:10px; padding:7px; line-height:1.6; }
+  .quest-missions { grid-template-columns:1fr; }
+  .quest-mission { padding:18px; }
+  .quest-mission.level-panel { display:none; }
+  .quest-step:nth-child(n) { margin-left:0; }
+  .quest-step:nth-child(even) { margin-left:10%; }
+  .quest-step { min-height:134px; }
+  .quest-road .chapter-card .num { width:55px; height:55px; border-radius:20px; font-size:19px; }
+  .quest-road .chapter-card .detail { max-width:190px; padding:6px; }
+  .quest-road .chapter-card h3 { font-size:13px; }
+  .quest-road .chapter-card p { font-size:11px; }
+  .quest-road .chapter-card { gap:8px; }
+  .quest-quiz { font-size:10px; padding:6px 7px; }
+  .quest-reward-toast { padding:12px 15px; font-size:12px; bottom:18px; }
+  .quest-reward-toast img { width:38px; height:42px; }
+}
+@media(max-width:390px) {
+  .quest-step:nth-child(n) { margin-left:0; }
+  .quest-road .chapter-card .detail { max-width:155px; }
+  .quest-stat { padding:7px 8px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .quest-meter > span,.quest-road .chapter-card .num { transition:none; }
+}
+:root[data-motion="off"] .quest-meter > span,:root[data-motion="off"] .quest-road .chapter-card .num { transition:none; }
+@media print { .quest-hud,.quest-mascot,.quest-missions,.quest-reward-toast,.quest-quiz { display:none!important; } }
+

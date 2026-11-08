@@ -907,6 +907,88 @@ body:after { height:24px; }
 @media(prefers-reduced-motion:reduce) { .intro-packet { animation:none; opacity:0; } }
 @media print { .reader-actions,.reader-top,.lesson-contents,.net-welcome { display:none!important; } }
 </style>
+<style id="practical-progress-colors">
+/* Progress panels in the practical lessons use the selected reading palette. */
+[data-reading-progress-panel] {
+  background:var(--soft,#f3f7f8) !important;
+  color:var(--navy,#172b3a) !important;
+  border:1px solid var(--line,#d6e0e5) !important;
+}
+[data-reading-progress-panel] :is(p,h2,h3,h4,span,strong,small,div,label) {
+  color:inherit !important;
+}
+[data-reading-progress-panel] [data-progress-caption] {
+  color:var(--muted,#4c6070) !important;
+}
+[data-reading-progress-panel] a {
+  color:var(--blue,#14695f) !important;
+}
+:root[data-theme="dark"] [data-reading-progress-panel] {
+  background:#20333f !important;
+  color:#d4e0e7 !important;
+  border-color:#415766 !important;
+}
+:root[data-theme="dark"] [data-reading-progress-panel] [data-progress-caption] {
+  color:#b0c1cd !important;
+}
+:root[data-theme="light"] [data-reading-progress-panel] {
+  background:#f0f5f6 !important;
+  color:#172b3a !important;
+  border-color:#cddbe1 !important;
+}
+:root[data-theme="paper"] [data-reading-progress-panel] {
+  background:#f5efe3 !important;
+  color:#352d24 !important;
+  border-color:#ded3c1 !important;
+}
+@media print {
+  [data-reading-progress-panel] {
+    background:#f3f3f3 !important; color:#111 !important; border-color:#bbb !important;
+  }
+}
+</style>
+<script id="practical-progress-colors-script">
+(() => {
+  'use strict';
+  function initializeProgressColors() {
+    const main = document.getElementById('main') || document.querySelector('main');
+    if (!main) return;
+    function findPanel(label) {
+      let node = label.parentElement;
+      for (let depth=0; node && node!==main && depth<5; depth++,node=node.parentElement) {
+        const content = node.textContent || '';
+        if (content.length > 1800) return null;
+        if (content.includes('กำลังอ่าน') && /อ่านแล้ว\s*\d/.test(content)) return node;
+      }
+      return null;
+    }
+    function refresh() {
+      pending = false;
+      for (const label of main.querySelectorAll('h2,h3,h4,p,span,strong,small,div')) {
+        if (label.textContent.trim() !== 'ความคืบหน้าในบทนี้') continue;
+        const panel = findPanel(label);
+        if (!panel) continue;
+        panel.setAttribute('data-reading-progress-panel','');
+        label.setAttribute('data-progress-caption','');
+      }
+    }
+    let pending = false;
+    new MutationObserver(() => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(refresh);
+    }).observe(main,{childList:true,subtree:true,characterData:true});
+    refresh();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded',initializeProgressColors,{once:true});
+  } else {
+    initializeProgressColors();
+  }
+})();
+</script>
+<link rel="stylesheet" href="quest.css">
+<script src="quest.js" defer></script>
 </head>
 <body>
 <script id="first-visit-intro">
