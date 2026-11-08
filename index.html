@@ -63,6 +63,263 @@
 @media (max-width:480px) {.tabs {flex-wrap:wrap}.tab {padding-inline:10px}}
 </style>
   
+<style id="reading-polish">
+
+/* Reading palette and interaction polish */
+:root {
+  --blue:#14695f; --blue-dark:#0d5149; --blue-wash:#e5f3ef;
+  --navy:#172b3a; --muted:#4c6070; --line:#d6e0e5;
+  --wash:#eef3f5; --surface:#ffffff; --soft:#f3f7f8;
+  --reading-size:16px;
+}
+:root[data-theme="paper"] {
+  --blue:#78532b; --blue-dark:#593b1d; --blue-wash:#f4e8d4;
+  --navy:#352d24; --muted:#675c4d; --line:#ded3c1;
+  --wash:#eee8dc; --surface:#fffcf5; --soft:#f5efe3;
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --blue:#8ad9c5; --blue-dark:#b6ebdd; --blue-wash:#203f3d;
+  --navy:#edf3f6; --muted:#b6c5d0; --line:#3a4b59;
+  --wash:#15212b; --surface:#1e2d39; --soft:#263946;
+  --green:#8bddb3; --red:#ffb1b7;
+}
+html { scroll-behavior:smooth; scroll-padding-top:100px; }
+body { background:var(--wash); color:var(--navy); }
+::selection { background:#b7dfd3; color:#102f2a; }
+#sidebar,.topbar,.reading,.chapter-card,.progress-strip,.toc,.quiz-choice,
+.question-panel,.result-head,.review-item,.empty-state,
+.search-wrap,#search-results,.btn,.option,.question-dots button {
+  background:var(--surface); color:var(--navy);
+}
+.topbar { backdrop-filter:blur(12px); }
+.hero p,.lead,.muted,.chapter-card p,.quiz-choice p,
+.quiz-meta,.tiny-note,.scope-note,.sources,footer,.sidebar-bottom,
+.review-item .review-body,.question-top { color:var(--muted); }
+.search-wrap input { color:var(--navy); }
+.search-wrap input::placeholder { color:var(--muted); opacity:1; }
+.brand,.icon-button { color:var(--navy); }
+.nav-item { color:var(--muted); }
+.nav-item.active,.tab.active { color:var(--blue); }
+.nav-item:hover,.toc a:hover,.search-result:hover,
+.btn:hover,.option:hover:not(:disabled) { background:var(--soft); }
+.nav-item.active,.chapter-card .num,.note,.option.selected {
+  background:var(--blue-wash);
+}
+.chapter-num,.objectives,th { background:var(--soft); }
+th { color:var(--navy); }
+.toc a { color:var(--muted); border-left:2px solid transparent; }
+.toc a.is-current {
+  color:var(--blue); background:var(--blue-wash);
+  border-left-color:var(--blue); font-weight:700;
+}
+.note { color:var(--blue); border:1px solid var(--line); }
+.progress-track { background:var(--line); }
+.reading { max-width:860px; box-shadow:0 5px 28px #172b3a05; }
+.reading p,.reading li { font-size:var(--reading-size); line-height:2; }
+.reading p { margin-bottom:18px; }
+.reading h2 { line-height:1.65; }
+.reading .objectives li { font-size:14px; }
+.reading .example p { font-size:calc(var(--reading-size) - 1px); }
+.example { background:var(--blue-wash); }
+.example h3 { color:var(--blue); }
+.pitfall { color:#67490f; background:#fff4d9; border-color:#e7d3a0; }
+.question-panel h2 { line-height:1.85; }
+.option { min-height:61px; padding:17px; }
+.option:disabled { opacity:1; }
+.btn:disabled { opacity:.65; }
+.btn.primary {
+  background:var(--blue); border-color:var(--blue); color:#fff;
+}
+.btn.primary:hover { background:var(--blue-dark); }
+.btn.success { color:#096044; background:#e3f5eb; }
+.chapter-card,.quiz-choice,.btn,.option {
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background-color .18s ease;
+}
+.chapter-card:hover {
+  transform:translateY(-3px); box-shadow:0 9px 24px #172b3a0c;
+  border-color:var(--blue);
+}
+.chapter-card:hover > svg { transform:translateX(4px); }
+.chapter-card > svg { transition:transform .18s ease; }
+.btn:active:not(:disabled),.option:active:not(:disabled) { transform:translateY(1px); }
+.feedback { color:#234535; }
+.feedback.wrong { color:#663c32; }
+.diagram { background:#f8faff; border-color:#dbe5f2; color:#172b3a; }
+.diagram figcaption { background:var(--soft); color:var(--muted); border-color:var(--line); }
+.diagram-controls,.diagram-output { background:var(--surface); color:var(--navy); }
+.hero-art svg { filter:drop-shadow(0 8px 9px #15314910); }
+pre { border:1px solid #344758; color:#e4efff; }
+body:after { content:""; display:block; height:70px; }
+.study-tools {
+  position:fixed; right:24px; bottom:18px; z-index:35;
+  display:flex; align-items:center; gap:4px; padding:6px;
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:12px; box-shadow:0 8px 32px #10213f18;
+}
+.study-tools select,.study-tools button {
+  font:500 12px Inter,'Noto Sans Thai',Tahoma,sans-serif;
+  color:var(--navy); background:transparent; border:0;
+  border-radius:7px; min-height:35px; padding:7px 10px;
+}
+.study-tools button:hover { background:var(--soft); }
+.study-tools button[aria-pressed="true"] {
+  color:var(--blue); background:var(--blue-wash); font-weight:700;
+}
+.study-tools .tools-separator { width:1px; height:20px; background:var(--line); }
+.study-tools .top-button { display:flex; align-items:center; gap:5px; }
+.reading-progress {
+  position:fixed; top:0; left:var(--sidebar); right:0; height:3px;
+  z-index:60; background:transparent; pointer-events:none;
+}
+.reading-progress span {
+  display:block; height:100%; width:100%; transform-origin:left;
+  transform:scaleX(0); background:var(--blue);
+}
+.page-enter { animation:page-appear .24s ease-out both; }
+@keyframes page-appear {
+  from { opacity:.4; transform:translateY(6px); }
+  to { opacity:1; transform:translateY(0); }
+}
+:root[data-theme="dark"] .btn.primary {
+  background:#8ad9c5; border-color:#8ad9c5; color:#103c34;
+}
+:root[data-theme="dark"] .btn.primary:hover { background:#b6ebdd; }
+:root[data-theme="dark"] .brand circle { fill:#1e2d39; }
+:root[data-theme="dark"] .chapter-num { background:#304651; color:#e5f0f4; }
+:root[data-theme="dark"] .chapter-num.done { background:#204c40; color:#a4e9c7; }
+:root[data-theme="dark"] .option.selected .letter {
+  background:#8ad9c5; border-color:#8ad9c5; color:#103c34;
+}
+:root[data-theme="dark"] .option.correct { background:#22483a; border-color:#77b797; }
+:root[data-theme="dark"] .option.correct .letter { background:#92dfb9; color:#173d2b; }
+:root[data-theme="dark"] .option.wrong { background:#4d3038; border-color:#c88791; }
+:root[data-theme="dark"] .option.wrong .letter { background:#ffb1b7; color:#4b2028; }
+:root[data-theme="dark"] .feedback { background:#224334; color:#e0f4e7; border-color:#426e54; }
+:root[data-theme="dark"] .feedback.wrong { background:#473238; color:#ffe6e5; border-color:#79525b; }
+:root[data-theme="dark"] .feedback strong { color:#a3e9bf; }
+:root[data-theme="dark"] .feedback.wrong strong { color:#ffb1b7; }
+:root[data-theme="dark"] .pitfall { background:#403a2a; border-color:#746347; color:#f2ddb2; }
+:root[data-theme="dark"] .btn.success { background:#254c3d; color:#a4e9c7; border-color:#46735e; }
+:root[data-theme="dark"] .mock-banner { background:#274238; color:#e8f5ef; }
+:root[data-theme="dark"] .mock-banner p { color:#c3d9ce; }
+:root[data-theme="dark"] .question-dots .answered { background:#284a44; color:#a4e9d8; border-color:#47786d; }
+:root[data-theme="dark"] .score-circle { border-color:#37544b; border-top-color:#8ad9c5; border-right-color:#8ad9c5; }
+:root[data-theme="dark"] .search-result { color:var(--navy); }
+@media(max-width:760px) {
+  .reading-progress { left:0; }
+  .study-tools { right:12px; bottom:12px; padding:5px; gap:2px; }
+  .study-tools select,.study-tools button { font-size:11px; padding:7px 8px; }
+  .reading p,.reading li { font-size:calc(var(--reading-size) - 1px); }
+  .reading .example p { font-size:calc(var(--reading-size) - 1px); }
+  .reading .objectives li { font-size:13px; }
+  .topbar { background:var(--surface); }
+  .hero h1 { font-size:36px; }
+}
+@media(hover:none) {
+  .chapter-card:hover { transform:none; box-shadow:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  .page-enter { animation:none; }
+  .chapter-card,.quiz-choice,.btn,.option,.chapter-card > svg { transition:none; }
+}
+@media print {
+  .study-tools,.reading-progress { display:none!important; }
+  body:after { display:none; }
+  :root,:root[data-theme] { --navy:#111; --muted:#333; --surface:#fff; --wash:#fff; --line:#ddd; }
+}
+
+</style>
+<script id="reading-polish-script">
+
+(() => {
+  'use strict';
+  const settingsKey = 'network-reading-preferences-v1';
+  let settings = {theme:'light',large:false};
+  try {
+    const saved = JSON.parse(localStorage.getItem(settingsKey));
+    if (saved && ['light','paper','dark'].includes(saved.theme)) settings.theme=saved.theme;
+    settings.large = saved?.large === true;
+  } catch {}
+  const applySettings = () => {
+    document.documentElement.dataset.theme=settings.theme;
+    document.documentElement.style.setProperty('--reading-size',settings.large?'18px':'16px');
+  };
+  applySettings();
+  document.addEventListener('DOMContentLoaded',() => {
+    const tools = document.createElement('div');
+    tools.className='study-tools';
+    tools.setAttribute('role','group');
+    tools.setAttribute('aria-label','ปรับการอ่าน');
+    tools.innerHTML='<select aria-label="โทนสีสำหรับอ่าน"><option value="light">โทนสว่าง</option><option value="paper">โทนกระดาษ</option><option value="dark">โทนกลางคืน</option></select><span class="tools-separator" aria-hidden="true"></span><button type="button" class="size-button" aria-label="ขยายตัวอักษรในบทเรียน" aria-pressed="false">ก +</button><span class="tools-separator" aria-hidden="true"></span><button type="button" class="top-button" aria-label="กลับขึ้นด้านบน"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 12 6-6 6 6M12 6v14"/></svg>ด้านบน</button>';
+    document.body.append(tools);
+    const themeSelect=tools.querySelector('select');
+    const sizeButton=tools.querySelector('.size-button');
+    themeSelect.value=settings.theme;
+    sizeButton.setAttribute('aria-pressed',String(settings.large));
+    const persist=() => { applySettings();try{localStorage.setItem(settingsKey,JSON.stringify(settings));}catch{} };
+    themeSelect.addEventListener('change',() => {settings.theme=themeSelect.value;persist();});
+    sizeButton.addEventListener('click',() => {
+      settings.large=!settings.large;
+      sizeButton.setAttribute('aria-pressed',String(settings.large));
+      persist();
+    });
+    tools.querySelector('.top-button').addEventListener('click',() => {
+      const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});
+    });
+    const progress=document.createElement('div');
+    progress.className='reading-progress';
+    progress.setAttribute('aria-hidden','true');
+    progress.innerHTML='<span></span>';
+    document.body.append(progress);
+    const fill=progress.firstElementChild;
+    const main=document.getElementById('main');
+    let sectionObserver;
+    let scrollPending=false;
+    const updateProgress=() => {
+      const article=main.querySelector('.reading');
+      progress.hidden=!article;
+      if(article) {
+        const rect=article.getBoundingClientRect();
+        const distance=article.scrollHeight-window.innerHeight+100;
+        const ratio=distance>0?Math.max(0,Math.min(1,(100-rect.top)/distance)):1;
+        fill.style.transform='scaleX('+ratio+')';
+      }
+      scrollPending=false;
+    };
+    window.addEventListener('scroll',() => {
+      if(!scrollPending){scrollPending=true;requestAnimationFrame(updateProgress);}
+    },{passive:true});
+    window.addEventListener('resize',updateProgress);
+    const refresh=() => {
+      main.classList.remove('page-enter');
+      requestAnimationFrame(() => main.classList.add('page-enter'));
+      sectionObserver?.disconnect();
+      const links=[...main.querySelectorAll('.toc [data-scroll]')];
+      if('IntersectionObserver' in window) {
+        sectionObserver=new IntersectionObserver(entries => {
+          const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);
+          if(!visible.length)return;
+          links.forEach(link=>{
+            const active=link.dataset.scroll===visible[0].target.id;
+            link.classList.toggle('is-current',active);
+            if(active)link.setAttribute('aria-current','location');
+            else link.removeAttribute('aria-current');
+          });
+        },{rootMargin:'-100px 0px -45% 0px',threshold:0});
+        main.querySelectorAll('.lesson-section').forEach(section=>sectionObserver.observe(section));
+      }
+      sizeButton.disabled=!main.querySelector('.reading');
+      updateProgress();
+    };
+    new MutationObserver(refresh).observe(main,{childList:true});
+    refresh();
+  },{once:true});
+})();
+
+</script>
 </head>
 <body>
 <a class="skip" href="#main">ข้ามไปเนื้อหา</a>
