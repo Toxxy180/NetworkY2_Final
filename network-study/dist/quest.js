@@ -292,7 +292,7 @@ function awardAttempts(game,attempts,today) {
     }
     function refresh(){
       frame=0;processAnswer();
-      if(!main.querySelector('.ne-lab')&&!main.querySelector('.quest-hud'))main.prepend(makeHUD());
+      if(!main.querySelector('.ne-lab,.ob-page')&&!main.querySelector('.quest-hud'))main.prepend(makeHUD());
       decorateOverview();updateStats();
     }
     const queue=()=>{if(!frame)frame=requestAnimationFrame(refresh);};

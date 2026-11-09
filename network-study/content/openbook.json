@@ -1,0 +1,283 @@
+[
+  {
+    "id": "theory",
+    "title": "ภาคทฤษฎี",
+    "description": "คำจำกัดความ หลักการ เปรียบเทียบ สูตร และจุดที่มักสับสน ครบ 8 บท",
+    "pages": [
+      {
+        "side": "หน้า",
+        "title": "Switching · VLAN · STP · Inter-VLAN",
+        "columns": [
+          [
+            {
+              "title": "01 Ethernet / MAC learning",
+              "text": "Switch ทำงานหลักที่ L2 ส่ง Ethernet frame ด้วย MAC; Router L3 เลือก IP route. MAC 48 บิต (6 octets), broadcast FF:FF:FF:FF:FF:FF. แต่ละพอร์ตสวิตช์แยก collision domain; VLAN แยก broadcast domain. Full-duplex ส่งและรับพร้อมกัน ไม่มี collision ตามการทำงานปกติของลิงก์นี้.\nรับเฟรม → เรียน Source MAC + VLAN + ingress port → ดู Destination MAC. Known unicast: ส่งพอร์ตที่ตารางระบุ; อยู่พอร์ตเดียวกับขาเข้า: filter ไม่ส่งกลับ. Unknown unicast / broadcast: flood เฉพาะพอร์ตที่ส่งต่อได้ใน VLAN เดียวกัน ยกเว้นขาเข้า. Multicast ขึ้นกับการ snooping/การตั้งค่า.\nMAC table ใช้คู่ VLAN+MAC; MAC เดียวอาจพบในคนละ VLAN. เรียนจาก source แม้ destination ยังไม่รู้. อุปกรณ์ย้ายพอร์ต: source frame ใหม่ทำให้เรียนตำแหน่งใหม่. Aging ลบ dynamic entry ที่หมดอายุ; ค่าเริ่มต้นพบได้บ่อย 300s ตรวจจริงด้วย show. Static ไม่หมดตาม dynamic aging.\nARP หา MAC จาก IPv4 ใน LAN; ARP request เป็น broadcast, reply ปกติเป็น unicast. เป้าหมายต่าง subnet: PC ARP หา MAC ของ gateway ไม่ใช่ MAC ของเครื่องปลายทางไกล."
+            },
+            {
+              "title": "Store-and-Forward / Cut-Through",
+              "text": "Store-and-Forward รับครบเฟรม ตรวจ FCS/CRC แล้วส่ง; ทิ้งเฟรมเสียก่อนส่งต่อ มี latency มากกว่า. Cut-Through เริ่มส่งหลังรู้ destination มี latency ต่ำ แต่เฟรมอาจถูกส่งไปก่อนรู้ FCS เสีย. FCS ตรวจข้อผิดพลาด ไม่ได้แก้ข้อมูลหรือเข้ารหัส.\nHub ทำซ้ำสัญญาณร่วม collision domain; switch เรียน MAC เลือกพอร์ต; router แยก broadcast และ route ข้าม subnet. Switch ไม่เปลี่ยน IP src/dst ของ frame ที่ bridge ตามปกติ."
+            },
+            {
+              "title": "Port Security / Sticky / Violation",
+              "text": "จำกัด source MAC ที่อนุญาตต่อพอร์ต; ตั้ง access mode, เปิด port-security, maximum, วิธีเรียน MAC, violation. Sticky เรียน MAC ลง running-config; ต้อง copy run start จึงคงอยู่หลัง reboot. MAC ที่ตั้งแบบ static กับ dynamic/sticky มีวิธีเก็บต่างกัน.\nProtect: drop เฟรม MAC เกิน/ไม่อนุญาต พอร์ตยัง up ไม่มีการแจ้งเตือนแบบ restrict. Restrict: drop + เพิ่ม violation counter/แจ้งตามที่รองรับ. Shutdown (ค่าปกติหลายรุ่น): err-disabled ทั้งพอร์ต. ตรวจ secure MAC, maximum, violation mode และ counter ก่อนสรุป.\nกู้พอร์ต: แก้สาเหตุ/ถอดเครื่องที่ผิดนโยบาย → ตรวจ sticky เก่า → shutdown / no shutdown → ตรวจ show port-security interface. เปิดกลับโดยไม่แก้สาเหตุอาจปิดซ้ำ. Port Security ตรวจ MAC ของเฟรม จึงไม่ได้ยืนยันตัวบุคคลแบบ 802.1X."
+            }
+          ],
+          [
+            {
+              "title": "02 VLAN / Access / Trunk / 802.1Q",
+              "text": "VLAN แบ่ง L2 broadcast domain แบบ logical; ต่าง VLAN ต้อง route ผ่าน L3 แม้ต่อ switch ตัวเดียวกัน. VLAN เดียวกันต่าง switch ใช้ trunk ขน VLAN ถึงกัน. VLAN กับ subnet คนละแนวคิด แต่ในการออกแบบทั่วไปจับหนึ่ง subnet ต่อหนึ่ง VLAN.\nAccess: อุปกรณ์ผู้ใช้ใน data VLAN เดียว เฟรมปลายทางทั่วไป untagged. Trunk: หลาย VLAN ผ่านลิงก์เดียว ใช้ 802.1Q tag 4 bytes; VLAN ID 12 บิต, VLAN ใช้งานทั่วไป 1–4094; ID 0 ใช้ priority tag, 4095 reserved. Voice VLAN เป็นกรณีพิเศษที่พอร์ต access รองรับ data+voice.\nNative VLAN: เฟรมของ VLAN นี้โดยปกติ untagged บน 802.1Q trunk; untagged ที่รับเข้าจัดเข้า native. Native ต้องตรงทั้งคู่. Native mismatch อาจทำให้เฟรมเข้า VLAN ผิด. Allowed list คุม VLAN ที่ผ่าน trunk; สร้าง VLAN แล้วต้องตรวจ allowed/active/forwarding ด้วย.\nจำกัด allowed เฉพาะที่ใช้; เปลี่ยน native เป็น VLAN ที่ไม่มีผู้ใช้; หลีกเลี่ยง data VLAN บน native. คำสั่ง allowed vlan LIST แทนรายการเดิม; add/remove แก้เฉพาะส่วน. ตรวจทั้งสองฝั่งด้วย show interfaces trunk และ show interfaces ... switchport."
+            },
+            {
+              "title": "VTP / Revision / Pruning",
+              "text": "VTP กระจายฐานข้อมูล VLAN ระหว่าง switch ใน domain ผ่าน trunk; ไม่สร้าง trunk และไม่กำหนด access-port membership ให้เอง. ตัวอย่างแลปใช้ VTPv2: domain LABCORP, password vtp123. รุ่น/โหมดมีผลต่อพฤติกรรม.\nServer สร้าง/แก้ VLAN และประกาศฐานข้อมูล. Client รับฐานข้อมูล โดยทั่วไปแก้ VLAN เองไม่ได้. Transparent ดูแล VLAN local ไม่รับมาแทนฐานของตน และส่งต่อประกาศตามเวอร์ชัน/เงื่อนไข.\nRevision สูงกว่าอาจนำฐาน VLAN มาเขียนทับเมื่อเงื่อนไขตรง: ตรวจ domain/password/version/mode/revision ก่อนเสียบ switch เก่า. Revision สูงไม่ได้แปลว่าข้อมูลถูก.\nPruning ลด broadcast/unknown-unicast traffic ของ VLAN บน trunk ที่ปลายทางไม่ต้องใช้. ต่างจาก allowed list ซึ่งเป็นการอนุญาตแบบตั้งค่า; pruning ไม่ใช่กลไกควบคุมสิทธิ์แทน allowed list."
+            },
+            {
+              "title": "DTP / VLAN hopping / Isolation",
+              "text": "DTP เจรจา trunk; switch spoofing พยายามทำให้พอร์ตผู้ใช้เป็น trunk. ป้องกัน: switchport mode access + switchport nonegotiate; trunk ที่ตั้งเองใช้ mode trunk + nonegotiate ทั้งสองฝั่งที่เหมาะสม.\nDouble tagging ใช้ tag ซ้อนและการถอด native tag: ไม่ให้ผู้ใช้อยู่ native VLAN, native ให้ตรงกันและแยกจาก data, จำกัด VLAN ที่ผ่าน. ปิด DTP อย่างเดียวไม่แก้ทุกกรณี double tagging.\nVoice VLAN แยกเสียงจาก data แม้โทรศัพท์กับ PC ใช้พอร์ตเดียว: โทรศัพท์มัก tag voice; PC untagged เข้า access VLAN. ไม่ได้เข้ารหัสเสียงด้วยตัวมันเอง.\nProtected port: protected ↔ protected บน switch เดียวกันไม่ส่งต่อโดยตรง แต่ยังคุยกับ unprotected ได้. Private VLAN: primary/secondary; isolated ไม่คุยกับ isolated/community โดยตรง, community คุยในกลุ่ม, promiscuous เช่น gateway เข้าถึงตาม mapping. Protected ไม่เท่ากับ PVLAN เต็มรูปแบบ."
+            }
+          ],
+          [
+            {
+              "title": "03 STP / BPDU / Root election",
+              "text": "L2 loop ทำให้ broadcast storm, duplicate frames, MAC flapping เพราะ Ethernet frame ไม่มี TTL สำหรับหยุด loop. STP แลก BPDU สร้าง topology ที่ไม่วน และเก็บลิงก์สำรองไว้. ไม่ต้องถอดสายสำรองทิ้ง.\nRoot = Bridge ID ต่ำสุด. BID = priority + extended system ID (VLAN ใน PVST) + MAC; priority เท่ากัน → MAC ต่ำชนะ. ตั้ง priority เป็นขั้น 4096 ตามแพลตฟอร์ม; ค่าทั่วไป 32768 (+VLAN). Root bridge ไม่มี root port; พอร์ตใช้งานบน root เป็น designated ตาม segment.\nRoot Port (RP): หนึ่งต่อ non-root switch ต่อ instance; เส้นทางรวม cost ถึง root ต่ำสุด. หากเท่ากัน ดู sender BID ต่ำ → sender port ID ต่ำ → local port ID ต่ำตามลำดับ tie ที่ยังเหลือ.\nDesignated Port (DP): ตัวแทนแต่ละ segment ที่เสนอ root path ดีสุด; เทียบ root ID → cost → BID → port ID. พอร์ตที่เป็นทางสำรองถูก block/discard. อ่าน role กับ state แยกกัน.\nShort path cost ที่พบบ่อย: 10M=100, 100M=19, 1G=4, 10G=2; long method ใช้คนละตัวเลข ต้องตรวจ mode. Cost ถึง root = ผลรวม cost ของพอร์ตตามทางไป root."
+            },
+            {
+              "title": "STP / RSTP / PVST / MST",
+              "text": "802.1D STP states: Blocking → Listening → Learning → Forwarding; Disabled เมื่อไม่ร่วมทำงาน. Listening ยังไม่เรียน MAC; Learning เรียน MAC แต่ยังไม่ส่ง user data. Timer ทั่วไป hello 2s, max age 20s, forward delay 15s; บางเหตุการณ์อาจรวมรอถึงประมาณ 50s.\nRSTP 802.1w: Discarding / Learning / Forwarding; role Root, Designated, Alternate, Backup; proposal/agreement และ edge ช่วย converge เร็วเมื่อเงื่อนไขเหมาะสม ไม่รับประกันเวลาตายตัวทุกเหตุการณ์.\nPVST+ แยก tree ต่อ VLAN; Rapid PVST+ ใช้ RSTP ต่อ VLAN. MSTP map หลาย VLAN เข้า instance ลดจำนวน tree; region ต้องมีชื่อ/revision/VLAN mapping ตรงกัน. ปรับ root ต่อ VLAN/instance เพื่อออกแบบเส้นทาง."
+            },
+            {
+              "title": "PortFast / BPDU Guard / Root Guard",
+              "text": "PortFast ให้พอร์ตปลายทางเข้าส่งต่อเร็ว; STP ยังตรวจ BPDU จึงไม่ใช่ปิด STP. ใช้กับ PC/server ตาม topology. BPDU Guard รับ BPDU ใด ๆ บนพอร์ตที่เปิด guard → err-disabled; กันการเสียบ switch/การส่ง BPDU จากขอบเครือข่าย.\nRoot Guard ใช้ทิศที่ไม่ควรมี root: ได้ superior BPDU → root-inconsistent; เมื่อ superior BPDU หายจะคืนตามกลไก. ไม่ใช่ shutdown แบบ BPDU Guard.\nBPDU spoofing ส่ง BID/Root ID ที่ดีกว่าเพื่อเปลี่ยน root/เส้นทาง. วาง Root Guard ที่ downlink และ BPDU Guard ที่ edge ตามหน้าที่. ตรวจ show spanning-tree vlan 1, inconsistentports, interfaces status err-disabled. อย่าสับสน MAC flapping จาก loop กับ MAC aging ปกติ."
+            }
+          ],
+          [
+            {
+              "title": "04 Inter-VLAN / ROAS / SVI",
+              "text": "Trunk ขนหลาย VLAN แต่ไม่ route ให้เอง. Router-on-a-Stick (ROAS): switch trunk → physical router interface เดียว → sub-interface ต่อ VLAN, encapsulation dot1Q VLAN_ID, IP เป็น gateway ของ subnet นั้น. Physical ต้อง no shutdown และ VLAN ต้องอนุญาตบน trunk.\nL3 Switch: สร้าง VLAN, interface vlan ID (SVI) ใส่ gateway IP, no shutdown และ ip routing. SVI จะ up ตามเงื่อนไข VLAN/พอร์ตที่ active ของรุ่นนั้น; สร้าง SVI อย่างเดียวอาจยัง down.\nROAS ใช้พอร์ตร่วมสำหรับหลาย VLAN, ข้าม VLAN วิ่งเข้าและออกลิงก์เดียวกัน; full-duplex ส่ง/รับพร้อมกันได้ จึงไม่ควรสรุปว่า 1Gbps เหลือ 500Mbps เสมอ. L3 switch route ในระบบ switch เหมาะกับ traffic ภายในมากกว่า แต่ขึ้นกับฮาร์ดแวร์/แบบเครือข่าย."
+            },
+            {
+              "title": "ตามแพ็กเก็ต A → B ข้าม VLAN",
+              "text": "A ตรวจ mask: B อยู่คนละ subnet → ใช้ default gateway. A ARP หา gateway → frame src MAC=A, dst MAC=gateway, IP src=A/dst=B. Switch ใส่ tag บน trunk ตาม VLAN. Router เปิด L2 header, หา route ด้วย destination IP, ลด TTL, สร้าง frame ใหม่ให้ next hop/เครื่อง B.\nถ้าไม่มี NAT: IP src/dst คงเดิมตลอดทาง; MAC เปลี่ยนเมื่อข้าม router แต่ละ hop; IPv4 header checksum เปลี่ยนตาม TTL. Switch ที่ bridge ปกติไม่ลด IP TTL. ขากลับต้องมี route และ gateway ที่ถูกต้องด้วย.\nถ้า A/B อยู่ subnet เดียวกัน A ARP หา B โดยตรง. ตั้ง mask ผิดอาจทำให้ ARP หาเครื่องไกลแทนการส่ง gateway. เลือก route ด้วย longest-prefix match ก่อนเทียบ AD/metric ของเส้นทางสำหรับ prefix ที่แข่งขันกัน."
+            },
+            {
+              "title": "Management / Running / Startup",
+              "text": "L2 switch ใช้ management SVI เป็น IP สำหรับเข้าไปบริหาร ไม่ได้ทำให้ route ระหว่าง VLAN โดยอัตโนมัติ. ตั้ง ip default-gateway ให้บริหารจาก subnet อื่นเมื่อไม่ได้เปิด IP routing. L3 ที่เปิด routing ใช้ตาราง route/default route.\nRunning-config อยู่ที่ใช้งานปัจจุบัน; startup-config ใช้ตอนบูต. copy running-config startup-config หลังตรวจผล. enable secret ตั้งรหัส privileged; line console/vty password ต้อง login ตามแบบแลป. ชื่อ interface และช่วง vty ขึ้นกับรุ่น."
+            },
+            {
+              "title": "ACL / วิธีตรวจปัญหา",
+              "text": "ACL อ่านบนลงล่าง match แรกแล้วหยุด; มี implicit deny ท้าย. Standard ดู source IP; Extended ดู src/dst/protocol/port. in = รับเข้าที่ interface, out = ก่อนส่งออกจาก interface; คิดจากมุม router.\nROAS lab ใส่ FILTER_STAFF_TRAFFIC in ที่ g0/0.10: ปฏิเสธ Staff→Kali, อนุญาตเว็บ TCP80/443+ICMP echo ไป web server, deny traffic อื่นเข้า server subnet แล้ว permit ip any any. ACL นี้ stateless: คำตอบจาก Staff ไป Kali ก็อาจถูก deny แม้ Kali เริ่มก่อน.\nลำดับเช็ก: สาย/port up → VLAN/access/trunk/native/allowed → IP/mask/gateway → route ไป–กลับ → ACL/counter → capture. ping gateway ผ่านแต่ข้าม VLAN ไม่ได้ให้ดู routing/ACL; อย่าเปลี่ยนหลายค่าโดยไม่ตรวจผลแต่ละจุด."
+            }
+          ]
+        ]
+      },
+      {
+        "side": "หลัง",
+        "title": "OSPF / EIGRP · FHRP · 802.1X / Tools · WAN",
+        "columns": [
+          [
+            {
+              "title": "05 OSPF / Neighbor / DR",
+              "text": "OSPF เป็น link-state IGP; Hello ค้นหา/รักษา neighbor, LSA เผยแพร่ link state, LSDB เป็นฐาน SPF. ใช้ IP protocol 89; multicast 224.0.0.5 AllSPFRouters / .6 AllDRouters. Process ID มีผล local ไม่ต้องเท่ากัน; area และค่าบนลิงก์ที่จำเป็นต้องตรง. Router ID 32-bit ต้องไม่ซ้ำ; ตั้งเองได้.\nNeighbor ต้องตรวจ subnet/area, hello-dead timers, network type, auth/key, passive-interface และ MTU เมื่อ ExStart/Exchange ค้าง. States: Down→Init→2-Way→ExStart→Exchange→Loading→Full. DROTHER↔DROTHER ค้าง 2-Way บน broadcast เป็นปกติ; Full กับ DR/BDR.\nBroadcast elect DR/BDR: interface priority สูงสุด → RID สูงสุด; priority 0 ไม่มีสิทธิ์. ไม่ preempt DR เดิมทันทีเมื่อมีตัวดีกว่าเข้ามา. P2P ไม่มี DR/BDR. ค่า timer ที่พบบ่อย broadcast/P2P hello10/dead40 ต้องตรวจจริง. Passive ไม่ส่ง Hello ที่ interface นั้นแต่ยังประกาศ network ที่เข้าเงื่อนไข."
+            },
+            {
+              "title": "Wildcard / Cost / Authentication",
+              "text": "Wildcard = 255.255.255.255 − mask; บิต0ต้องตรง บิต1ไม่สนใจ. /24→0.0.0.255, /30→0.0.0.3, /29→0.0.0.7, host→0.0.0.0. network ใน OSPF/EIGRP ใช้เลือก local interface ที่ร่วมโปรโตคอล.\nOSPF cost = reference bandwidth / interface bandwidth, อย่างน้อย1; IOS ตัดเศษลง. รวม cost ขาออกตามเส้นทางและลิงก์ LAN ปลายทาง. Reference ต้องสอดคล้องทั้งระบบ; bandwidth ใช้คำนวณ ไม่ได้จำกัดความเร็วจริง. Equal-cost อาจมีหลาย next hop.\nแลป ref10000Mbps: Gi1G cost10; 1.544M cost6476; R1→R4 LAN ผ่าน Gi broadcast =10+10=20; backup P2P=6476+10=6486. สไลด์ที่ปัดเป็น6477/รวม12954 ใช้คนละวิธีจาก IOS.\nMD5 authentication ตรวจ digest/ผู้รู้ shared key ไม่ได้เข้ารหัสข้อมูลแพ็กเก็ต. ตรวจ key ID, secret, mode ทั้งสองฝั่ง; auth ผิด neighbor ไม่ขึ้น. OSPF AD110, EIGRP internal90/external170 เป็นค่า default ที่พบใน IOS."
+            },
+            {
+              "title": "EIGRP / Summary / Redistribution",
+              "text": "EIGRP ใช้ IP protocol88, multicast224.0.0.10; DUAL เลือก successor และหาเส้นทาง loop-free. Neighbor table=เพื่อน; topology=เส้นทางเรียนรู้; routing=เส้นทางใช้งาน. Metric default ใช้ min bandwidth + sum delay ตาม K values ไม่ใช่นับ hop.\nFD=ดีที่สุดของเรา; RD=distance ที่ neighbor รายงาน. Feasible successor ต้อง RD < FD ของ successor (เท่ากันไม่ผ่าน). ไม่มี FS แล้ว main ล่ม → query/diffusing computation; มีเส้นทางสำรองทางกายภาพไม่ได้แปลว่ามี FS.\nSummary ต้อง prefix ต่อเนื่อง/ตรง boundary: 172.16.8–11 /24→172.16.8.0/22, mask255.255.252.0; 10.10.0–3 /24→10.10.0.0/22. ดู common leading bits อย่ารวมกิน subnet ที่ไม่ตั้งใจ.\nRedistribution นำ route ระหว่าง protocol; EIGRP ต้อง seed metric ที่เหมาะสม (BW,delay,reliability,load,MTU). ใส่ subnets ตอนเข้า OSPF ตาม IOS. Tag+route-map กัน route feedback; ตรวจ route ไปและกลับ; summary กับ redistribute ทำคนละหน้าที่."
+            }
+          ],
+          [
+            {
+              "title": "06 FHRP / HSRP / VRRP / GLBP",
+              "text": "FHRP ให้ host ใช้ Virtual IP+Virtual MAC เป็น default gateway คงที่เมื่อ router เปลี่ยนบทบาท. Real IP ของแต่ละ router ต้องไม่ซ้ำ. Host ARP หา VIP; ผู้รับผิดชอบตอบ virtual MAC. มี router สองเครื่องอย่างเดียวไม่ทำให้ gateway ที่ host ตั้งไว้สลับเอง.\nHSRP (Cisco): Active forward, Standby รอรับช่วง. Priority สูงชนะ (default100); เท่ากันใช้ real IP สูงตามเงื่อนไข election. preempt อนุญาตตัว priority สูงกว่าแย่งกลับ; ไม่เปิดอาจปล่อย Active เดิมต่อ. Active/Standby ต่อ group ไม่ได้แบ่งทุก packet ของ group ให้สองเครื่องเท่ากัน.\nVRRP (มาตรฐาน): Master/Backup; priority default100, IP owner255, 0 สื่อสละบทบาท; preemption เปิดเป็นค่าเริ่มต้นตาม VRRP. Host ใช้ VIP เช่นกัน. ระบุ version เมื่อตอบ timers/รายละเอียด.\nGLBP (Cisco): AVG เลือก/ตอบ ARP ด้วย virtual MAC ของ AVF; AVF ส่ง traffic ของ MAC ที่ได้รับมอบหมาย. Round-robin แจก MAC หมุนตาม ARP; weighted แบ่งตาม weight; host-dependent ผูก host ให้คงที่. ARP cache ทำให้ host เดียว ping ซ้ำไม่ได้พิสูจน์การกระจายหลาย AVF."
+            },
+            {
+              "title": "Protocol / Multicast / Virtual MAC",
+              "text": "HSRPv1: UDP1985 →224.0.0.2, MAC0000.0c07.acXX (XX=group hex). HSRPv2: UDP1985 →224.0.0.102, MAC0000.0c9f.fXXX (XXX=group hex), รองรับ group มากขึ้น.\nVRRP IPv4: IP112 →224.0.0.18, MAC0000.5e00.01XX (VRID hex). GLBP: UDP3222 →224.0.0.102, virtual MAC prefix0007.b4… แยก AVF. IP protocol number ไม่ใช่ TCP/UDP port. HSRPv2 กับ GLBP multicast เดียวกันแต่ UDP port ต่าง.\nReal MAC อาจต่างจาก virtual MAC; ดู ARP ที่ client + show standby/vrrp/glbp ประกอบ capture. อย่าสรุปบทบาทจาก IP ผู้ส่งเพียงค่าเดียว."
+            },
+            {
+              "title": "Timers / Tracking / Failover",
+              "text": "HSRP default hello3s/hold10s; แลปตั้ง1/4. Hold หมดหลังไม่ได้ยิน active จึง elect; hello interval ไม่เท่ากับเวลาที่ traffic ฟื้น.\nVRRPv2: Master_Down=3×Advertisement+Skew; Skew=(256−priority)/256 วินาที. Ad1s, Backup priority100 →3.609s. VRRPv3 skew ยังขึ้นกับ advertisement interval.\nTracking ลด priority เมื่อ uplink เสียแม้ LAN interface ยัง up. ตัวอย่าง110−30=80 < backup100; มี preempt ตามนโยบายจึงสลับตาม priority. อีกแลป120−30=90 <100: อย่าปนเลขต่าง scenario.\nวัด failover จาก ping ต่อเนื่อง + เวลาของ last good/first restored + control-plane capture + show role. Ping ทุก1s ให้ความละเอียดจำกัด; เวลารวมขึ้นกับ timer, election, ARP/MAC relearn และเงื่อนไขเส้นทาง. GLBP failover AVG กับ AVF มีหน้าที่ต่างกัน.\nVIP ต้อง subnet เดียวกับ host, group/version/virtual IP ตรงกันระหว่าง router; protocol ถูกบล็อกหรือ config ไม่ตรงอาจเห็น active/master ซ้ำ. ตัด uplink เพื่อตรวจ track และตัด LAN เพื่อตรวจ gateway reachability เป็นคนละการทดลอง."
+            }
+          ],
+          [
+            {
+              "title": "07 Standards / 802.1X / AAA",
+              "text": "IEEE802.3=Ethernet; 802.1Q=VLAN tagging/bridging; 802.1X=port-based network access control. 802.1X ไม่ใช่การใส่ VLAN tag. Authentication=เป็นใคร; Authorization=ทำอะไรได้; Accounting=บันทึกการใช้งาน.\nSupplicant=client ผู้ขอ, Authenticator=switch/AP คุมพอร์ต, Authentication server=เช่น RADIUS ตรวจข้อมูล. Supplicant↔Authenticator ใช้ EAP over LAN (EAPOL); Authenticator↔Server ส่ง EAP ผ่าน RADIUS. ก่อน authorize พอร์ตจำกัด user traffic ตาม policy แต่เปิดทางข้อความควบคุมที่ต้องใช้.\nSuccess → authorize พอร์ต/อาจให้ dynamic VLAN ตาม policy; Failure/timeout ต้องแยกว่า client ไม่ตอบ, EAP method/credential/cert ผิด หรือ RADIUS ไม่ถึง. EAPOL เห็นที่ access link; capture ที่ server มักเห็น RADIUS. MAC security ไม่ยืนยันตัวบุคคลแทน 802.1X. การเข้ารหัส traffic ขึ้นกับเทคโนโลยีอื่นด้วย."
+            },
+            {
+              "title": "เลือกเครื่องมือจากคำถาม",
+              "text": "ip addr/ip route/ip neigh: IP, route, ARP cache local. ping: ICMP reachability/latency; ping ไม่ผ่านอาจถูกกรองจึงไม่ยืนยันว่า host ปิด. traceroute/tracert: TTL/hop response; เครื่องหมาย * อาจไม่ตอบ probe ไม่ได้แปลว่าทุก traffic ไปไม่ได้.\narp-scan: พบ IP↔MAC ภายใน local broadcast segment; ARP ไม่ข้าม router. nmap -sn สำรวจ host; scan port ดู open/closed/filtered. Open=มีบริการตอบรับ, closed=hostตอบว่าไม่ฟัง, filtered=ตัวกรอง/ไม่มีหลักฐานพอ. MAC ของ next hop ไม่ใช่ MAC ของ host ต่าง subnet.\nตามหาเครื่อง: IP→ARP/MAC→show mac address-table address MAC→พอร์ต/VLAN→show interfaces status/switchport→CDP/ผังถ้าพอร์ตเป็น trunk แล้วไล่ switch ถัดไป. CDP รายงาน neighbor ที่รองรับ ไม่ใช่รายชื่อ host ทุกตัว."
+            },
+            {
+              "title": "Capture / Display filter / หลักฐาน",
+              "text": "tcpdump capture filter (BPF) เลือกก่อนบันทึก; Wireshark display filter เลือกแสดงหลังจับ ใช้ syntax คนละภาษา. Capture ที่ผิดตำแหน่งทำให้ไม่เห็นแม้ protocol ทำงาน.\nCapture → Display: ip proto89 → ospf หรือ ip.proto==89; ip proto88 → eigrp; udp port1985 → hsrp; ip proto112 → vrrp; udp port3222 → udp.port==3222; ether proto0x888e → eapol. host192.168.20.10 → ip.addr==192.168.20.10.\nDisplay vlan.id==10 ใช้กับเฟรมที่มี tag จริง. Capture ที่ access port โดยทั่วไป untagged; trunk/SPAN ต้องรักษา encapsulation และเลือก interface ที่เหมาะสม. Promiscuous mode ไม่ทำให้ switch ส่ง unicast ทุกพอร์ตมาให้.\nHSRP Hello/OSPF Hello ไม่พิสูจน์ data traffic ผ่านด้วยตัวมันเอง; ต้องดู ping/route/ACL/port ประกอบ. เช็ก timestamp, interface, source/destination, VLAN, protocol และทิศทางก่อนสรุป. เก็บ pcap เพื่อย้อนเทียบเหตุการณ์ก่อนตัด/หลังตัด/หลังคืนลิงก์."
+            }
+          ],
+          [
+            {
+              "title": "08 WAN / PPP / CHAP",
+              "text": "WAN เชื่อม LAN ที่อยู่ไกลผ่านผู้ให้บริการ/ลิงก์ระหว่างไซต์. เลือกจาก bandwidth, latency, availability, ราคา และรูปแบบ traffic. Point-to-point=เชื่อมสองปลาย; multipoint=หลายปลายร่วมโครงข่ายตามบริการ.\nPPP เป็น data-link protocol ของ point-to-point: LCP ตั้ง/ทดสอบ link → authentication ถ้ากำหนด → NCP ตั้ง network-layer protocol → data. IPCP เป็น NCP สำหรับ IPv4; PPP ไม่ใช่ IP routing protocol. LCP สร้างลิงก์ไม่ได้หมายความว่า IP สื่อสารได้แล้ว.\nCHAP: challenger ส่ง challenge+ID → peer hash challenge+shared secret → challenger คำนวณเทียบ → success/failure; อาจ challenge ซ้ำเป็นระยะ. Secret ไม่ถูกส่งตรง ๆ ในขั้น hash response แต่ไม่ได้เข้ารหัส payload ทั้งหมด. PAP ส่ง credential แบบ plaintext ตามกลไก ต้องพึ่งชั้นป้องกันอื่นหากใช้.\nPPP authentication ผิดให้ดู username/ชื่อ peer/secret และ link encapsulation; routing และ addressing ต้องตรวจเพิ่มหลัง link ผ่าน."
+            },
+            {
+              "title": "MPLS / VPN / การแยกกับเข้ารหัส",
+              "text": "MPLS ส่งต่อด้วย label ใน provider network: ingress PE push label, P router swap label, egress pop ตามกลไก. CE อยู่ฝั่งลูกค้า, PE เชื่อมลูกค้า, P อยู่ core. Label เลือก forwarding path ไม่ใช่เลข IP address ของ host.\nMPLS L3VPN ใช้ VRF แยก routing table ลูกค้า; แยกเครือข่าย/route ไม่ได้เข้ารหัส payload อัตโนมัติ. ถ้าต้องการ confidentiality ใช้ระบบ encryption เช่น IPsec ตามการออกแบบ.\nRemote-Access VPN: ผู้ใช้/อุปกรณ์รายบุคคลเชื่อมเข้าองค์กรจากภายนอก มี client/authentication ตามระบบ. Site-to-Site VPN: gateway เชื่อม LAN ของสำนักงาน ใช้ policy/route ระหว่างไซต์; ผู้ใช้ LAN ไม่จำเป็นต้องเปิด client เองทุกคน.\nVPN คือการเชื่อมเชิงตรรกะผ่านเครือข่ายที่ใช้ร่วมกัน; ความลับ/ความถูกต้อง/การยืนยันตัวตนขึ้นกับ protocol และ config. Tunnel up ยังต้องตรวจ selector, route, ACL และ return path ของ traffic."
+            },
+            {
+              "title": "Topology / Summary / Border router",
+              "text": "Hub-and-Spoke: สาขาผ่าน hub ดูแลง่าย ลิงก์น้อย; spoke↔spoke อ้อมผ่าน hub และ hub เป็นจุดสำคัญ. n โหนดแบบ hub เดียวต้อง n−1 ลิงก์.\nPartial Mesh: เพิ่มทางตรงเฉพาะคู่ที่ใช้บ่อย ลดการอ้อมและเพิ่มทางสำรองบางส่วน ต้นทุนปานกลาง. Full Mesh: ทุกคู่มีลิงก์ตรง n(n−1)/2; n=4→6, n=5→10; ทางตรงมากแต่ตั้งค่า/ดูแลเพิ่มเร็ว. สำรองทางกายภาพต้องมี routing ที่ใช้เส้นทางนั้นได้ด้วย.\nWAN lab: R1 EIGRP100 ↔ R2 border ↔ R3 OSPF Area0. R2 ร่วมสองโปรโตคอลแล้ว redistribute ไป–กลับพร้อม metric/tag. OSPF/EIGRP อยู่เครื่องเดียวกันเฉย ๆ ไม่ทำให้แลก route อัตโนมัติ.\nR1 เรียน LAN ฝั่ง R3 เป็น D EX; R3 เรียน LAN ฝั่ง R1 เป็น O E2 ตาม config. route tag กันนำ route ที่เคย redistribute กลับเข้าต้นทาง. สองทิศต้องมี route และ PC ต้อง gateway ถูก.\nแลปตัด R1–R2 ที่มีเส้นทางกายภาพเดียวจะขาดจนคืนลิงก์ ไม่ใช่ตัวอย่างที่ต้องสลับไป alternate path ได้เสมอ. แยก route withdrawal, convergence หลังคืน และ FHRP gateway failover ให้ชัด."
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "practical",
+    "title": "ภาคปฏิบัติ",
+    "description": "แม่แบบ Cisco IOS / Kali จากงานแลบ พร้อมค่าตัวอย่าง วิธีตรวจ และจุดแก้ปัญหา",
+    "pages": [
+      {
+        "side": "หน้า",
+        "title": "Console / MAC · VLAN / STP · ROAS / ACL",
+        "columns": [
+          [
+            {
+              "title": "เริ่ม IOS / โหมด / Save",
+              "text": "> user EXEC → enable → # privileged → conf t → (config)#; int ... เข้า interface; exit ย้อน1ชั้น, end กลับ #; show/copy ใช้ # หรือ do show ... ใน config. คำย่อด้านล่างเป็น IOS; เปลี่ยน IP/พอร์ตตามผัง. ! เป็น comment/separator; ไม่พิมพ์เครื่องหมาย / เพื่อรวมคำสั่ง.",
+              "code": "enable\nconfigure terminal\nhostname SW1\nno ip domain-lookup\nenable secret cisco123\nline console 0\n password cisco\n login\n exec-timeout 5 0\n exit\nline vty 0 4\n password cisco\n login\n exit\ninterface vlan 1\n ip address 192.168.1.2 255.255.255.0\n no shutdown\n exit\nip default-gateway 192.168.1.1\nend\ncopy running-config startup-config"
+            },
+            {
+              "title": "Week1 SW2 / ตรวจ MAC",
+              "text": "SW2 เปลี่ยน hostname และ SVI เป็น192.168.1.3/24. ให้ PC อยู่ subnet เดียวกันแล้ว ping เพื่อสร้าง source traffic. Static example ปรับ MAC/พอร์ตจริง; clear dynamic แล้วต้องส่งเฟรมเพื่อเรียนใหม่.",
+              "code": "show version\nshow running-config\nshow startup-config\nshow ip interface brief\nshow interfaces status\nshow mac address-table dynamic\nshow mac address-table aging-time\nshow mac address-table address 0011.2233.4455\nclear mac address-table dynamic\nconf t\nmac address-table static 0011.2233.4455 vlan 1 interface fa0/1\nend\nshow mac address-table static"
+            },
+            {
+              "title": "Port Security / กู้ err-disabled",
+              "text": "Fa0/1 protect; Fa0/2 restrict; Fa0/3 shutdown. maximum2 แล้วให้ MAC ที่3 ส่งเฟรม. Sticky ถูกเก็บใน run; save หลังตรวจ. คำสั่ง recovery ใช้หลังแก้ต้นเหตุ.",
+              "code": "conf t\ninterface range fa0/1 - 3\n switchport mode access\n switchport port-security\n switchport port-security maximum 2\n switchport port-security mac-address sticky\n exit\ninterface fa0/1\n switchport port-security violation protect\ninterface fa0/2\n switchport port-security violation restrict\ninterface fa0/3\n switchport port-security violation shutdown\nend\nshow port-security\nshow port-security interface fa0/3\nshow port-security address\nshow interfaces status err-disabled\nconf t\ninterface fa0/3\n shutdown\n no shutdown\nend"
+            },
+            {
+              "title": "Voice VLAN / โทรศัพท์ + PC",
+              "text": "พอร์ต data VLAN10 + voice VLAN100; สร้าง VLAN100 ก่อน. โทรศัพท์ที่รองรับ tag เสียง ส่วน PC ใช้ data VLAN.",
+              "code": "conf t\nvlan 100\nexit\ninterface fa0/5\n switchport mode access\n switchport access vlan 10\n switchport voice vlan 100\nend"
+            }
+          ],
+          [
+            {
+              "title": "VTPv2 / VLAN / Access / Trunk",
+              "text": "SW1 server; SW2,SW3 client (เปลี่ยนเฉพาะ mode). ตั้ง trunk ทุกฝั่งตามผัง: SW1Gi0/1→SW2, Gi0/2→SW3; clientGi0/1. Native Week2=999; ROAS=666 แยกคนละแลป. VLAN สร้างบน server; ตรวจ revision ก่อนต่อระบบ.",
+              "code": "conf t\nvtp domain LABCORP\nvtp password vtp123\nvtp version 2\nvtp mode server\nvlan 10\n name SALES\nvlan 20\n name IT\nvlan 30\n name HR\nvlan 999\n name NATIVE_UNUSED\nexit\ninterface gi0/1\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30,999\n switchport nonegotiate\n no shutdown\n exit\ninterface fa0/1\n switchport mode access\n switchport access vlan 10\n switchport nonegotiate\n no shutdown\nend\nshow vlan brief\nshow vtp status\nshow interfaces trunk\nshow interfaces fa0/1 switchport\nshow cdp neighbors detail"
+            },
+            {
+              "title": "Protected / Allowed / Pruning",
+              "text": "protected Fa0/1↔Fa0/2 ไม่คุยตรง แต่คุย Fa0/4 unprotected ได้ถ้า IP/VLAN ถูก. ตัวอย่างกำหนดทั้งสามพอร์ตเป็น access VLAN10. เพิ่ม allowed ด้วย add เพื่อไม่ทับรายการ; VLAN40 ต้องสร้างให้ใช้งานได้. vtp pruning ใช้ที่ server หาก image รองรับ.",
+              "code": "conf t\ninterface range fa0/1 - 2\n switchport mode access\n switchport access vlan 10\n switchport protected\nexit\ninterface fa0/4\n switchport mode access\n switchport access vlan 10\n no switchport protected\nexit\ninterface gi0/1\n switchport trunk allowed vlan add 40\nend"
+            },
+            {
+              "title": "STP / PortFast / Guards",
+              "text": "SW1 root ของ VLAN1; SW2Gi0/1 ในใบงานเป็นพอร์ต PC. Root Guard ใช้เฉพาะ downlink ที่ไม่ควรเห็น root. อย่าใช้ PortFast/Guard แบบ edge บนลิงก์ switch ระหว่างกันโดยไม่ดูบทบาท.",
+              "code": "conf t\nspanning-tree vlan 1 root primary\ninterface gi0/1\n switchport mode access\n spanning-tree portfast\n spanning-tree bpduguard enable\nend\nshow spanning-tree vlan 1\nshow spanning-tree interface gi0/1 detail\nshow spanning-tree inconsistentports\nshow interfaces status err-disabled\n! ตัวอย่าง Root Guard ที่ downlink\nconf t\ninterface fa0/10\n spanning-tree guard root\nend\nshow interfaces counters"
+            },
+            {
+              "title": "พิสูจน์ผล VLAN / STP",
+              "text": "VLAN เดียวข้าม switch ควรถึง; ต่าง VLAN ต้อง route. ตรวจ native/allowed ทั้งคู่. STP ดู Root/RP/DP/alternate แล้วตัด active link. BPDU Guard รับ BPDU → err-disabled; แก้เหตุแล้ว shut/no shut. Display: stp.type==0x00. แลป loop ใช้ no spanning-tree vlan 1; ปลดสายวงวนก่อนคืน spanning-tree vlan 1 แล้วค่อยต่อครบ. Kali ด้านล่างใช้ในวงแลปแยก.",
+              "code": "sudo yersinia dtp -attack 1 -interface eth0\nsudo yersinia -G"
+            }
+          ],
+          [
+            {
+              "title": "ROAS / L2 switch / IP plan",
+              "text": "R1 g0/0 trunk → subif10/20/99 IP .1; R2 subifเหมือนกัน IP .2. Staff192.168.10.10, Web192.168.20.10, Kali192.168.99.100 (/24); gateway=.1 ของแต่ละ subnet. R1g0/1=10.0.0.1/30, R2=.2. ตัวอย่าง switch trunkGi0/0, accessพอร์ตเปลี่ยนตามผัง.",
+              "code": "conf t\nvlan 10\nvlan 20\nvlan 99\nvlan 666\nexit\ninterface gi0/0\n switchport mode trunk\n switchport trunk native vlan 666\n switchport trunk allowed vlan 10,20,99\n switchport nonegotiate\nexit\ninterface fa0/1\n switchport mode access\n switchport access vlan 10\nend\n! R1\nconf t\ninterface g0/0\n no shutdown\ninterface g0/0.10\n encapsulation dot1Q 10\n ip address 192.168.10.1 255.255.255.0\ninterface g0/0.20\n encapsulation dot1Q 20\n ip address 192.168.20.1 255.255.255.0\ninterface g0/0.99\n encapsulation dot1Q 99\n ip address 192.168.99.1 255.255.255.0\ninterface g0/1\n ip address 10.0.0.1 255.255.255.252\n no shutdown\nexit\nrouter ospf 1\n router-id 1.1.1.1\n network 192.168.0.0 0.0.255.255 area 0\n network 10.0.0.0 0.0.0.3 area 0\nend"
+            },
+            {
+              "title": "Extended ACL ของใบงาน ROAS",
+              "text": "ใส่ R1 g0/0.10 inbound จาก Staff; ใช้ counter พิสูจน์จากต้นทาง Staff. deny ไป Kali เป็น stateless จึงอาจตัด reply ของ Staff ด้วย.",
+              "code": "conf t\nip access-list extended FILTER_STAFF_TRAFFIC\n deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443\n permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo\n deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255\n permit ip any any\nexit\ninterface g0/0.10\n ip access-group FILTER_STAFF_TRAFFIC in\nend\nshow access-lists FILTER_STAFF_TRAFFIC\nshow ip interface g0/0.10\nshow ip route\nshow ip interface brief"
+            },
+            {
+              "title": "L3 SVI / ตรวจตามชั้น",
+              "text": "ทางเลือกแทน ROAS: สร้าง VLAN บน L3 switch แล้ว SVI ตามตัวอย่าง; VLAN20 ทำซ้ำ IP192.168.20.1. ต้องมี active member/trunk ที่ทำให้ SVI up. ตรวจ host IP/mask/gateway → access VLAN → trunk → router/subif → route → ACL.",
+              "code": "conf t\nip routing\ninterface vlan 10\n ip address 192.168.10.1 255.255.255.0\n no shutdown\nend"
+            }
+          ]
+        ]
+      },
+      {
+        "side": "หลัง",
+        "title": "OSPF · HSRP / VRRP / GLBP · EIGRP–OSPF / Kali",
+        "columns": [
+          [
+            {
+              "title": "OSPF R1–R4 / Area0",
+              "text": "N=1..4: Loopback0=N.N.N.N/32; Gi0/1=192.168.100.N/24; Gi0/2=10.0.N.1/24. R1/R2 Gi0/1 priority100, R3 default1, R4 priority0. R1Gi0/3=172.16.14.1/30, R4=.2, bandwidth1544 และ P2P. ตั้ง address/no shut ทุกลิงก์ตามนี้; ตัวอย่างด้านล่าง R1.",
+              "code": "conf t\ninterface loopback 0\n ip address 1.1.1.1 255.255.255.255\ninterface gi0/1\n ip address 192.168.100.1 255.255.255.0\n ip ospf priority 100\n no shutdown\ninterface gi0/2\n ip address 10.0.1.1 255.255.255.0\n no shutdown\ninterface gi0/3\n ip address 172.16.14.1 255.255.255.252\n bandwidth 1544\n ip ospf network point-to-point\n no shutdown\nexit\nrouter ospf 1\n router-id 1.1.1.1\n auto-cost reference-bandwidth 10000\n network 192.168.100.0 0.0.0.255 area 0\n network 10.0.1.0 0.0.0.255 area 0\n network 172.16.14.0 0.0.0.3 area 0\n network 1.1.1.1 0.0.0.0 area 0\n passive-interface gi0/2\nend"
+            },
+            {
+              "title": "MD5 / ตรวจ / ตัดเส้นทาง",
+              "text": "ทุก router ตั้ง reference10000; R2/R3 ไม่ใส่ network P2P ที่ไม่มี. เปิด auth และ key ตรงกันทุก interface ที่มี OSPF neighbor; Gi0/3 ทำเฉพาะ R1/R4. Area auth ต้องพร้อมทั้ง area. R1ไปLAN R4: primary20; ตัด R4Gi0/1 → next hop172.16.14.2, cost6486; คืน no shutdown.",
+              "code": "conf t\ninterface gi0/1\n ip ospf authentication message-digest\n ip ospf message-digest-key 1 md5 CCNAlab#2024\nexit\ninterface gi0/3\n ip ospf authentication message-digest\n ip ospf message-digest-key 1 md5 CCNAlab#2024\nexit\nrouter ospf 1\n area 0 authentication message-digest\nend\nshow ip ospf neighbor\nshow ip ospf interface brief\nshow ip ospf interface gi0/3\nshow ip route ospf\nshow ip route 10.0.4.0\nshow ip protocols\n! R4: ตัดแล้วตรวจจาก R1\nconf t\ninterface gi0/1\n shutdown\n! คืนลิงก์หลังวัด\n no shutdown\nend"
+            },
+            {
+              "title": "OSPF ไม่ขึ้น / Cost ไม่ตรง",
+              "text": "ตรวจ IP/mask/area, no shutdown, passive, auth/key, hello/dead, network type; stuck ExStart/Exchange ดู MTU. 2-Way ระหว่าง DROTHER ปกติ. Priority0 ไม่เป็น DR; ตัวใหม่ priority สูงไม่แย่ง DR เดิมทันที. bandwidth1544 เป็นค่าคำนวณ Kbit/s; auto-cost10000 เป็น Mbit/s. IOSตัดเศษ cost6476 ไม่ใช่6477."
+            },
+            {
+              "title": "Common masks / Route codes",
+              "text": "/24 255.255.255.0 WC0.0.0.255; /30 .252 WC.3; /29 .248 WC.7; /22 255.255.252.0 WC0.0.3.255. C=connected, L=local, O=OSPF, O E2=external OSPF, D=EIGRP, D EX=external EIGRP. show ip route <IP> ใช้ดู route ที่ match ปลายทาง."
+            }
+          ],
+          [
+            {
+              "title": "FHRP lab / HSRPv2",
+              "text": "แต่ละแลปใช้ group1: R1 real .2 priority110, R2 real .3 priority100, VIP .1. HSRP subnet192.168.10.0/24; VRRP .20.0/24; GLBP .30.0/24. ใช้ interfaceGi0/1 ตามใบงาน. แม่แบบ R1; R2 เปลี่ยน real IP/priority. Client gateway=VIP.",
+              "code": "conf t\ninterface gi0/1\n ip address 192.168.10.2 255.255.255.0\n no shutdown\n standby version 2\n standby 1 ip 192.168.10.1\n standby 1 priority 110\n standby 1 preempt\n standby 1 timers 1 4\nend\nshow standby brief\nshow standby gi0/1"
+            },
+            {
+              "title": "VRRP / GLBP (แยกแต่ละแลป)",
+              "code": "conf t\ninterface gi0/1\n ip address 192.168.20.2 255.255.255.0\n no shutdown\n vrrp 1 ip 192.168.20.1\n vrrp 1 priority 110\n vrrp 1 preempt\n vrrp 1 timers advertise 1\nend\nshow vrrp brief\n! GLBP R1 / R2 เปลี่ยนเป็น .3 pri100\nconf t\ninterface gi0/1\n ip address 192.168.30.2 255.255.255.0\n no shutdown\n glbp 1 ip 192.168.30.1\n glbp 1 priority 110\n glbp 1 preempt\n glbp 1 load-balancing round-robin\nend\nshow glbp brief\nshow glbp"
+            },
+            {
+              "title": "Tracking (อีกตัวอย่าง group10)",
+              "text": "กรณี priority120 ลด30→90 แพ้ backup100. ถ้าใช้110จะเหลือ80. เปลี่ยน interface ให้ตรง router ที่ใช้; standby preempt ตั้งทั้งสองฝั่งที่ต้องแย่งกลับ.",
+              "code": "conf t\ntrack 1 interface g0/0/1 line-protocol\ninterface g0/0/0.10\n standby 10 priority 120\n standby 10 preempt\n standby 10 track 1 decrement 30\nend\nshow track 1\nshow standby brief"
+            },
+            {
+              "title": "Failover / ARP / Capture",
+              "text": "เริ่ม capture+ping → บันทึกบทบาท → shutdown interface ตามโจทย์ → ดู packet loss และบทบาทใหม่ → no shut → ดู preempt/recovery. Linux ping -i0.2 ได้ความละเอียดกว่าทุก1s. GLBP ทดสอบหลาย client/ARP ใหม่; hostเดียวมี ARP cache จึงไม่เห็นการแบ่งทุก packet.",
+              "code": "# Kali: เปลี่ยน interface ตาม ip -br addr\nping -i 0.2 192.168.10.1\nsudo tcpdump -ni eth0 -w failover.pcap 'udp port 1985 or icmp or arp'\n# Windows\nping -t 192.168.10.1\narp -a"
+            },
+            {
+              "title": "Filter จับคู่ให้ถูกภาษา",
+              "text": "Wireshark display: hsrp / vrrp / ospf / eigrp / stp / eapol / arp / icmp; ip.proto==89 (OSPF), ==88 (EIGRP), ==112 (VRRP); udp.port==1985 HSRP, ==3222 GLBP. BPF: ip proto 89 / ip proto 88 / ip proto 112 / udp port 1985 / udp port 3222. ใช้ or รวมในภาษาเดียวกัน."
+            }
+          ],
+          [
+            {
+              "title": "WAN 3 routers / IP plan / Routing",
+              "text": "R1g0/0 LAN10=192.168.10.1/24, g0/1=10.0.12.1/30; R2g0/0=.12.2/30, g0/1=10.0.23.1/29; R3g0/0=.23.2/29, g0/1 LAN30=192.168.30.1/24. PC1=.10.10 gw.10.1; PC2=.30.30 gw.30.1; Kali10.0.23.3/29. ใส่ IP/no shut ก่อน. คำสั่งแต่ละกลุ่มเริ่ม global config.",
+              "code": "! R1 (conf t)\nrouter eigrp 100\n eigrp router-id 1.1.1.1\n network 192.168.10.0 0.0.0.255\n network 10.0.12.0 0.0.0.3\n passive-interface g0/0\n no auto-summary\nend\n! R2 (conf t)\nrouter eigrp 100\n eigrp router-id 2.2.2.2\n network 10.0.12.0 0.0.0.3\n no auto-summary\n exit\nrouter ospf 1\n router-id 2.2.2.2\n network 10.0.23.0 0.0.0.7 area 0\nend\n! R3 (conf t)\nrouter ospf 1\n router-id 3.3.3.3\n network 10.0.23.0 0.0.0.7 area 0\n network 192.168.30.0 0.0.0.255 area 0\n passive-interface g0/1\nend"
+            },
+            {
+              "title": "R2 Redistribute / Tag กัน feedback",
+              "text": "EIGRP→OSPF ใส่ tag100 และกัน200; OSPF→EIGRP ใส่200 กัน100. Seed metric 10000 100 255 1 1500 = BW, delay, reliability, load, MTU. route-map permit20 ไม่ใส่ match จะรับส่วนที่เหลือ.",
+              "code": "conf t\nroute-map EIGRP-TO-OSPF deny 10\n match tag 200\nroute-map EIGRP-TO-OSPF permit 20\n set tag 100\nroute-map OSPF-TO-EIGRP deny 10\n match tag 100\nroute-map OSPF-TO-EIGRP permit 20\n set tag 200\nexit\nrouter ospf 1\n redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF\n exit\nrouter eigrp 100\n redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP\nend\nshow ip eigrp neighbors\nshow ip eigrp topology\nshow ip route\nshow ip protocols\nshow route-map"
+            },
+            {
+              "title": "Kali / พิสูจน์ host–service–VLAN",
+              "text": "เปลี่ยน eth0 ให้ตรงจริง; arp-scan อยู่ local LAN. nmap ใช้ตรวจ server ในแลป. เห็น VLAN tag ต้องจับ trunk/SPAN ที่รักษา tag. คำสั่ง shell ขึ้นบรรทัดใหม่ในแผ่นเพราะยาว ให้พิมพ์ต่อเป็นคำสั่งเดียวตามกรอบ.",
+              "code": "ip -br addr\nip route\nip neigh\nfping -a -g 192.168.10.0/24\nsudo tcpdump -i eth0 -nn arp\nping -c 4 192.168.20.10\ntraceroute -n 192.168.30.30\nsudo arp-scan --interface=eth0 --localnet\nnmap -sn 192.168.10.0/24\nsudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10\nsudo tcpdump -ni eth0 -w routing_control.pcap 'ip proto 88 or ip proto 89'\nsudo tshark -i eth0 -Y vlan -T fields -e frame.number -e vlan.id -e ip.src -e ip.dst"
+            },
+            {
+              "title": "ตรวจปลายทาง / คืนค่า / Save",
+              "text": "R1 ต้องเห็น D EX192.168.30.0/24; R3 เห็น O E2 192.168.10.0/24. ping PC1↔PC2 และ traceroute ไป–กลับ. ตัด R1g0/1 ประมาณ20sแล้ว no shut; ผังนี้ไม่มี alternate path จึงขาดจนคืนลิงก์. ตรวจ neighbor/route กลับมา จากนั้น copy run start ทุกอุปกรณ์. ถ้าไม่ผ่าน: L1→VLAN→IP/mask/gateway→neighbor→route ไป–กลับ→ACL→capture."
+            }
+          ]
+        ]
+      }
+    ]
+  }
+]

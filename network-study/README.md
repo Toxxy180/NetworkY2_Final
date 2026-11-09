@@ -20,6 +20,22 @@ The question bank is newly written practice material, not the instructor's actua
 
 ## Content boundary
 
+## Openbook A4 sheets
+
+`#/openbook/theory` and `#/openbook/practical` each contain two A4 portrait pages (front/back), intended as dense handwriting references. Screen text stays larger and reflows on mobile. The print stylesheet uses four columns for theory and three for CLI practice, with 6 mm margins and long-edge duplex instructions. Print/PDF sizes are independent of the reader's theme and font preference.
+
+Edit `content/openbook.json`; render and print behavior live in `dist/openbook.js` and `dist/openbook.css`. To regenerate the PDFs, make Playwright available to Node (through the local installation or `NODE_PATH`) and use an installed Chrome:
+
+```sh
+node validate.mjs
+node generate-openbook.mjs
+node validate.mjs
+```
+
+The generator rejects overflowing columns and writes two PDFs to `../output/pdf/`, with hosting copies under `dist/`. The final validation/build embeds both PDFs as Blob downloads in the root offline page. Serve the whole `dist/` folder for the hosted version. The separate root `index.html` remains self-contained.
+
+## Content boundary
+
 1. Ethernet switching and MAC addresses
 2. VLAN, trunk, VTP and port security features
 3. STP and loop protection

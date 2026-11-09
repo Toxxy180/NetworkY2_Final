@@ -36,14 +36,29 @@ for (const [i, exam] of practicalExams.entries()) {
   assert(['ios', 'shell', 'filter'].includes(question.inputType));
  }
 }
+const openbook = JSON.parse(fs.readFileSync('content/openbook.json', 'utf8'));
+assert.deepEqual(openbook.map(set => set.id), ['theory', 'practical']);
+for (const set of openbook) {
+ assert.equal(set.pages.length, 2, 'Each Openbook sheet must have a front and back');
+ assert.deepEqual(set.pages.map(page => page.side), ['หน้า', 'หลัง']);
+ for (const page of set.pages) {
+  assert.equal(page.columns.length, set.id === 'theory' ? 4 : 3);
+  for (const column of page.columns) {
+   assert(column.length);
+   for (const block of column) assert(block.title && (block.text || block.code));
+  }
+ }
+}
 const data = 'window.CHAPTERS = '+JSON.stringify(chapters,null,2)+';\n'
- + 'window.PRACTICAL_EXAMS = '+JSON.stringify(practicalExams,null,2)+';\n';
+ + 'window.PRACTICAL_EXAMS = '+JSON.stringify(practicalExams,null,2)+';\n'
+ + 'window.OPENBOOK = '+JSON.stringify(openbook,null,2)+';\n';
 fs.writeFileSync('dist/data.js', data);
 
 // Keep the offline page at the repository root in sync with the served app.
 const asset = name => fs.readFileSync('dist/' + name, 'utf8');
 const encoded = name => fs.readFileSync('dist/' + name).toString('base64');
 const pdf = `window.pdfUrl=URL.createObjectURL(new Blob([Uint8Array.from(atob('${encoded('exam-scope.pdf')}'),c=>c.charCodeAt(0))],{type:'application/pdf'}));`;
+const openbookPDFs = 'window.OPENBOOK_PDF_URLS={'+openbook.filter(set=>fs.existsSync('dist/openbook-'+set.id+'.pdf')).map(set=>`${JSON.stringify(set.id)}:URL.createObjectURL(new Blob([Uint8Array.from(atob('${encoded('openbook-'+set.id+'.pdf')}'),c=>c.charCodeAt(0))],{type:'application/pdf'}))`).join(',')+'};';
 const template = asset('index.html');
 const deferredAssets = [...template.matchAll(/<script src="([^"]+)" defer><\/script>/g)].map(match => match[1]);
 const scripts = deferredAssets.map(name => {
@@ -51,7 +66,7 @@ const scripts = deferredAssets.map(name => {
  if (name === 'app.js') return asset(name).replaceAll('href="exam-scope.pdf"', 'href="${window.pdfUrl}"');
  return asset(name);
 });
-const script = [pdf, ...scripts].join('\n').replace(/<\/script/gi, '<\\/script');
+const script = [pdf, openbookPDFs, ...scripts].join('\n').replace(/<\/script/gi, '<\\/script');
 const offline = template
  .replace('href="favicon.svg"', () => `href="data:image/svg+xml;base64,${encoded('favicon.svg')}"`)
  .replace(/<link [^>]*href="https:\/\/fonts\.[^>]+>/g, '')
