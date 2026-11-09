@@ -2,7 +2,9 @@
 (() => {
  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const sheets = window.OPENBOOK;
- const block = item => `<section class="ob-block"><h3>${esc(item.title)}</h3>${item.text ? item.text.split('\n').map(p=>`<p>${esc(p)}</p>`).join('') : ''}${item.code ? `<pre>${esc(item.code)}</pre>` : ''}</section>`;
+ // Keep the compact text intact for print; separate sentences on screen.
+ const sentences = text => text.split(/(?<=[.!?])\s+(?=[\p{L}])/u).map(part=>`<span class="ob-sentence">${esc(part)}</span>`).join(' ');
+ const block = item => `<section class="ob-block"><h3>${esc(item.title)}</h3>${item.text ? item.text.split('\n').map(p=>`<p>${sentences(p)}</p>`).join('') : ''}${item.code ? `<pre>${esc(item.code)}</pre>` : ''}</section>`;
  function pages(set) {
   return set.pages.map((page, index) => `<article class="ob-sheet" id="ob-side-${index+1}" aria-label="${esc(set.title)} ด้าน${esc(page.side)}">
    <header class="ob-sheet-head"><div><b>NETWORK / OPENBOOK</b><h2>${esc(set.title)} · ด้าน${esc(page.side)}</h2></div><div><strong>A4 · ${index+1}/2</strong><span>01076040</span></div></header>

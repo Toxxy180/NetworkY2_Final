@@ -22,6 +22,8 @@ The question bank is newly written practice material, not the instructor's actua
 
 ## Openbook A4 sheets
 
+Screen typography is centralized in `dist/typography.css`. Author each lesson `body` item as one paragraph; use `**bold**` for key terms and backticks for inline commands. Lab `body` items render as an ordered preparation/work sequence. Quiz explanations support blank lines between paragraphs. Screen-only rules and the Openbook sentence spans preserve the compact A4 print layout.
+
 `#/openbook/theory` and `#/openbook/practical` each contain two A4 portrait pages (front/back), intended as dense handwriting references. Screen text stays larger and reflows on mobile. The print stylesheet uses four columns for theory and three for CLI practice, with 6 mm margins and long-edge duplex instructions. Print/PDF sizes are independent of the reader's theme and font preference.
 
 Edit `content/openbook.json`; render and print behavior live in `dist/openbook.js` and `dist/openbook.css`. To regenerate the PDFs, make Playwright available to Node (through the local installation or `NODE_PATH`) and use an installed Chrome:

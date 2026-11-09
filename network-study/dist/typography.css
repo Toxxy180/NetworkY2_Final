@@ -1,0 +1,78 @@
+/* Reading styles are screen-only so that the compact A4 sheets keep their layout. */
+@media screen {
+ :root{--reader-font:Tahoma,'Noto Sans Thai','Leelawadee UI',system-ui,sans-serif;--reader-mono:Consolas,'Cascadia Code',Tahoma,monospace;font-family:var(--reader-font)}
+ body,button,input,select,textarea,.reader-trigger,.reader-option{font-family:var(--reader-font)}
+ h1,h2,h3,h4{letter-spacing:normal;text-wrap:pretty;font-weight:700}
+ p,li,td,th{word-break:normal;line-break:auto;overflow-wrap:break-word;text-align:start}
+ :root .diagram text{font-family:var(--reader-font)}
+ #main .lead{font-size:calc(16px + var(--font-step,0px));line-height:1.9;max-width:76ch}
+ #main .reading{padding:32px 36px}
+ #main .reading p,#main .reading li{font-size:calc(17px + var(--font-step,0px));line-height:1.95;letter-spacing:normal}
+ #main .reading p{margin:0 0 1.1em;max-width:74ch}
+ #main .reading p+p{margin-top:.35em}
+ #main .reading :is(ul,ol){margin:16px 0 24px;padding-inline-start:1.6em;max-width:76ch}
+ #main .reading li{padding-inline-start:.25em;margin-block:0 12px}
+ #main .reading li:last-child{margin-bottom:0}
+ #main .reading strong{font-weight:700}
+ #main .lesson-section{margin-bottom:40px;padding-bottom:36px;scroll-margin-top:112px}
+ #main .lesson-section>h2{font-size:calc(25px + var(--font-step,0px));line-height:1.55;border-inline-start:4px solid var(--blue);padding-inline-start:14px;margin:0 0 24px}
+ #main .lesson-section h3{font-size:calc(19px + var(--font-step,0px));line-height:1.65;margin-block:24px 12px}
+ #main .reading .objectives{padding:20px 24px;margin-bottom:36px}
+ #main .objectives strong{display:block;font-size:calc(16px + var(--font-step,0px));line-height:1.8}
+ #main .reading .objectives li{font-size:calc(15px + var(--font-step,0px));line-height:1.85}
+ #main .example{padding:22px 24px;margin-block:26px}
+ #main .example h3{margin:0 0 14px}
+ #main .reading .example p{font-size:calc(16px + var(--font-step,0px));line-height:1.95}
+ #main .example p:last-child{margin-bottom:0}
+ #main .pitfall{font-size:calc(16px + var(--font-step,0px));line-height:1.95;padding:20px 22px;margin-block:26px}
+ #main .pitfall>strong{display:block;margin-bottom:10px}
+ #main .table-scroll{margin-block:26px}
+ #main .table-scroll :is(th,td){font-size:calc(15px + var(--font-step,0px));line-height:1.85;padding:15px 17px}
+ #main .table-scroll td{min-width:140px}
+ #main pre,#main code,#main kbd,#main .cli-answer{font-family:var(--reader-mono)}
+ #main pre{font-size:calc(14px + var(--font-step,0px));line-height:1.75;padding:20px 22px;white-space:pre;overflow:auto;word-break:normal;overflow-wrap:normal}
+ #main :is(p,li,td) code{font-size:.92em;line-height:inherit;overflow-wrap:anywhere}
+ #main .code-header{font-size:calc(13px + var(--font-step,0px));line-height:1.8;gap:14px;align-items:flex-start;margin-top:24px}
+ #main .code-header>span{font-weight:700}
+ #main .lab-answer>summary{font-size:calc(16px + var(--font-step,0px));line-height:1.8;padding-block:15px}
+ #main .lab-brief{margin-block:0 26px}
+ #main .lab-brief h3{color:var(--blue);margin-top:0;font-size:calc(17px + var(--font-step,0px))}
+ #main .reading .lab-brief ol{margin-top:14px}
+ #main .lab-brief li::marker{color:var(--blue);font-weight:700}
+ #main .command-block+.command-block{margin-top:28px}
+ #main .lab-verify li,#main .lab-objectives li{line-height:1.9}
+ #main .question-panel{padding:30px 34px}
+ #main .question-panel h2{font-size:calc(22px + var(--font-step,0px));line-height:1.85;margin-bottom:26px;max-width:66ch}
+ #main .option{font-size:calc(16px + var(--font-step,0px));line-height:1.9;align-items:flex-start;padding:16px 18px}
+ #main .option .letter{flex-shrink:0;margin-top:2px}
+ #main .feedback,#main .feedback p,#main .review-body p{font-size:calc(16px + var(--font-step,0px));line-height:1.95}
+ #main .feedback p,#main .review-body p{margin-block:12px;max-width:74ch}
+ #main .feedback p:last-child{margin-bottom:0}
+ #main .command-context,#main .answer-label{font-size:calc(15px + var(--font-step,0px));line-height:1.9}
+ #main .cli-answer{font-size:calc(15px + var(--font-step,0px));line-height:1.8}
+ #main .review-item summary{font-size:calc(16px + var(--font-step,0px));line-height:1.85}
+ #main .diagram figcaption,#main .diagram-output{font-size:calc(14px + var(--font-step,0px));line-height:1.9}
+ #main .chapter-card p,#main .quiz-choice p{font-size:calc(14px + var(--font-step,0px));line-height:1.85}
+ #main .scope-note,#main .sources,#main .note{font-size:calc(14px + var(--font-step,0px));line-height:1.95}
+ #main .lesson-contents a{line-height:1.85}
+ #main .ob-block h3{font-size:calc(18px + var(--font-step,0px));line-height:1.7;padding:10px 12px;margin-bottom:16px}
+ #main .ob-columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+ #main .ob-block p{font-size:calc(16px + var(--font-step,0px));line-height:1.95;margin-bottom:18px}
+ #main .ob-sentence{display:block}
+ #main .ob-sentence+.ob-sentence{margin-top:8px}
+ #main .ob-block{margin-bottom:32px}
+ #main .ob-block pre{font-size:calc(13px + var(--font-step,0px));line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+ #main .ne-context,#main .ne-detail p{font-size:calc(16px + var(--font-step,0px));line-height:1.95}
+ @media(max-width:760px){
+  #main .reading{padding:24px 20px}
+  #main .lesson-section>h2{font-size:calc(22px + var(--font-step,0px));padding-inline-start:11px;margin-bottom:22px}
+  #main .reading p,#main .reading li{font-size:calc(16px + var(--font-step,0px));line-height:1.95}
+  #main .question-panel{padding:24px 20px}
+  #main .question-panel h2{font-size:calc(20px + var(--font-step,0px))}
+  #main .option{font-size:calc(15px + var(--font-step,0px));padding:14px;gap:11px}
+  #main .example,#main .pitfall{padding:18px}
+  #main .reading .objectives{padding:18px}
+  #main pre{padding:18px 16px;font-size:calc(13px + var(--font-step,0px))}
+  #main .ob-columns{grid-template-columns:minmax(0,1fr);gap:18px}
+ }
+}

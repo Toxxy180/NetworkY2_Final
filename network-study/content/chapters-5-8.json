@@ -15,8 +15,10 @@
       {
         "title": "เริ่มจากภาพใหญ่: Routing ต่างจาก Switching อย่างไร",
         "body": [
-          "สวิตช์ Layer 2 ส่งเฟรมภายใน VLAN โดยดู Destination MAC ส่วนเราเตอร์เลือกทางไป IP Network ปลายทางจาก Routing Table เมื่อเครือข่ายใหญ่ขึ้น การใส่ Static Route ทุกเส้นด้วยมือจะดูแลยาก จึงใช้ Routing Protocol ช่วยแลกเปลี่ยนข้อมูลเส้นทาง",
-          "OSPF เป็น Link-State Protocol: เราเตอร์แลกเปลี่ยนข้อมูลสถานะลิงก์เป็น LSA สร้างฐานข้อมูล LSDB แล้วคำนวณเส้นทางด้วย SPF เปรียบเหมือนแต่ละตัวมีแผนที่ของ Area แล้วเลือกทางของตนเอง ส่วน EIGRP ใช้อัลกอริทึม DUAL เพื่อเลือกเส้นทางและรักษาทางสำรองที่ยืนยันว่าไม่วนลูป"
+          "สวิตช์ Layer 2 ส่งเฟรมภายใน VLAN โดยดู Destination MAC ส่วนเราเตอร์เลือกทางไป IP Network ปลายทางจาก Routing Table",
+          "เมื่อเครือข่ายใหญ่ขึ้น การใส่ Static Route ทุกเส้นด้วยมือจะดูแลยาก จึงใช้ Routing Protocol ช่วยแลกเปลี่ยนข้อมูลเส้นทาง",
+          "**OSPF** เป็น Link-State Protocol: เราเตอร์แลกเปลี่ยนข้อมูลสถานะลิงก์เป็น LSA สร้างฐานข้อมูล LSDB แล้วคำนวณเส้นทางด้วย SPF เปรียบเหมือนแต่ละตัวมีแผนที่ของ Area แล้วเลือกทางของตนเอง",
+          "ส่วน **EIGRP** ใช้อัลกอริทึม DUAL เพื่อเลือกเส้นทางและรักษาทางสำรองที่ยืนยันว่าไม่วนลูป"
         ],
         "diagram": "routing",
         "table": {
@@ -44,8 +46,9 @@
       {
         "title": "OSPF ใช้ IP Protocol 89 และเริ่มรู้จักกันด้วย Hello",
         "body": [
-          "OSPF สำหรับ IPv4 ส่งข้อมูลตรงใน IP โดยระบุ Protocol Number 89 จึงไม่มี TCP Port 89 หรือ UDP Port 89 ให้หา Hello ใช้ค้นหาเพื่อนบ้านและบอกว่ายังทำงานอยู่",
-          "บนลิงก์เดียวกัน ตรวจ Area, Hello/Dead Timer, Authentication และการตั้งค่า IP/Network Type ให้สอดคล้องกัน รวมถึง Router ID ที่ต้องไม่ซ้ำ หากเป็น Ethernet ปกติควรอยู่ subnet เดียวกัน ค่า OSPF Process ID เป็นหมายเลขภายในเครื่อง ไม่จำเป็นต้องเท่ากันระหว่างเราเตอร์",
+          "**OSPF** สำหรับ IPv4 ส่งข้อมูลตรงใน IP โดยระบุ Protocol Number 89 จึงไม่มี TCP Port 89 หรือ UDP Port 89 ให้หา Hello ใช้ค้นหาเพื่อนบ้านและบอกว่ายังทำงานอยู่",
+          "บนลิงก์เดียวกัน ตรวจ Area, Hello/Dead Timer, Authentication และการตั้งค่า IP/Network Type ให้สอดคล้องกัน รวมถึง Router ID ที่ต้องไม่ซ้ำ หากเป็น Ethernet ปกติควรอยู่ subnet เดียวกัน",
+          "ค่า OSPF Process ID เป็นหมายเลขภายในเครื่อง ไม่จำเป็นต้องเท่ากันระหว่างเราเตอร์",
           "Neighbor ไม่จำเป็นต้องขึ้น FULL กับทุกตัวบน Broadcast Network: DROTHER สองตัวอาจอยู่ 2-WAY ตามปกติ แต่สร้าง Full Adjacency กับ DR/BDR ดังนั้นอ่านบทบาทและ Network Type ก่อนสรุปว่าระบบเสีย"
         ],
         "code": "show ip ospf neighbor\nshow ip ospf interface GigabitEthernet0/0\nshow ip ospf\nshow ip route ospf",
@@ -105,7 +108,8 @@
         "title": "DR/BDR: ตัวประสานงานบน Multiaccess Network",
         "body": [
           "บน Broadcast Network เช่น Ethernet ที่มีเราเตอร์หลายตัว OSPF เลือก Designated Router (DR) และ Backup Designated Router (BDR) เพื่อลดจำนวนความสัมพันธ์ที่ต้องแลกเปลี่ยนฐานข้อมูล ไม่ได้บังคับให้ข้อมูลผู้ใช้ทุกแพ็กเก็ตวิ่งผ่าน DR",
-          "เมื่อมีการเลือกตั้ง เปรียบเทียบ Interface Priority สูงสุดก่อน แล้วใช้ Router ID สูงสุดตัดสินเมื่อ Priority เท่ากัน ค่า Priority 0 ไม่มีสิทธิ์เป็น DR หรือ BDR ส่วน Point-to-Point Network ไม่มีการเลือก DR/BDR",
+          "เมื่อมีการเลือกตั้ง เปรียบเทียบ Interface Priority สูงสุดก่อน แล้วใช้ Router ID สูงสุดตัดสินเมื่อ Priority เท่ากัน",
+          "ค่า Priority 0 ไม่มีสิทธิ์เป็น DR หรือ BDR ส่วน Point-to-Point Network ไม่มีการเลือก DR/BDR",
           "การเลือกตั้ง OSPF โดยทั่วไปไม่ preempt: เราเตอร์ใหม่ที่มี Priority สูงกว่าไม่ได้แย่ง DR ที่ยังทำงานปกติทันที โจทย์ที่ถามว่าใครชนะต้องดูว่าเป็นการเลือกตั้งใหม่หรือมี DR เดิมอยู่แล้ว"
         ],
         "table": {
@@ -141,9 +145,11 @@
       {
         "title": "Cost และ Reference Bandwidth: ทางสั้นคือค่า Cost รวมต่ำ",
         "body": [
-          "OSPF เลือกเส้นทางจากผลรวม Cost ของ interface ขาออกตามเส้นทาง ไม่ได้นับจำนวนเราเตอร์เพียงอย่างเดียว ในภาพ R1 ไป R3 โดยตรง Cost 30 แต่ผ่าน R2 มี Cost 10 + 10 = 20 จึงเลือกผ่าน R2",
-          "ค่า Cost อัตโนมัติสัมพันธ์กับ Reference Bandwidth ÷ Interface Bandwidth โดยใช้หน่วยให้ตรงกัน และโดยทั่วไปค่าต่ำสุดเป็น 1 หากใช้ reference 100 Mbps ลิงก์ 100 Mbps และ 1 Gbps อาจได้ Cost 1 เหมือนกัน จึงควรปรับ reference ให้เหมาะกับความเร็วเครือข่ายและให้สอดคล้องทุกเราเตอร์",
-          "หากเส้นทางที่มีคุณสมบัติเทียบกันได้มี Cost เท่ากัน OSPF อาจติดตั้งหลาย next hop เพื่อทำ Equal-Cost Multipath (ECMP) ตามขีดจำกัดอุปกรณ์ คำสั่ง bandwidth เป็นข้อมูลสำหรับการคำนวณ ไม่ใช่การเปลี่ยนความเร็วจริงของสาย"
+          "**OSPF** เลือกเส้นทางจากผลรวม Cost ของ interface ขาออกตามเส้นทาง ไม่ได้นับจำนวนเราเตอร์เพียงอย่างเดียว ในภาพ R1 ไป R3 โดยตรง Cost 30 แต่ผ่าน R2 มี Cost 10 + 10 = 20 จึงเลือกผ่าน R2",
+          "ค่า Cost อัตโนมัติสัมพันธ์กับ Reference Bandwidth ÷ Interface Bandwidth โดยใช้หน่วยให้ตรงกัน และโดยทั่วไปค่าต่ำสุดเป็น 1",
+          "หากใช้ reference 100 Mbps ลิงก์ 100 Mbps และ 1 Gbps อาจได้ Cost 1 เหมือนกัน จึงควรปรับ reference ให้เหมาะกับความเร็วเครือข่ายและให้สอดคล้องทุกเราเตอร์",
+          "หากเส้นทางที่มีคุณสมบัติเทียบกันได้มี Cost เท่ากัน OSPF อาจติดตั้งหลาย next hop เพื่อทำ Equal-Cost Multipath (ECMP) ตามขีดจำกัดอุปกรณ์",
+          "คำสั่ง bandwidth เป็นข้อมูลสำหรับการคำนวณ ไม่ใช่การเปลี่ยนความเร็วจริงของสาย"
         ],
         "diagram": "routing",
         "code": "router ospf 1\n auto-cost reference-bandwidth 10000\n!\ninterface GigabitEthernet0/0\n ip ospf cost 10",
@@ -159,16 +165,21 @@
         "title": "Authentication: ตรวจว่าข้อความมาจากผู้ที่รู้กุญแจ",
         "body": [
           "MD5 Authentication ในบริบท OSPFv2 แบบที่พบในแลปใช้กุญแจร่วมสร้าง Digest เพื่อตรวจสอบความถูกต้องของข้อความและการยืนยันแหล่งส่ง ผู้รับคำนวณเทียบก่อนยอมรับ",
-          "สิ่งนี้ไม่ได้เข้ารหัสแพ็กเก็ต OSPF ทั้งชุด ผู้ที่จับแพ็กเก็ตยังอาจอ่านข้อมูลเส้นทางที่ส่งอยู่ได้ จึงต้องแยก Authentication/Integrity ออกจาก Confidentiality หาก key หรือวิธี authentication ไม่ตรงกัน Neighbor อาจตั้งไม่สำเร็จ"
+          "สิ่งนี้ไม่ได้เข้ารหัสแพ็กเก็ต OSPF ทั้งชุด ผู้ที่จับแพ็กเก็ตยังอาจอ่านข้อมูลเส้นทางที่ส่งอยู่ได้ จึงต้องแยก Authentication/Integrity ออกจาก Confidentiality",
+          "หาก key หรือวิธี authentication ไม่ตรงกัน Neighbor อาจตั้งไม่สำเร็จ"
         ],
         "pitfall": "คำตอบว่า ‘เปิด MD5 แล้วไม่มีใครอ่าน Packet ได้’ ผิด: Digest ไม่เท่ากับ Encryption และ MD5 เป็นเทคโนโลยีเก่าที่อธิบายตามบริบทแลป"
       },
       {
         "title": "EIGRP: 3 ตาราง และเงื่อนไขทางสำรอง",
         "body": [
-          "Neighbor Table ระบุเพื่อนบ้านที่เชื่อมความสัมพันธ์ได้ Topology Table เก็บข้อมูลเส้นทางที่เรียนรู้ ส่วน Routing Table เก็บเส้นทางที่ได้รับเลือกใช้งาน Successor คือ next hop ของทางหลักที่ดีที่สุด",
-          "Reported Distance (RD) คือระยะทางที่เพื่อนบ้านประกาศว่าตนไปถึงปลายทาง ส่วน Feasible Distance (FD) เป็นค่าระยะทางอ้างอิงที่ DUAL ใช้ตรวจความเป็นไปได้ของเส้นทาง โดยละเอียดคือค่าต่ำสุดนับจากครั้งล่าสุดที่เส้นทางเข้าสู่สถานะ Passive",
-          "เพื่อนบ้านที่จะเป็น Feasible Successor ต้องผ่าน Feasibility Condition: RD < FD อย่างเคร่งครัด จึงมีทางสำรองที่รับรองว่าไม่วนกลับมาหาเรา หากไม่ผ่านไม่ได้แปลว่าเส้นทางนั้นวนจริงเสมอไป แต่ยังใช้เป็นทางสำรองทันทีแบบที่ผ่านเงื่อนไขไม่ได้ และอาจต้อง Query/คำนวณใหม่เมื่อทางหลักล่ม"
+          "**Neighbor Table:** เก็บเพื่อนบ้านที่สร้างความสัมพันธ์ได้",
+          "**Topology Table:** เก็บข้อมูลเส้นทางที่เรียนรู้",
+          "**Routing Table:** เก็บเส้นทางที่ได้รับเลือกใช้งาน; Successor คือ next hop ของทางหลักที่ดีที่สุด",
+          "**Reported Distance (RD)** คือระยะทางที่เพื่อนบ้านประกาศว่าตนไปถึงปลายทาง",
+          "ส่วน **Feasible Distance (FD)** เป็นค่าระยะทางอ้างอิงที่ DUAL ใช้ตรวจความเป็นไปได้ของเส้นทาง โดยละเอียดคือค่าต่ำสุดนับจากครั้งล่าสุดที่เส้นทางเข้าสู่สถานะ Passive",
+          "เพื่อนบ้านที่จะเป็น Feasible Successor ต้องผ่าน Feasibility Condition: RD < FD อย่างเคร่งครัด จึงมีทางสำรองที่รับรองว่าไม่วนกลับมาหาเรา",
+          "หากไม่ผ่านไม่ได้แปลว่าเส้นทางนั้นวนจริงเสมอไป แต่ยังใช้เป็นทางสำรองทันทีแบบที่ผ่านเงื่อนไขไม่ได้ และอาจต้อง Query/คำนวณใหม่เมื่อทางหลักล่ม"
         ],
         "table": {
           "headers": [
@@ -200,9 +211,11 @@
       {
         "title": "Route Summarization และ Redistribution",
         "body": [
-          "Summarization คือรวม prefix ที่อยู่ติดกันและมีบิตนำหน้าร่วมกันเพื่อลดจำนวนรายการ เช่น 172.16.8.0/24, .9.0/24, .10.0/24 และ .11.0/24 รวมพอดีเป็น 172.16.8.0/22 โดย mask คือ 255.255.252.0 ครอบคลุม 172.16.8.0–172.16.11.255",
+          "**Summarization** คือรวม prefix ที่อยู่ติดกันและมีบิตนำหน้าร่วมกันเพื่อลดจำนวนรายการ",
+          "เช่น 172.16.8.0/24, .9.0/24, .10.0/24 และ .11.0/24 รวมพอดีเป็น 172.16.8.0/22 โดย mask คือ 255.255.252.0 ครอบคลุม 172.16.8.0–172.16.11.255",
           "วิธีคิดคือ octet ที่สาม: 8 = 00001000 และ 11 = 00001011 มี 6 บิตแรกร่วมกัน บวก 16 บิตของสอง octet แรกเป็น /22 การรวมต้องตรวจทั้งขอบเขตและ alignment ไม่ใช่แค่ลด prefix ตามจำนวนเครือข่าย",
-          "Redistribution คือให้เราเตอร์ชายแดนนำเส้นทางจากระบบหนึ่งเข้าอีกระบบ เช่น OSPF ↔ EIGRP ต้องกำหนด metric เริ่มต้นให้โปรโตคอลที่ต้องการ และควบคุม prefix/route tag เพื่อไม่ให้เส้นทางที่นำออกถูกนำกลับซ้ำเป็น Route Feedback โดยเฉพาะเมื่อมีหลายจุดเชื่อมต่อ"
+          "**Redistribution** คือให้เราเตอร์ชายแดนนำเส้นทางจากระบบหนึ่งเข้าอีกระบบ เช่น OSPF ↔ EIGRP",
+          "ต้องกำหนด metric เริ่มต้นให้โปรโตคอลที่ต้องการ และควบคุม prefix/route tag เพื่อไม่ให้เส้นทางที่นำออกถูกนำกลับซ้ำเป็น Route Feedback โดยเฉพาะเมื่อมีหลายจุดเชื่อมต่อ"
         ],
         "example": {
           "title": "ผูกกับ Lab ที่มี R1–R3",
@@ -339,7 +352,7 @@
           "R1 ต้องกลายเป็น DR ก่อนจึงใช้ทางตรงได้"
         ],
         "answer": 2,
-        "explanation": "ทางตรง Cost20 เท่ากับทางผ่าน R2 Cost10+10 จึงเป็น Equal-Cost Paths และอาจติดตั้งหลาย next hop ตามขีดจำกัดอุปกรณ์",
+        "explanation": "ทางตรง Cost 20 เท่ากับทางผ่าน R2 Cost 10+10 จึงเป็น Equal-Cost Paths และอาจติดตั้งหลาย next hop ตามขีดจำกัดอุปกรณ์",
         "level": "วิเคราะห์",
         "diagram": "routing"
       },
@@ -392,7 +405,7 @@
           "ไม่มีใครผ่าน"
         ],
         "answer": 2,
-        "explanation": "เงื่อนไขเป็น RD < FD แบบน้อยกว่าอย่างเคร่งครัด A:900<1000 ผ่าน แต่ B เท่ากับ1000 จึงไม่ผ่าน",
+        "explanation": "เงื่อนไขเป็น RD < FD แบบน้อยกว่าอย่างเคร่งครัด A:900<1000 ผ่าน แต่ B เท่ากับ 1000 จึงไม่ผ่าน",
         "level": "ประยุกต์"
       },
       {
@@ -405,7 +418,7 @@
           "172.16.8.0/22"
         ],
         "answer": 3,
-        "explanation": "4 เครือข่าย /24 ใช้บิต host เพิ่ม2บิตจึงเป็น /22 และเริ่มที่ขอบเขต8 ครอบคลุม octetที่สาม8–11",
+        "explanation": "4 เครือข่าย /24 ใช้บิต host เพิ่ม 2 บิตจึงเป็น /22 และเริ่มที่ขอบเขต 8 ครอบคลุม octet ที่สาม 8–11",
         "level": "ประยุกต์"
       },
       {
@@ -413,7 +426,7 @@
         "prompt": "มี Redistribution OSPF ↔ EIGRP หลายจุด เส้นทางถูกนำกลับเข้าโปรโตคอลเดิม ควรจัดการอย่างไร",
         "options": [
           "ใช้ policy/filter หรือ route tag ควบคุมการนำเส้นทางกลับ และกำหนด metric ให้เหมาะสม",
-          "เพิ่มทุก metric ให้เป็น0เสมอ",
+          "เพิ่มทุก metric ให้เป็น 0 เสมอ",
           "เปิด Trunk ทุกพอร์ต",
           "ปิดการตรวจ Neighbor ทั้งหมด"
         ],
@@ -453,8 +466,10 @@
       {
         "title": "ทำไมมีเราเตอร์สองตัวแล้ว ยังต้องมี Virtual Gateway",
         "body": [
-          "เครื่องลูกข่ายทั่วไปตั้ง Default Gateway เป็น IP หนึ่งค่า หากค่านั้นเป็น IP จริงของเราเตอร์ที่ล่ม การมีเราเตอร์ตัวที่สองอยู่ใน VLAN ไม่ได้ทำให้ลูกข่ายสลับมาใช้อัตโนมัติ First-Hop Redundancy Protocol (FHRP) จึงสร้าง Virtual IP และ Virtual MAC ให้เราเตอร์หลายตัวร่วมรับผิดชอบ",
-          "ในภาพ Client 192.168.10.10 ใช้ Default Gateway 192.168.10.1 ซึ่งเป็น Virtual IP ส่วน R1 และ R2 ใช้ IP จริง .2 และ .3 เมื่อเครื่องหลักล่ม เครื่องสำรองรับหน้าที่ Virtual Gateway ต่อ ลูกข่ายจึงคงค่า Gateway เดิมได้"
+          "เครื่องลูกข่ายทั่วไปตั้ง Default Gateway เป็น IP หนึ่งค่า หากค่านั้นเป็น IP จริงของเราเตอร์ที่ล่ม การมีเราเตอร์ตัวที่สองอยู่ใน VLAN ไม่ได้ทำให้ลูกข่ายสลับมาใช้อัตโนมัติ",
+          "First-Hop Redundancy Protocol (FHRP) จึงสร้าง Virtual IP และ Virtual MAC ให้เราเตอร์หลายตัวร่วมรับผิดชอบ",
+          "ในภาพ Client 192.168.10.10 ใช้ Default Gateway 192.168.10.1 ซึ่งเป็น Virtual IP",
+          "ส่วน R1 และ R2 ใช้ IP จริง .2 และ .3 เมื่อเครื่องหลักล่ม เครื่องสำรองรับหน้าที่ Virtual Gateway ต่อ ลูกข่ายจึงคงค่า Gateway เดิมได้"
         ],
         "diagram": "gateway",
         "example": {
@@ -469,16 +484,18 @@
       {
         "title": "HSRP: Active/Standby, Priority และ Preempt",
         "body": [
-          "HSRP เป็นเทคโนโลยีของ Cisco โดย Active Router ส่งต่อข้อมูลแทน Virtual Gateway และ Standby Router รอรับช่วง Priority สูงกว่ามีสิทธิ์เหนือกว่าในการเลือกบทบาทตามสถานการณ์",
-          "Preempt คืออนุญาตให้เราเตอร์ที่เหมาะสมกว่ากลับมารับตำแหน่ง Active จากตัวที่กำลังทำงานอยู่ HSRP โดยทั่วไปไม่เปิด preempt เป็นค่าเริ่มต้น ดังนั้น R1 Priority110 กลับมาออนไลน์หลัง R2 Priority100 รับช่วงแล้ว ไม่ได้แปลว่า R1 จะได้ Active คืนทันที",
-          "ถ้าลิงก์ LAN ของ R1 ยัง up แต่ uplink ด้านนอกล่ม การดูเฉพาะ Hello ระหว่าง R1/R2 อาจไม่พบปัญหา จึงใช้ Tracking ลด Priority ตามสถานะ uplink หรือ object ที่ตรวจสอบ และให้เราเตอร์ที่ดีกว่ารับช่วงตามนโยบาย preempt"
+          "**HSRP** เป็นเทคโนโลยีของ Cisco โดย Active Router ส่งต่อข้อมูลแทน Virtual Gateway และ Standby Router รอรับช่วง Priority สูงกว่ามีสิทธิ์เหนือกว่าในการเลือกบทบาทตามสถานการณ์",
+          "**Preempt** คืออนุญาตให้เราเตอร์ที่เหมาะสมกว่ากลับมารับตำแหน่ง Active จากตัวที่กำลังทำงานอยู่",
+          "**HSRP** โดยทั่วไปไม่เปิด preempt เป็นค่าเริ่มต้น ดังนั้น R1 Priority 110 กลับมาออนไลน์หลัง R2 Priority 100 รับช่วงแล้ว ไม่ได้แปลว่า R1 จะได้ Active คืนทันที",
+          "ถ้าลิงก์ LAN ของ R1 ยัง up แต่ uplink ด้านนอกล่ม การดูเฉพาะ Hello ระหว่าง R1/R2 อาจไม่พบปัญหา",
+          "จึงใช้ Tracking ลด Priority ตามสถานะ uplink หรือ object ที่ตรวจสอบ และให้เราเตอร์ที่ดีกว่ารับช่วงตามนโยบาย preempt"
         ],
         "diagram": "gateway",
         "code": "! ตัวอย่าง Cisco IOS บน R1 สำหรับ HSRPv2\ninterface GigabitEthernet0/0\n ip address 192.168.10.2 255.255.255.0\n standby version 2\n standby 10 ip 192.168.10.1\n standby 10 priority 110\n standby 10 preempt\n!\nshow standby brief",
         "example": {
           "title": "R1 มี Priority110 และถูกลดลง20",
           "body": [
-            "หลัง Tracking ตรวจพบปัญหา ค่า R1 เหลือ90 ต่ำกว่า R2 ที่100 หาก R2 เปิด preempt และเงื่อนไขอื่นพร้อม R2 สามารถรับบท Active",
+            "หลัง Tracking ตรวจพบปัญหา ค่า R1 เหลือ 90 ต่ำกว่า R2 ที่ 100 หาก R2 เปิด preempt และเงื่อนไขอื่นพร้อม R2 สามารถรับบท Active",
             "Preempt delay อาจใช้รอให้ routing/uplink พร้อมก่อนรับหน้าที่คืน เพื่อลดการสลับเร็วเกินไป"
           ]
         }
@@ -486,8 +503,10 @@
       {
         "title": "VRRP และ GLBP: สำรองกับกระจายโหลด",
         "body": [
-          "VRRP เป็นมาตรฐานเปิด ใช้ชื่อบทบาท Master/Backup ตามคำศัพท์ในแนวข้อสอบ Priority สูงกว่ามีสิทธิ์เป็น Master และเปิด preemption โดยค่าเริ่มต้น สำหรับ IP Address Owner ที่ใช้ IP จริงของตนเป็น Virtual IP มี Priority255 และเป็นกรณีพิเศษที่มีสิทธิ์กลับเป็น Master",
-          "GLBP ช่วยให้ลูกข่ายต่างเครื่องใช้เราเตอร์ส่งต่อคนละตัวภายใต้ Virtual IP เดียว AVG (Active Virtual Gateway) ตอบ ARP ด้วย Virtual MAC ที่แตกต่างกันตามกลไกกระจายโหลด ส่วน AVF (Active Virtual Forwarder) รับผิดชอบส่งต่อข้อมูลของ Virtual MAC นั้น",
+          "**VRRP** เป็นมาตรฐานเปิด ใช้ชื่อบทบาท Master/Backup ตามคำศัพท์ในแนวข้อสอบ Priority สูงกว่ามีสิทธิ์เป็น Master และเปิด preemption โดยค่าเริ่มต้น",
+          "สำหรับ IP Address Owner ที่ใช้ IP จริงของตนเป็น Virtual IP มี Priority 255 และเป็นกรณีพิเศษที่มีสิทธิ์กลับเป็น Master",
+          "**GLBP** ช่วยให้ลูกข่ายต่างเครื่องใช้เราเตอร์ส่งต่อคนละตัวภายใต้ Virtual IP เดียว AVG (Active Virtual Gateway) ตอบ ARP ด้วย Virtual MAC ที่แตกต่างกันตามกลไกกระจายโหลด",
+          "ส่วน AVF (Active Virtual Forwarder) รับผิดชอบส่งต่อข้อมูลของ Virtual MAC นั้น",
           "HSRP/VRRP หนึ่งกลุ่มโดยหลักมีตัวส่งต่อหลักหนึ่งตัว การทำหลายกลุ่มเพื่อแบ่ง VLAN หรือกลุ่มลูกข่ายเป็นอีกวิธีหนึ่ง แต่ต่างจากการกระจายโหลดที่ GLBP ทำในกลุ่มเดียว"
         ],
         "table": {
@@ -529,7 +548,7 @@
       {
         "title": "จำ Protocol, Multicast และ Virtual MAC โดยระบุเวอร์ชัน",
         "body": [
-          "แยก ‘IP Protocol Number’ ออกจาก ‘UDP Port’ ให้ชัดเจน HSRP IPv4 ใช้ UDP1985 ส่วน VRRP IPv4 ใช้ IP Protocol112 และ multicast224.0.0.18 จึงหาด้วย udp.port == 112 ไม่ได้",
+          "แยก ‘IP Protocol Number’ ออกจาก ‘UDP Port’ ให้ชัดเจน HSRP IPv4 ใช้ UDP 1985 ส่วน VRRP IPv4 ใช้ IP Protocol 112 และ multicast 224.0.0.18 จึงหาด้วย udp.port == 112 ไม่ได้",
           "รูปแบบ Virtual MAC ต้องผูกกับโปรโตคอลและเวอร์ชัน สำหรับ VRRP IPv4 คือ 00:00:5e:00:01:xx โดย xx เป็น VRID ในฐานสิบหก ส่วน HSRPv1 คือ 0000.0c07.acXX และ HSRPv2 คือ 0000.0c9f.fXXX"
         ],
         "table": {
@@ -541,17 +560,17 @@
           "rows": [
             [
               "HSRPv1",
-              "UDP1985 / 224.0.0.2",
+              "UDP 1985 / 224.0.0.2",
               "0000.0c07.ac0a"
             ],
             [
               "HSRPv2",
-              "UDP1985 / 224.0.0.102",
+              "UDP 1985 / 224.0.0.102",
               "0000.0c9f.f00a"
             ],
             [
               "VRRP",
-              "IP Protocol112 / 224.0.0.18",
+              "IP Protocol 112 / 224.0.0.18",
               "0000.5e00.010a"
             ]
           ]
@@ -567,9 +586,12 @@
       {
         "title": "Timer และ Convergence Time: อย่าตอบว่า Hello เท่ากับเวลาสลับ",
         "body": [
-          "ค่า HSRP ที่มักใช้เป็นค่าเริ่มต้นในแลป Cisco คือ Hello3วินาที และ Hold10วินาที ส่วน VRRP ค่า Advertisement Interval โดยทั่วไป1วินาที การประกาศว่า Master หายต้องรอหลายช่วงรวม Skew Time จึงไม่ใช่สลับภายใน1วินาทีเสมอ",
-          "สำหรับ VRRPv2, Master_Down_Interval = 3 × Advertisement_Interval + (256 − Priority)/256 วินาที เช่น Interval1 และ Backup Priority100 ได้3 + 156/256 ≈ 3.609วินาที ส่วน VRRPv3 คำนวณ Skew โดยสัมพันธ์กับ Master Advertisement Interval",
-          "เมื่อใช้ค่าตั้งต้นเหล่านี้ VRRP มักตรวจการหายของ Master เร็วกว่า HSRP แต่เวลาสลับจริงยังขึ้นกับการตรวจ failure, timer ที่ตั้ง, การรับช่วง forwarding, ARP/MAC learning และวิธีวัด ทั้งสองระบบปรับ Timer ให้เร็วขึ้นได้ตามความสามารถอุปกรณ์"
+          "ค่า HSRP ที่มักใช้เป็นค่าเริ่มต้นในแลป Cisco คือ Hello 3 วินาที และ Hold 10 วินาที",
+          "ส่วน **VRRP** ค่า Advertisement Interval โดยทั่วไป 1 วินาที การประกาศว่า Master หายต้องรอหลายช่วงรวม Skew Time จึงไม่ใช่สลับภายใน 1 วินาทีเสมอ",
+          "สำหรับ VRRPv2, Master_Down_Interval = 3 × Advertisement_Interval + (256 − Priority)/256 วินาที เช่น Interval 1 และ Backup Priority 100 ได้ 3 + 156/256 ≈ 3.609 วินาที",
+          "ส่วน VRRPv3 คำนวณ Skew โดยสัมพันธ์กับ Master Advertisement Interval",
+          "เมื่อใช้ค่าตั้งต้นเหล่านี้ VRRP มักตรวจการหายของ Master เร็วกว่า HSRP",
+          "แต่เวลาสลับจริงยังขึ้นกับการตรวจ failure, timer ที่ตั้ง, การรับช่วง forwarding, ARP/MAC learning และวิธีวัด ทั้งสองระบบปรับ Timer ให้เร็วขึ้นได้ตามความสามารถอุปกรณ์"
         ],
         "pitfall": "จำนวน ping ที่หาย × ช่วง ping เป็นเพียงค่าประมาณ การเทียบเวลาต้องใช้วิธีและจุดวัดเดียวกัน ไม่อ้างว่า VRRP เร็วกว่า HSRP ทุกกรณี"
       },
@@ -577,8 +599,9 @@
         "title": "อ่าน Capture เพื่อวัดผลการรับช่วงอย่างมีหลักฐาน",
         "body": [
           "ในแลปให้สร้างทราฟฟิกต่อเนื่องจากลูกข่ายไปปลายทางผ่าน Gateway แล้วบันทึกเวลาที่ทำให้ตัวหลักหรือ uplink ขัดข้อง ควบคู่กับ capture โปรโตคอลและ Echo Request/Reply",
-          "กำหนดสิ่งที่จะวัดก่อน: control-plane failover ดูการเปลี่ยน Active/Master ส่วน data-plane outage ดูช่วงที่แพ็กเก็ตผู้ใช้ส่งต่อไม่ได้ การใช้เวลาจาก Hello สุดท้ายของตัวเดิมถึง Hello/Advertisement แรกของตัวใหม่เป็นค่าประมาณเฉพาะที่จุด capture มองเห็น",
-          "สำหรับตัวอย่าง ถ้ามีหลักฐานเวลา failure ที่12.000วินาที และแพ็กเก็ตผู้ใช้สำเร็จครั้งแรกหลังรับช่วงที่15.400วินาที เวลากลับมาให้บริการที่วัดได้ประมาณ3.400วินาที ต้องบอกความละเอียดของ probe และจุดจับด้วย"
+          "กำหนดสิ่งที่จะวัดก่อน: control-plane failover ดูการเปลี่ยน Active/Master",
+          "ส่วน data-plane outage ดูช่วงที่แพ็กเก็ตผู้ใช้ส่งต่อไม่ได้ การใช้เวลาจาก Hello สุดท้ายของตัวเดิมถึง Hello/Advertisement แรกของตัวใหม่เป็นค่าประมาณเฉพาะที่จุด capture มองเห็น",
+          "สำหรับตัวอย่าง ถ้ามีหลักฐานเวลา failure ที่ 12.000 วินาที และแพ็กเก็ตผู้ใช้สำเร็จครั้งแรกหลังรับช่วงที่ 15.400 วินาที เวลากลับมาให้บริการที่วัดได้ประมาณ 3.400 วินาที ต้องบอกความละเอียดของ probe และจุดจับด้วย"
         ],
         "code": "# Wireshark display filters\nhsrp\nvrrp\nudp.port == 1985\nip.proto == 112\nicmp",
         "example": {
@@ -594,8 +617,8 @@
       "Client ตั้ง Default Gateway เป็น Virtual IP เพื่อคงค่าเดิมขณะเราเตอร์สลับตัว",
       "HSRP: Active/Standby; Preempt โดยทั่วไปปิด — VRRP: Master/Backup; Preempt เปิด",
       "Priority สูงมีสิทธิ์เหนือกว่า แต่ต้องพิจารณา Preempt และสถานะเดิม",
-      "HSRP IPv4 = UDP1985; VRRP IPv4 = IP112 และ224.0.0.18",
-      "VRRP IPv4 MAC = 0000.5e00.01xx โดย xx คือ VRID ฐาน16",
+      "HSRP IPv4 = UDP 1985; VRRP IPv4 = IP 112 และ 224.0.0.18",
+      "VRRP IPv4 MAC = 0000.5e00.01xx โดย xx คือ VRID ฐาน 16",
       "GLBP ใช้ AVG/AVF ช่วยกระจายงานส่งต่อ",
       "วัด Convergence ต้องระบุจุดเริ่ม จุดจบ และแยก control plane กับ data plane"
     ],
@@ -618,10 +641,10 @@
         "id": "6-02",
         "prompt": "จากภาพ R1 ล่มและ R2 รับหน้าที่ Virtual Gateway สำเร็จ Client ต้องแก้ Gateway เป็น .3 หรือไม่",
         "options": [
-          "ไม่ต้อง ยังคงใช้192.168.10.1",
-          "ต้องเปลี่ยนเป็น192.168.10.3ทุกครั้ง",
-          "ต้องเปลี่ยน IP ตัวเองเป็น192.168.10.1",
-          "ต้องลบ VLAN10"
+          "ไม่ต้อง ยังคงใช้ 192.168.10.1",
+          "ต้องเปลี่ยนเป็น 192.168.10.3 ทุกครั้ง",
+          "ต้องเปลี่ยน IP ตัวเองเป็น 192.168.10.1",
+          "ต้องลบ VLAN 10"
         ],
         "answer": 0,
         "explanation": "หัวใจของ Virtual Gateway คือจุดติดต่อของ Client คงเดิม ขณะที่ผู้ส่งต่อด้านหลังเปลี่ยนจาก R1 เป็น R2",
@@ -643,12 +666,12 @@
       },
       {
         "id": "6-04",
-        "prompt": "R2 Priority100 เป็น HSRP Active อยู่ แล้ว R1 Priority110 กลับมาโดยปิด Preempt คาดว่าอย่างไร",
+        "prompt": "R2 Priority 100 เป็น HSRP Active อยู่ แล้ว R1 Priority 110 กลับมาโดยปิด Preempt คาดว่าอย่างไร",
         "options": [
           "R1 แย่ง Active ทันทีเสมอ",
           "ทั้งสองต้องหยุดส่งข้อมูล",
           "R2 อาจคง Active ต่อ แม้ R1 Priority สูงกว่า",
-          "Priority ของ R2 จะเปลี่ยนเป็น255อัตโนมัติ"
+          "Priority ของ R2 จะเปลี่ยนเป็น 255 อัตโนมัติ"
         ],
         "answer": 2,
         "explanation": "Priority สูงไม่ได้บังคับให้แย่ง Active เดิมเมื่อ Preempt ปิด ต้องพิจารณาสถานะและนโยบายการรับบทบาท",
@@ -669,15 +692,15 @@
       },
       {
         "id": "6-06",
-        "prompt": "R1 Priority110 ถูก Tracking ลด20 ส่วน R2 Priority100 และเปิด Preempt ค่าใดอธิบายการรับช่วงได้",
+        "prompt": "R1 Priority 110 ถูก Tracking ลด 20 ส่วน R2 Priority 100 และเปิด Preempt ค่าใดอธิบายการรับช่วงได้",
         "options": [
-          "R1 เหลือ90 จึงต่ำกว่า R2 และ R2 สามารถรับ Active",
-          "R1 เหลือ130 จึงยังสูงกว่า",
+          "R1 เหลือ 90 จึงต่ำกว่า R2 และ R2 สามารถรับ Active",
+          "R1 เหลือ 130 จึงยังสูงกว่า",
           "R2 ต้องใช้ OSPF Cost ก่อน",
-          "R1 ยังคง110เพราะ Tracking ไม่มีผลต่อ Priority"
+          "R1 ยังคง 110 เพราะ Tracking ไม่มีผลต่อ Priority"
         ],
         "answer": 0,
-        "explanation": "นำ110−20=90 แล้วเทียบ100ของR2 Tracking จึงช่วยสะท้อนปัญหา uplink แม้ LAN interface ยัง up",
+        "explanation": "นำ 110−20=90 แล้วเทียบ 100 ของ R2 Tracking จึงช่วยสะท้อนปัญหา uplink แม้ LAN interface ยัง up",
         "level": "ประยุกต์"
       },
       {
@@ -690,30 +713,30 @@
           "Preempt ใช้เฉพาะ STP"
         ],
         "answer": 1,
-        "explanation": "เป็นค่าเริ่มต้นที่มักพบในบริบทแลป ต้องดู configurationจริงด้วย VRRP address owner ยังเป็นกรณีพิเศษ",
+        "explanation": "เป็นค่าเริ่มต้นที่มักพบในบริบทแลป ต้องดู configuration จริงด้วย VRRP address owner ยังเป็นกรณีพิเศษ",
         "level": "พื้นฐาน"
       },
       {
         "id": "6-08",
         "prompt": "HSRP สำหรับ IPv4 ใช้การระบุโปรโตคอลแบบใด",
         "options": [
-          "TCP Port1985",
-          "IP Protocol112",
-          "UDP Port1985",
-          "UDP Port89"
+          "TCP Port 1985",
+          "IP Protocol 112",
+          "UDP Port 1985",
+          "UDP Port 89"
         ],
         "answer": 2,
-        "explanation": "HSRP IPv4 ห่อด้วย UDP1985 อย่าสลับกับ VRRP ซึ่งใช้ IP Protocol112",
+        "explanation": "HSRP IPv4 ห่อด้วย UDP 1985 อย่าสลับกับ VRRP ซึ่งใช้ IP Protocol 112",
         "level": "พื้นฐาน"
       },
       {
         "id": "6-09",
         "prompt": "ข้อใดคือ VRRP สำหรับ IPv4",
         "options": [
-          "UDP112 และ224.0.0.2",
-          "TCP1985 และ224.0.0.18",
-          "IP89 และ224.0.0.5",
-          "IP Protocol112 และ Multicast224.0.0.18"
+          "UDP 112 และ 224.0.0.2",
+          "TCP 1985 และ 224.0.0.18",
+          "IP 89 และ 224.0.0.5",
+          "IP Protocol 112 และ Multicast 224.0.0.18"
         ],
         "answer": 3,
         "explanation": "112 เป็นหมายเลข Protocol ใน IP header ของ VRRP ไม่ใช่หมายเลข TCP/UDP port",
@@ -721,7 +744,7 @@
       },
       {
         "id": "6-10",
-        "prompt": "VRRP IPv4 กลุ่ม10 มี Virtual MAC ข้อใด",
+        "prompt": "VRRP IPv4 กลุ่ม 10 มี Virtual MAC ข้อใด",
         "options": [
           "0000.5e00.010a",
           "0000.5e00.0110",
@@ -729,12 +752,12 @@
           "0000.0c9f.f00a"
         ],
         "answer": 0,
-        "explanation": "VRID10ฐานสิบคือ0aฐาน16 นำต่อท้าย0000.5e00.01 ส่วนอีกสองรูปแบบเป็น HSRPv1/v2",
+        "explanation": "VRID10 ฐานสิบคือ 0a ฐาน 16 นำต่อท้าย 0000.5e00.01 ส่วนอีกสองรูปแบบเป็น HSRPv1/v2",
         "level": "ประยุกต์"
       },
       {
         "id": "6-11",
-        "prompt": "HSRPv2 IPv4 กลุ่ม10 ใช้ Virtual MAC ใด",
+        "prompt": "HSRPv2 IPv4 กลุ่ม 10 ใช้ Virtual MAC ใด",
         "options": [
           "0000.0c07.ac0a",
           "0000.0c9f.f00a",
@@ -742,7 +765,7 @@
           "ffff.ffff.ffff"
         ],
         "answer": 1,
-        "explanation": "HSRPv2 ใช้ช่วง0000.0c9f.f000–ffff โดยท้าย12บิตคือ group; กลุ่ม10จึงเป็น00a",
+        "explanation": "HSRPv2 ใช้ช่วง 0000.0c9f.f000–ffff โดยท้าย 12 บิตคือ group; กลุ่ม 10 จึงเป็น 00a",
         "level": "ประยุกต์"
       },
       {
@@ -760,15 +783,15 @@
       },
       {
         "id": "6-13",
-        "prompt": "VRRPv2 มี Advertisement1วินาที และ Backup Priority100 ค่า Master_Down_Interval ตามสูตรประมาณเท่าใด",
+        "prompt": "VRRPv2 มี Advertisement1 วินาที และ Backup Priority 100 ค่า Master_Down_Interval ตามสูตรประมาณเท่าใด",
         "options": [
-          "1วินาที",
-          "10วินาที",
-          "100วินาที",
-          "3.609วินาที"
+          "1 วินาที",
+          "10 วินาที",
+          "100 วินาที",
+          "3.609 วินาที"
         ],
         "answer": 3,
-        "explanation": "3×1 +(256−100)/256 =3+0.609375 ≈3.609วินาที ค่านี้เป็น timer ไม่ใช่การรับประกัน outage จริง",
+        "explanation": "3×1 +(256−100)/256 =3+0.609375 ≈3.609 วินาที ค่านี้เป็น timer ไม่ใช่การรับประกัน outage จริง",
         "level": "ประยุกต์"
       },
       {
@@ -778,7 +801,7 @@
           "เมื่อใช้ Timer เริ่มต้นที่กล่าวในบท VRRP มักตรวจ failure เร็วกว่า แต่ปรับ Timer แล้วผลอาจต่าง",
           "VRRP เร็วกว่าเสมอในทุก configuration",
           "HSRP Hold Timer เท่ากับ Hello Timer เสมอ",
-          "VRRP มี Advertisement1วินาทีจึงสลับได้ตรง1วินาทีแน่นอน"
+          "VRRP มี Advertisement1 วินาทีจึงสลับได้ตรง 1 วินาทีแน่นอน"
         ],
         "answer": 0,
         "explanation": "ความเร็วขึ้นกับ Timer, failure detection และสภาพเครือข่าย ต้องไม่ใช้ค่า Hello/Advertisement แทน outage ทั้งหมด",
@@ -786,15 +809,15 @@
       },
       {
         "id": "6-15",
-        "prompt": "บันทึก failure เวลา12.000s และ probe ผู้ใช้สำเร็จครั้งแรกหลังรับช่วงที่15.400s ควรรายงานอย่างไร",
+        "prompt": "บันทึก failure เวลา 12.000s และ probe ผู้ใช้สำเร็จครั้งแรกหลังรับช่วงที่ 15.400s ควรรายงานอย่างไร",
         "options": [
-          "Convergence เท่ากับ15.400sเสมอ",
-          "กลับมาให้บริการประมาณ3.400s พร้อมระบุ probe interval และจุดวัด",
-          "Convergence เท่ากับ1sเพราะเป็น VRRP",
+          "Convergence เท่ากับ 15.400s เสมอ",
+          "กลับมาให้บริการประมาณ 3.400s พร้อมระบุ probe interval และจุดวัด",
+          "Convergence เท่ากับ 1s เพราะเป็น VRRP",
           "สรุปได้ว่าไม่มีแพ็กเก็ตสูญหาย"
         ],
         "answer": 1,
-        "explanation": "ลบ15.400−12.000=3.400s แต่ความละเอียดการวัดขึ้นกับ probe และตำแหน่ง capture ต้องแยกจากการเปลี่ยนบทบาท control plane",
+        "explanation": "ลบ 15.400−12.000=3.400s แต่ความละเอียดการวัดขึ้นกับ probe และตำแหน่ง capture ต้องแยกจากการเปลี่ยนบทบาท control plane",
         "level": "วิเคราะห์"
       }
     ],
@@ -828,7 +851,7 @@
     "subtitle": "เชื่อมมาตรฐาน การยืนยันตัวตน และหลักฐานจากแพ็กเก็ตเข้ากับการแก้ปัญหาแลป",
     "minutes": 30,
     "objectives": [
-      "แยกมาตรฐาน802.3,802.1Q,802.1X และบทบาทการยืนยันตัวตน",
+      "แยกมาตรฐาน 802.3,802.1Q,802.1X และบทบาทการยืนยันตัวตน",
       "เลือก Nmap, arp-scan, traceroute และ Wireshark ให้ตรงงาน",
       "เขียน display filter สำหรับโปรโตคอลที่ออกสอบ",
       "ไล่ปัญหาจาก IP ไป MAC และพอร์ตสวิตช์อย่างเป็นขั้นตอน"
@@ -837,7 +860,8 @@
       {
         "title": "มาตรฐานที่ชื่อคล้ายกัน แต่ทำคนละหน้าที่",
         "body": [
-          "IEEE802.3 เกี่ยวข้องกับ Ethernet เช่นกลไก MAC และ Physical Layer ของ Ethernet ส่วน802.1Q ใช้กับ bridged networks/VLAN tagging และ802.1X ใช้ควบคุมการเข้าถึงเครือข่ายผ่านการยืนยันตัวตนที่พอร์ต",
+          "IEEE 802.3 เกี่ยวข้องกับ Ethernet เช่นกลไก MAC และ Physical Layer ของ Ethernet",
+          "ส่วน 802.1Q ใช้กับ bridged networks/VLAN tagging และ 802.1X ใช้ควบคุมการเข้าถึงเครือข่ายผ่านการยืนยันตัวตนที่พอร์ต",
           "จำด้วยคำถามที่แต่ละมาตรฐานตอบ: 802.3 ส่งข้อมูลบน Ethernet อย่างไร, 802.1Q เฟรมเป็นของ VLAN ใด, 802.1X ผู้เชื่อมต่อได้รับอนุญาตใช้เครือข่ายหรือยัง การใช้ VLAN อย่างเดียวไม่ได้ทดแทนการยืนยันตัวตน"
         ],
         "table": {
@@ -848,17 +872,17 @@
           ],
           "rows": [
             [
-              "IEEE802.3",
+              "IEEE 802.3",
               "Ethernet",
               "การสื่อสารผ่าน Ethernet interface"
             ],
             [
-              "IEEE802.1Q",
+              "IEEE 802.1Q",
               "VLAN / Tagging",
-              "เฟรม VLAN10 วิ่งผ่าน trunk"
+              "เฟรม VLAN 10 วิ่งผ่าน trunk"
             ],
             [
-              "IEEE802.1X",
+              "IEEE 802.1X",
               "Port-based Access Control",
               "ตรวจสิทธิ์ก่อนยอมให้ Client ใช้เครือข่าย"
             ]
@@ -869,9 +893,13 @@
       {
         "title": "802.1X: ใครเป็นผู้ขอ ใครคุมประตู ใครตัดสิน",
         "body": [
-          "Supplicant คือซอฟต์แวร์/อุปกรณ์ฝั่งผู้ใช้ที่ร้องขอเข้าเครือข่าย Authenticator คืออุปกรณ์ที่คุมการผ่านของพอร์ต เช่นสวิตช์หรือ Access Point ส่วน Authentication Server ตรวจสอบข้อมูลยืนยันตัวตน โดยมักใช้ RADIUS",
-          "ฝั่ง Client คุยกับ Authenticator ผ่าน EAP over LAN (EAPOL) แล้ว Authenticator ส่งข้อมูลไปให้ Server ผ่าน RADIUS ในรูปแบบใช้งานทั่วไป ก่อนผ่านการยืนยันตัวตน controlled port จะยังไม่อนุญาตทราฟฟิกปกติตามนโยบาย แต่ยังต้องเปิดทางสำหรับขั้นตอน authentication",
-          "เมื่อ Server ยอมรับและอุปกรณ์นำผลไปใช้งาน พอร์ต/เซสชันจึงเข้าสู่สถานะ Authorized และอาจได้รับ VLAN หรือนโยบายเฉพาะผู้ใช้ตามระบบที่ตั้งไว้ การปฏิเสธอาจนำไปสู่การบล็อกหรือ VLANจำกัดสิทธิ์ตาม configuration"
+          "**Supplicant:** ซอฟต์แวร์หรืออุปกรณ์ฝั่งผู้ใช้ที่ร้องขอเข้าเครือข่าย",
+          "**Authenticator:** อุปกรณ์ที่ควบคุมการผ่านของพอร์ต เช่น สวิตช์หรือ Access Point",
+          "**Authentication Server:** ตรวจข้อมูลยืนยันตัวตน โดยมักใช้ RADIUS",
+          "ฝั่ง Client คุยกับ Authenticator ผ่าน EAP over LAN (EAPOL) แล้ว Authenticator ส่งข้อมูลไปให้ Server ผ่าน RADIUS ในรูปแบบใช้งานทั่วไป",
+          "ก่อนผ่านการยืนยันตัวตน controlled port จะยังไม่อนุญาตทราฟฟิกปกติตามนโยบาย แต่ยังต้องเปิดทางสำหรับขั้นตอน authentication",
+          "เมื่อ Server ยอมรับและอุปกรณ์นำผลไปใช้งาน พอร์ต/เซสชันจึงเข้าสู่สถานะ Authorized และอาจได้รับ VLAN หรือนโยบายเฉพาะผู้ใช้ตามระบบที่ตั้งไว้",
+          "การปฏิเสธอาจนำไปสู่การบล็อกหรือ VLAN จำกัดสิทธิ์ตาม configuration"
         ],
         "diagram": "auth",
         "example": {
@@ -885,9 +913,12 @@
       {
         "title": "เลือกเครื่องมือให้ตรงคำถาม",
         "body": [
-          "Nmap ใช้สำรวจว่า host ใดตอบสนอง และบริการ/port ใดเปิดอยู่ โดยเลือกโหมดให้ตรงเป้าหมาย ส่วน arp-scan ใช้ ARP สำรวจ IP/MAC บนเครือข่าย Ethernet ที่เข้าถึงระดับ Layer2 ได้ ARP ไม่ถูกเราเตอร์ส่งต่อข้าม subnet แบบปกติ",
-          "traceroute เพิ่มค่า TTL ทีละขั้นเพื่อเห็นเราเตอร์ตามเส้นทางจากคำตอบ ICMP Time Exceeded และผลตอบกลับปลายทางตามชนิด probe ของเครื่องมือ ส่วน Windows ใช้คำสั่ง tracert โดยทั่วไป หากเห็น * อาจเป็นเพราะไม่ตอบ probe หรือถูกกรอง ไม่ได้ยืนยันว่าทราฟฟิกทุกชนิดผ่านไม่ได้",
-          "Wireshark จับแพ็กเก็ตที่จุดจับมองเห็นแล้วถอดรหัส protocol ให้ตรวจลำดับเหตุการณ์ ใน switched LAN เครื่องจับไม่ได้เห็น unicast ของทุกเครื่องอัตโนมัติ หากต้องดูพอร์ตอื่นอาจต้องใช้ SPAN/mirror ตาม topology ของแลป"
+          "**Nmap** ใช้สำรวจว่า host ใดตอบสนอง และบริการ/port ใดเปิดอยู่ โดยเลือกโหมดให้ตรงเป้าหมาย",
+          "ส่วน arp-scan ใช้ ARP สำรวจ IP/MAC บนเครือข่าย Ethernet ที่เข้าถึงระดับ Layer 2 ได้ ARP ไม่ถูกเราเตอร์ส่งต่อข้าม subnet แบบปกติ",
+          "**traceroute** เพิ่มค่า TTL ทีละขั้นเพื่อเห็นเราเตอร์ตามเส้นทางจากคำตอบ ICMP Time Exceeded และผลตอบกลับปลายทางตามชนิด probe ของเครื่องมือ",
+          "ส่วน Windows ใช้คำสั่ง tracert โดยทั่วไป หากเห็น * อาจเป็นเพราะไม่ตอบ probe หรือถูกกรอง ไม่ได้ยืนยันว่าทราฟฟิกทุกชนิดผ่านไม่ได้",
+          "**Wireshark** จับแพ็กเก็ตที่จุดจับมองเห็นแล้วถอดรหัส protocol ให้ตรวจลำดับเหตุการณ์",
+          "ใน switched LAN เครื่องจับไม่ได้เห็น unicast ของทุกเครื่องอัตโนมัติ หากต้องดูพอร์ตอื่นอาจต้องใช้ SPAN/mirror ตาม topology ของแลป"
         ],
         "table": {
           "headers": [
@@ -904,7 +935,7 @@
             [
               "IP นี้ใช้ MAC อะไรบน LAN",
               "arp-scan / ARP table",
-              "ขอบเขต Layer2"
+              "ขอบเขต Layer 2"
             ],
             [
               "ไปปลายทางผ่าน hop ใด",
@@ -923,8 +954,8 @@
       {
         "title": "Capture Filter กับ Display Filter: ใช้คนละภาษา",
         "body": [
-          "Capture Filter คัดว่าจะเก็บแพ็กเก็ตใดตั้งแต่ตอนจับ ใช้ไวยากรณ์ตระกูล BPF เช่น udp port1985 แพ็กเก็ตที่ถูกตัดออกไม่ได้อยู่ในไฟล์ capture จึงเรียกกลับมาด้วยการล้าง display filter ไม่ได้",
-          "Display Filter ใช้เลือกว่าจะแสดงแพ็กเก็ตใดจากข้อมูลที่จับมาแล้ว เช่น udp.port == 1985 การกรองนี้ไม่ลบแพ็กเก็ตต้นฉบับ เมื่อล้าง filter จะกลับมาเห็นรายการเดิมได้",
+          "**Capture Filter** คัดว่าจะเก็บแพ็กเก็ตใดตั้งแต่ตอนจับ ใช้ไวยากรณ์ตระกูล BPF เช่น udp port 1985 แพ็กเก็ตที่ถูกตัดออกไม่ได้อยู่ในไฟล์ capture จึงเรียกกลับมาด้วยการล้าง display filter ไม่ได้",
+          "**Display Filter** ใช้เลือกว่าจะแสดงแพ็กเก็ตใดจากข้อมูลที่จับมาแล้ว เช่น udp.port == 1985 การกรองนี้ไม่ลบแพ็กเก็ตต้นฉบับ เมื่อล้าง filter จะกลับมาเห็นรายการเดิมได้",
           "อ่าน Layer ให้ถูก: OSPF/VRRP ใช้ ip.proto ส่วน HSRP ใช้ udp.port ตัวกรองชื่อ protocol เช่น ospf, hsrp, vrrp อ่านง่ายเมื่อ Wireshark ถอดรหัส protocol นั้นได้"
         ],
         "table": {
@@ -955,7 +986,7 @@
               "ip proto 112"
             ],
             [
-              "IP192.168.10.10",
+              "IP 192.168.10.10",
               "ip.addr == 192.168.10.10",
               "host 192.168.10.10"
             ],
@@ -967,21 +998,21 @@
           ]
         },
         "code": "# Display filter: ดู OSPF หรือ EIGRP\nip.proto == 89 || ip.proto == 88\n\n# Display filter: ICMP ของ Client ที่ระบุ\nicmp && ip.addr == 192.168.10.10",
-        "pitfall": "udp port1985 ใช้เป็น Capture Filter ส่วน udp.port == 1985 ใช้เป็น Display Filter อย่าสลับช่อง"
+        "pitfall": "udp port 1985 ใช้เป็น Capture Filter ส่วน udp.port == 1985 ใช้เป็น Display Filter อย่าสลับช่อง"
       },
       {
         "title": "ตามหาเครื่องจาก IP → MAC → Switch Port",
         "body": [
-          "เริ่มจาก IP ของเครื่องปลายทาง แล้วดู ARP/Neighbor Table ของอุปกรณ์ที่อยู่ subnet เดียวกัน เพื่อหา MAC จากนั้นค้น MAC Address Table ของสวิตช์เพื่อทราบ VLAN และพอร์ตที่เรียนรู้ MAC นั้น",
-          "ถ้าพอร์ตที่พบเป็น trunk/uplink แปลว่าเครื่องอาจอยู่หลังสวิตช์อีกตัว ต้องตาม topology ไปทีละตัวโดยใช้ข้อมูล CDP/LLDP และตรวจ MAC ต่อ จนพบ access port แล้วเช็ก VLAN, link, port security และ authentication ของพอร์ตนั้น",
-          "MAC Address Table ตอบว่า MAC อยู่ทางไหน ไม่ได้พิสูจน์ว่า IP ถูกต้องหรือมีเส้นทางข้าม VLAN ครบ จึงต้องดู IP/mask/gateway ของ PC, VLAN/trunk, SVI/routing และเส้นทางขากลับประกอบ"
+          "**ขั้นที่ 1:** เริ่มจาก IP ของเครื่องปลายทาง แล้วดู ARP/Neighbor Table ของอุปกรณ์ที่อยู่ subnet เดียวกัน เพื่อหา MAC จากนั้นค้น MAC Address Table ของสวิตช์เพื่อทราบ VLAN และพอร์ตที่เรียนรู้ MAC นั้น",
+          "**ขั้นที่ 2:** ถ้าพอร์ตที่พบเป็น trunk/uplink แปลว่าเครื่องอาจอยู่หลังสวิตช์อีกตัว ต้องตาม topology ไปทีละตัวโดยใช้ข้อมูล CDP/LLDP และตรวจ MAC ต่อ จนพบ access port แล้วเช็ก VLAN, link, port security และ authentication ของพอร์ตนั้น",
+          "**ขั้นที่ 3:** **MAC Address** Table ตอบว่า MAC อยู่ทางไหน ไม่ได้พิสูจน์ว่า IP ถูกต้องหรือมีเส้นทางข้าม VLAN ครบ จึงต้องดู IP/mask/gateway ของ PC, VLAN/trunk, SVI/routing และเส้นทางขากลับประกอบ"
         ],
         "code": "show ip arp\nshow mac address-table address aaaa.bbbb.cccc\nshow interfaces status\nshow interfaces switchport\nshow vlan brief\nshow interfaces trunk\nshow cdp neighbors\nshow port-security interface FastEthernet0/1",
         "example": {
           "title": "PC2 ต่อสายแล้วแต่เข้าเครือข่ายไม่ได้",
           "body": [
-            "ตรวจไฟลิงก์และสถานะพอร์ต → ดูว่าเป็น access VLAN ที่ต้องการ → ตรวจว่า MAC เรียนรู้ที่พอร์ตนั้น → เช็กสถานะ802.1X/Port Security",
-            "เมื่อผ่าน Layer2 แล้วจึงตรวจ IP/mask/default gateway และลอง ping gateway ก่อนออกไปปลายทาง"
+            "ตรวจไฟลิงก์และสถานะพอร์ต → ดูว่าเป็น access VLAN ที่ต้องการ → ตรวจว่า MAC เรียนรู้ที่พอร์ตนั้น → เช็กสถานะ 802.1X/Port Security",
+            "เมื่อผ่าน Layer 2 แล้วจึงตรวจ IP/mask/default gateway และลอง ping gateway ก่อนออกไปปลายทาง"
           ]
         }
       },
@@ -990,7 +1021,7 @@
         "body": [
           "จากภาพ PC ต้องส่ง EAPOL ถึง Switch และ Switch ต้องติดต่อ RADIUS Server ได้ หาก PC ส่ง EAPOL แต่ไม่ได้รับการเดินกระบวนการต่อ ให้ตรวจ supplicant, port configuration และสถานะ authentication ฝั่ง Switch",
           "ถ้า Switch ส่ง RADIUS request แต่ไม่เห็น response ให้ตรวจเส้นทางไป Server, shared secret, policy และ log ฝั่ง Server ก่อนสรุปว่ารหัสผู้ใช้ผิด การตรวจรหัสต้องแยกจากการที่ข้อความไปไม่ถึง",
-          "ทำรายงานแลปให้มีคำถาม สมมติฐาน หลักฐาน และข้อสรุป เช่น ‘คาดว่า VLANผิด เพราะ MACอยู่พอร์ตถูกแต่ show interfaces switchport แสดง Access VLAN20 แทน10’ จะชัดกว่าการเปลี่ยนหลายอย่างพร้อมกัน"
+          "ทำรายงานแลปให้มีคำถาม สมมติฐาน หลักฐาน และข้อสรุป เช่น ‘คาดว่า VLAN ผิด เพราะ MAC อยู่พอร์ตถูกแต่ show interfaces switchport แสดง Access VLAN 20 แทน 10’ จะชัดกว่าการเปลี่ยนหลายอย่างพร้อมกัน"
         ],
         "diagram": "auth",
         "pitfall": "ไม่มีแพ็กเก็ตในหน้าจออาจเกิดจาก filter ผิดหรือจับผิด interface ก่อนสรุปว่าอุปกรณ์ไม่ส่ง ให้ล้าง filter และยืนยันจุด capture"
@@ -1007,7 +1038,7 @@
     "questions": [
       {
         "id": "7-01",
-        "prompt": "IEEE802.1X มีหน้าที่หลักข้อใด",
+        "prompt": "IEEE 802.1X มีหน้าที่หลักข้อใด",
         "options": [
           "ควบคุมการเข้าถึงเครือข่ายด้วยการยืนยันตัวตนที่พอร์ต",
           "ติด VLAN tag ให้ทุกเฟรม",
@@ -1015,7 +1046,7 @@
           "เลือก HSRP Active"
         ],
         "answer": 0,
-        "explanation": "802.1X เป็น Port-Based Network Access Control ส่วน VLAN tagging เกี่ยวข้องกับ802.1Q",
+        "explanation": "802.1X เป็น Port-Based Network Access Control ส่วน VLAN tagging เกี่ยวข้องกับ 802.1Q",
         "level": "พื้นฐาน"
       },
       {
@@ -1074,7 +1105,7 @@
       },
       {
         "id": "7-06",
-        "prompt": "ต้องการหา IP/MAC ของเครื่องใน Layer2 LAN ที่ต่ออยู่ เครื่องมือใดตรงงานที่สุด",
+        "prompt": "ต้องการหา IP/MAC ของเครื่องใน Layer 2 LAN ที่ต่ออยู่ เครื่องมือใดตรงงานที่สุด",
         "options": [
           "OSPF SPF",
           "arp-scan",
@@ -1121,7 +1152,7 @@
           "ip.proto == 1985"
         ],
         "answer": 0,
-        "explanation": "HSRP IPv4 ใช้ UDP1985 และรูปแบบชื่อฟิลด์ udp.port เป็นภาษา Display Filter ส่วน udp port1985 เป็น Capture Filter",
+        "explanation": "HSRP IPv4 ใช้ UDP 1985 และรูปแบบชื่อฟิลด์ udp.port เป็นภาษา Display Filter ส่วน udp port 1985 เป็น Capture Filter",
         "level": "ประยุกต์"
       },
       {
@@ -1134,7 +1165,7 @@
           "ip.addr == 112"
         ],
         "answer": 1,
-        "explanation": "VRRP อยู่ใน IP Protocol112 โดยตรง ไม่ได้ใช้ TCP/UDP port112",
+        "explanation": "VRRP อยู่ใน IP Protocol 112 โดยตรง ไม่ได้ใช้ TCP/UDP port 112",
         "level": "ประยุกต์"
       },
       {
@@ -1147,7 +1178,7 @@
           "vlan.id == 89 || vlan.id == 88"
         ],
         "answer": 2,
-        "explanation": "OR (||) ยอมรับเมื่อเป็นอย่างใดอย่างหนึ่ง ส่วนฟิลด์ protocol เดียวไม่สามารถเท่ากับ88และ89พร้อมกัน",
+        "explanation": "OR (||) ยอมรับเมื่อเป็นอย่างใดอย่างหนึ่ง ส่วนฟิลด์ protocol เดียวไม่สามารถเท่ากับ 88 และ 89 พร้อมกัน",
         "level": "ประยุกต์"
       },
       {
@@ -1170,7 +1201,7 @@
           "ARP Table หา MAC แล้ว MAC Address Table หา VLAN/Port",
           "OSPF Router ID แล้ว DHCP Lease ของอินเทอร์เน็ต",
           "HSRP Priority แล้ว VTP Revision",
-          "จำนวน hop แล้วเลข VLANเท่ากับ IP"
+          "จำนวน hop แล้วเลข VLAN เท่ากับ IP"
         ],
         "answer": 0,
         "explanation": "ARP เชื่อม IP↔MAC ส่วน Switch MAC Table เชื่อม VLAN/MAC↔Port ถ้าพบ trunk ให้ตามไปยังสวิตช์ถัดไป",
@@ -1196,7 +1227,7 @@
           "รหัสผ่านผิดแน่นอนทุกกรณี",
           "802.1X ไม่ต้องใช้ Server จึงละเลยได้",
           "ตรวจเส้นทาง Server การตั้งค่า RADIUS และ log ก่อนสรุปว่ารหัสผู้ใช้ผิด",
-          "ต้องเปลี่ยนไปใช้ TCP1985"
+          "ต้องเปลี่ยนไปใช้ TCP 1985"
         ],
         "answer": 2,
         "explanation": "การสื่อสารถึง Server และผลตรวจ credentials เป็นคนละขั้น ไม่มี response อาจเกิดจาก routing, filtering, secret/config หรือ Server ไม่พร้อม",
@@ -1253,7 +1284,8 @@
       {
         "title": "PPP: LCP เปิดลิงก์, NCP เตรียม Network Layer",
         "body": [
-          "PPP หรือ Point-to-Point Protocol ใช้ขนส่ง datagram ผ่านลิงก์ระหว่างสองปลายทาง มี LCP (Link Control Protocol) จัดการการตั้งค่าและสถานะลิงก์ รวมถึงตกลงตัวเลือกที่ไม่ขึ้นกับ Network Layer เช่นว่าจะใช้ authentication แบบใด",
+          "**PPP** หรือ Point-to-Point Protocol ใช้ขนส่ง datagram ผ่านลิงก์ระหว่างสองปลายทาง",
+          "มี LCP (Link Control Protocol) จัดการการตั้งค่าและสถานะลิงก์ รวมถึงตกลงตัวเลือกที่ไม่ขึ้นกับ Network Layer เช่นว่าจะใช้ authentication แบบใด",
           "เมื่อสร้างลิงก์และผ่าน authentication หากกำหนดไว้แล้ว จึงเข้าสู่การตั้งค่า Network Layer ด้วย NCP (Network Control Protocol) ที่เหมาะกับโปรโตคอลนั้น เช่น IPCP สำหรับ IPv4",
           "ลำดับที่ต้องจำคือ Physical Link พร้อม → LCP เจรจา → Authentication ถ้ากำหนด → NCP → ส่งข้อมูล Network Layer ได้ ถ้า LCP ยังไม่เปิด การแก้ routing เพียงอย่างเดียวจะไม่ทำให้ PPP พร้อมใช้งาน"
         ],
@@ -1291,7 +1323,7 @@
       {
         "title": "CHAP: Challenge–Response ไม่ใช่การเข้ารหัสข้อมูลทั้งหมด",
         "body": [
-          "CHAP ใช้การท้าทายด้วย Challenge แล้วให้ peer คำนวณ Response จาก Challenge และ shared secret ฝั่งตรวจสอบคำนวณเทียบเพื่อตัดสิน Success หรือ Failure โดยไม่ส่ง secret เดิมเป็นข้อความตรง ๆ ในการแลกเปลี่ยนแบบปกติ",
+          "**CHAP** ใช้การท้าทายด้วย Challenge แล้วให้ peer คำนวณ Response จาก Challenge และ shared secret ฝั่งตรวจสอบคำนวณเทียบเพื่อตัดสิน Success หรือ Failure โดยไม่ส่ง secret เดิมเป็นข้อความตรง ๆ ในการแลกเปลี่ยนแบบปกติ",
           "การยืนยันตัวตนนี้ตอบว่า peer รู้ secret หรือไม่ ไม่ได้ทำให้ payload ทุกแพ็กเก็ตบน PPP ถูกเข้ารหัส หากโจทย์ต้องการรักษาความลับของข้อมูลยังต้องพิจารณากลไกเข้ารหัสเพิ่มเติม",
           "ในแลป Cisco แบบ PPP/CHAP ตรวจ hostname/username ที่จับคู่ฝั่งตรงข้าม รหัส shared secret และการตั้งค่า ppp authentication ให้สอดคล้อง พร้อมดูสถานะ LCP/NCP ก่อนแก้เส้นทาง"
         ],
@@ -1307,8 +1339,8 @@
       {
         "title": "MPLS: ใช้ Label ส่งต่อและแยกบริการ",
         "body": [
-          "MPLS ย่อจาก Multiprotocol Label Switching โหนดในเครือข่าย MPLS ใช้ label ประกอบการส่งต่อ โดยบริเวณทางเข้าอาจ push label ระหว่างทาง swap และทางออก pop ตามเส้นทางและการทำงานที่กำหนด",
-          "MPLS Layer3 VPN ช่วยให้ผู้ให้บริการแยกข้อมูลเส้นทางของลูกค้า เช่นใช้ VRF ทำให้สององค์กรสามารถใช้ private subnet ซ้ำกันได้โดยยังแยกการส่งต่อของแต่ละ VPN ตามการตั้งค่าที่ถูกต้อง",
+          "**MPLS** ย่อจาก Multiprotocol Label Switching โหนดในเครือข่าย MPLS ใช้ label ประกอบการส่งต่อ โดยบริเวณทางเข้าอาจ push label ระหว่างทาง swap และทางออก pop ตามเส้นทางและการทำงานที่กำหนด",
+          "**MPLS** Layer 3 VPN ช่วยให้ผู้ให้บริการแยกข้อมูลเส้นทางของลูกค้า เช่นใช้ VRF ทำให้สององค์กรสามารถใช้ private subnet ซ้ำกันได้โดยยังแยกการส่งต่อของแต่ละ VPN ตามการตั้งค่าที่ถูกต้อง",
           "แต่ label และการแยก VPN ไม่ได้เข้ารหัสข้อมูลอัตโนมัติ ถ้าข้อกำหนดต้องป้องกันการดักอ่านระหว่างทาง ต้องเสริมเทคโนโลยี encryption เช่น IPsec ตามสถาปัตยกรรม"
         ],
         "table": {
@@ -1336,9 +1368,10 @@
       {
         "title": "Remote-Access VPN กับ Site-to-Site VPN",
         "body": [
-          "Remote-Access VPN เชื่อมผู้ใช้รายบุคคลเข้าทรัพยากรองค์กร เช่นนักศึกษาหรือพนักงานใช้ notebook จากบ้านเชื่อมเครือข่ายมหาวิทยาลัย/บริษัท จุดเน้นอยู่ที่การยืนยันตัวตนของผู้ใช้และสิทธิ์ที่ได้รับ",
-          "Site-to-Site VPN เชื่อมเครือข่ายของสองสถานที่ขึ้นไป โดยมี gateway ของแต่ละฝั่งสร้าง tunnel ให้เครื่องใน subnet ภายในติดต่อกันตาม policy ผู้ใช้แต่ละเครื่องไม่จำเป็นต้องเปิด VPN client ของตนทุกครั้ง",
-          "VPN ที่ใช้ IPsec/TLS สามารถให้ confidentiality ตามโหมดและนโยบายที่ตั้ง แต่ต้องตรวจทั้งการสร้าง tunnel, routes, selectors/policy และการอนุญาตทราฟฟิก การเห็น tunnel up เพียงอย่างเดียวไม่ได้รับประกันว่าปลายทางทุกเครือข่ายใช้ได้"
+          "**Remote-Access VPN** เชื่อมผู้ใช้รายบุคคลเข้าทรัพยากรองค์กร เช่นนักศึกษาหรือพนักงานใช้ notebook จากบ้านเชื่อมเครือข่ายมหาวิทยาลัย/บริษัท จุดเน้นอยู่ที่การยืนยันตัวตนของผู้ใช้และสิทธิ์ที่ได้รับ",
+          "**Site-to-Site VPN** เชื่อมเครือข่ายของสองสถานที่ขึ้นไป โดยมี gateway ของแต่ละฝั่งสร้าง tunnel ให้เครื่องใน subnet ภายในติดต่อกันตาม policy ผู้ใช้แต่ละเครื่องไม่จำเป็นต้องเปิด VPN client ของตนทุกครั้ง",
+          "VPN ที่ใช้ IPsec/TLS สามารถให้ confidentiality ตามโหมดและนโยบายที่ตั้ง แต่ต้องตรวจทั้งการสร้าง tunnel, routes, selectors/policy และการอนุญาตทราฟฟิก",
+          "การเห็น tunnel up เพียงอย่างเดียวไม่ได้รับประกันว่าปลายทางทุกเครือข่ายใช้ได้"
         ],
         "table": {
           "headers": [
@@ -1358,7 +1391,7 @@
               "เครือข่าย ↔ เครือข่าย"
             ],
             [
-              "หลายองค์กรใช้บริการ MPLSร่วมกัน",
+              "หลายองค์กรใช้บริการ MPLS ร่วมกัน",
               "MPLS VPN",
               "แยกบริบทลูกค้าบนโครงข่ายผู้ให้บริการ"
             ]
@@ -1375,9 +1408,11 @@
       {
         "title": "Topology: เลือกจากทิศทางทราฟฟิกและต้นทุนลิงก์",
         "body": [
-          "Hub-and-Spoke ให้สาขาต่อเข้าศูนย์กลาง เช่น A/B/C ต่อ HQ การเดินจาก A ไป B จึงผ่าน HQ ตามรูปแบบ star พื้นฐาน เหมาะเมื่อทราฟฟิกส่วนใหญ่เข้าศูนย์กลางและต้องการดูแลง่าย แต่ HQ/uplink อาจเป็นคอขวดหรือจุดล้มเหลวร่วม",
-          "Partial Mesh เพิ่มทางตรงเฉพาะคู่ที่จำเป็น เช่น A ติดต่อ B บ่อยจึงเพิ่ม A–B เพื่อไม่อ้อม HQ ทุกครั้ง ยังคงใช้ลิงก์น้อยกว่า Full Mesh และต้องออกแบบ routing ให้เลือกเส้นทางที่ต้องการ",
-          "Full Mesh เชื่อมทุกคู่โดยตรง ถ้ามี n จุดและนับลิงก์แบบไม่กำหนดทิศทางคู่ละหนึ่งเส้น จำนวนลิงก์ = n(n−1)/2 เช่น4จุดได้6เส้น เทียบกับ Hub-and-Spoke4จุดที่มี3เส้น การมีลิงก์ครบคู่เพิ่มต้นทุนและงานดูแล ไม่ได้ทำให้การรับช่วงเกิดขึ้นโดยไม่ต้องมี routing ที่ถูกต้อง"
+          "**Hub-and-Spoke** ให้สาขาต่อเข้าศูนย์กลาง เช่น A/B/C ต่อ HQ การเดินจาก A ไป B จึงผ่าน HQ ตามรูปแบบ star พื้นฐาน",
+          "เหมาะเมื่อทราฟฟิกส่วนใหญ่เข้าศูนย์กลางและต้องการดูแลง่าย แต่ HQ/uplink อาจเป็นคอขวดหรือจุดล้มเหลวร่วม",
+          "**Partial Mesh** เพิ่มทางตรงเฉพาะคู่ที่จำเป็น เช่น A ติดต่อ B บ่อยจึงเพิ่ม A–B เพื่อไม่อ้อม HQ ทุกครั้ง ยังคงใช้ลิงก์น้อยกว่า Full Mesh และต้องออกแบบ routing ให้เลือกเส้นทางที่ต้องการ",
+          "**Full Mesh** เชื่อมทุกคู่โดยตรง ถ้ามี n จุดและนับลิงก์แบบไม่กำหนดทิศทางคู่ละหนึ่งเส้น จำนวนลิงก์ = n(n−1)/2 เช่น 4 จุดได้ 6 เส้น เทียบกับ Hub-and-Spoke4 จุดที่มี 3 เส้น",
+          "การมีลิงก์ครบคู่เพิ่มต้นทุนและงานดูแล ไม่ได้ทำให้การรับช่วงเกิดขึ้นโดยไม่ต้องมี routing ที่ถูกต้อง"
         ],
         "diagram": "wan",
         "table": {
@@ -1475,7 +1510,7 @@
           "ทุกแพ็กเก็ต IP ถูกเข้ารหัสแน่นอน",
           "ยืนยันตัวตน peer แต่ไม่ได้เข้ารหัส payload ทั้งหมดโดยอัตโนมัติ",
           "ไม่ต้องใช้ NCP อีกต่อไป",
-          "PPP เปลี่ยนเป็น MPLSทันที"
+          "PPP เปลี่ยนเป็น MPLS ทันที"
         ],
         "answer": 1,
         "explanation": "Authentication กับ Confidentiality เป็นคนละคุณสมบัติ CHAP ไม่ได้เป็นกลไก encryption ของทราฟฟิกผู้ใช้",
@@ -1514,7 +1549,7 @@
           "พิจารณาเพิ่มการเข้ารหัส เช่น IPsec เพราะ MPLS VPN ไม่เข้ารหัสให้เอง",
           "ไม่ต้องทำอะไรเพราะ Label คือ Encryption",
           "ปิด Routing Table จะทำให้ปลอดภัย",
-          "ใช้ VLAN1 จะเข้ารหัสอัตโนมัติ"
+          "ใช้ VLAN 1 จะเข้ารหัสอัตโนมัติ"
         ],
         "answer": 0,
         "explanation": "MPLS VPN ให้การแยกบริบทลูกค้า แต่ isolation ไม่เท่ากับ encryption ข้อกำหนด confidentiality ต้องมีกลไกเหมาะสม",
@@ -1538,7 +1573,7 @@
         "prompt": "ต้องการให้เครือข่ายสำนักงานกรุงเทพฯกับเชียงใหม่ติดต่อกันผ่าน tunnel ของ gateway เลือกอะไร",
         "options": [
           "Remote-Access สำหรับทุก MAC บน trunk",
-          "802.1X แทน WANทั้งหมด",
+          "802.1X แทน WAN ทั้งหมด",
           "Site-to-Site VPN",
           "MAC Aging"
         ],
@@ -1576,7 +1611,7 @@
       },
       {
         "id": "8-13",
-        "prompt": "Full Mesh มี4จุดและเชื่อมทุกคู่คู่ละหนึ่งลิงก์ ต้องใช้กี่ลิงก์",
+        "prompt": "Full Mesh มี 4 จุดและเชื่อมทุกคู่คู่ละหนึ่งลิงก์ ต้องใช้กี่ลิงก์",
         "options": [
           "3",
           "6",
@@ -1584,20 +1619,20 @@
           "12"
         ],
         "answer": 1,
-        "explanation": "n(n−1)/2 =4×3/2=6 หาร2เพราะ A–B และ B–A เป็นลิงก์เดียวกัน",
+        "explanation": "n(n−1)/2 =4×3/2=6 หาร 2 เพราะ A–B และ B–A เป็นลิงก์เดียวกัน",
         "level": "ประยุกต์"
       },
       {
         "id": "8-14",
-        "prompt": "เมื่อขยาย Full Mesh จาก4จุดเป็น5จุด จำนวนลิงก์รวมและจำนวนที่เพิ่มเป็นเท่าใด",
+        "prompt": "เมื่อขยาย Full Mesh จาก 4 จุดเป็น 5 จุด จำนวนลิงก์รวมและจำนวนที่เพิ่มเป็นเท่าใด",
         "options": [
-          "รวม5ลิงก์ เพิ่ม1ลิงก์",
-          "รวม20ลิงก์ เพิ่ม14ลิงก์",
-          "รวม10ลิงก์ เพิ่ม4ลิงก์",
-          "รวม6ลิงก์ ไม่ต้องเพิ่ม"
+          "รวม 5 ลิงก์ เพิ่ม 1 ลิงก์",
+          "รวม 20 ลิงก์ เพิ่ม 14 ลิงก์",
+          "รวม 10 ลิงก์ เพิ่ม 4 ลิงก์",
+          "รวม 6 ลิงก์ ไม่ต้องเพิ่ม"
         ],
         "answer": 2,
-        "explanation": "5×4/2=10 จากเดิม6จึงเพิ่ม4 จุดใหม่ต้องเชื่อมกับจุดเดิมทั้ง4",
+        "explanation": "5×4/2=10 จากเดิม 6 จึงเพิ่ม 4 จุดใหม่ต้องเชื่อมกับจุดเดิมทั้ง 4",
         "level": "วิเคราะห์"
       },
       {
