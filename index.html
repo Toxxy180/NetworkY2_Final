@@ -868,19 +868,23 @@ body:after { content:""; display:block; height:70px; }
   background:#1b2e3c; border-color:#3c5263;
 }
 :root[data-theme="dark"] .diagram-canvas { background:#1b2e3c; }
-:root[data-theme="dark"] .diagram svg text { fill:#dce7ed; }
-:root[data-theme="dark"] .diagram svg text[fill="#8b9ab1"] { fill:#b8c9d4; }
-:root[data-theme="dark"] .diagram svg text[fill="#1454eb"] { fill:#9bdac6; }
-:root[data-theme="dark"] .diagram svg text[fill="#008653"] { fill:#a5deb7; }
-:root[data-theme="dark"] .diagram svg text[fill="#c73546"] { fill:#ffbbc0; }
-:root[data-theme="dark"] .diagram svg [fill="#fff"] { fill:#233c4c; }
-:root[data-theme="dark"] .diagram svg [fill="#e9f1ff"],
-:root[data-theme="dark"] .diagram svg [fill="#eaf1ff"] { fill:#294553; }
-:root[data-theme="dark"] .diagram svg [fill="#eaf8f1"] { fill:#25463d; }
-:root[data-theme="dark"] .diagram svg [stroke="#10213f"] { stroke:#bfced7; }
-:root[data-theme="dark"] .diagram svg [stroke="#8b9ab1"] { stroke:#849eaf; }
-:root[data-theme="dark"] .diagram svg [stroke="#008653"] { stroke:#92d4ac; }
-:root[data-theme="dark"] .diagram svg [stroke="#c73546"] { stroke:#f5a4ad; }
+/* Match the instructional SVG palette; keep screen recoloring out of print. */
+@media screen {
+  :root[data-theme="dark"] .diagram svg text { fill:#dce7ed; }
+  :root[data-theme="dark"] .diagram svg text[fill="#596c61"] { fill:#b8c9d4; }
+  :root[data-theme="dark"] .diagram svg text[fill="#2f6862"] { fill:#9bdac6; }
+  :root[data-theme="dark"] .diagram svg text[fill="#326947"] { fill:#a5deb7; }
+  :root[data-theme="dark"] .diagram svg text[fill="#a0443b"] { fill:#ffbbc0; }
+  :root[data-theme="dark"] .diagram svg [fill="#e3ede5"] { fill:#29434d; }
+  :root[data-theme="dark"] .diagram svg [fill="#edf0dc"] { fill:#3a4331; }
+  :root[data-theme="dark"] .diagram svg [fill="#fff"][stroke] { fill:#233c4c; }
+  :root[data-theme="dark"] .diagram svg [stroke="#293630"] { stroke:#bfced7; }
+  :root[data-theme="dark"] .diagram svg [stroke="#596c61"] { stroke:#849eaf; }
+  :root[data-theme="dark"] .diagram svg [stroke="#2f6862"] { stroke:#9bdac6; }
+  :root[data-theme="dark"] .diagram svg [stroke="#326947"] { stroke:#92d4ac; }
+  :root[data-theme="dark"] .diagram svg [stroke="#a0443b"] { stroke:#f5a4ad; }
+  :root[data-theme="dark"] .diagram svg [stroke="#b5ccba"] { stroke:#688779; }
+}
 :root[data-theme="dark"] .diagram figcaption,
 :root[data-theme="dark"] .diagram-controls,
 :root[data-theme="dark"] .diagram-output { background:#20333f; color:#c4d3de; }
