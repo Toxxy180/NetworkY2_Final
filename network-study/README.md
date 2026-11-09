@@ -8,6 +8,10 @@ Author practical questions in `content/practical-exams.json`. Each question supp
 
 ## Preview
 
+The interactive network laboratory is available at `#/explore`. Its Canvas scenarios, step controls, playback, fullscreen view, and lesson links are implemented in `dist/network-experience.js` and `dist/network-experience.css`. It illustrates HSRP tracking/preempt, OSPF path changes, and Router-on-a-Stick forwarding. Motion follows the existing animation preference and reduced-motion setting, and playback stops when the page is hidden or the route changes.
+
+The offline build inlines every local stylesheet and deferred script listed by `dist/index.html`, including the existing quest and 3D product modules.
+
 Run `node serve.mjs` from this directory and open `http://127.0.0.1:4173`.
 
 Hosting assets live in `dist/`. Core lessons and questions are in `content/chapters-1-4.json` and `content/chapters-5-8.json`. The course-file references, additional theory and device-specific lab walkthroughs are in `content/course-review.json`. After changes, run `node validate.mjs` from this directory to validate the content and rebuild both `dist/data.js` and the standalone `../index.html`.

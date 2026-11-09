@@ -44,12 +44,18 @@ fs.writeFileSync('dist/data.js', data);
 const asset = name => fs.readFileSync('dist/' + name, 'utf8');
 const encoded = name => fs.readFileSync('dist/' + name).toString('base64');
 const pdf = `window.pdfUrl=URL.createObjectURL(new Blob([Uint8Array.from(atob('${encoded('exam-scope.pdf')}'),c=>c.charCodeAt(0))],{type:'application/pdf'}));`;
-const app = asset('app.js').replaceAll('href="exam-scope.pdf"', 'href="${window.pdfUrl}"');
-const script = [pdf, data, asset('diagrams.js'), app].join('\n').replace(/<\/script/gi, '<\\/script');
-const offline = asset('index.html')
+const template = asset('index.html');
+const deferredAssets = [...template.matchAll(/<script src="([^"]+)" defer><\/script>/g)].map(match => match[1]);
+const scripts = deferredAssets.map(name => {
+ if (name === 'data.js') return data;
+ if (name === 'app.js') return asset(name).replaceAll('href="exam-scope.pdf"', 'href="${window.pdfUrl}"');
+ return asset(name);
+});
+const script = [pdf, ...scripts].join('\n').replace(/<\/script/gi, '<\\/script');
+const offline = template
  .replace('href="favicon.svg"', () => `href="data:image/svg+xml;base64,${encoded('favicon.svg')}"`)
  .replace(/<link [^>]*href="https:\/\/fonts\.[^>]+>/g, '')
- .replace('<link rel="stylesheet" href="styles.css">', () => `<style>${asset('styles.css')}</style>`)
+ .replace(/<link rel="stylesheet" href="([^"]+)">/g, (_, name) => `<style>${asset(name)}</style>`)
  .replace(/<script src="[^"]+" defer><\/script>/g, '')
  .replace('</body>', () => `<script>${script}</script></body>`);
 fs.writeFileSync('../index.html', offline);
