@@ -12399,8 +12399,8 @@ const Diagrams = (() => {
   const annotated=notes.map(note=>{
    const prefix=note.inputType==='ios'?'!':'#';
    const mode=note.mode+(note.mode!==note.nextMode?' → '+note.nextMode:'');
-   return '<span class="code-comment">'+esc(prefix+' ['+mode+'] '+note.meaning)+'</span>\n<span class="code-command">'+esc(note.command)+'</span>';
-  }).join('\n\n');
+   return '<span class="code-command">'+esc(note.command)+'</span>  <span class="code-comment">'+esc(prefix+' '+note.meaning+' ['+mode+']')+'</span>';
+  }).join('\n');
   return '<div class="command-block"><div class="code-header"><span>'+esc(title)+'</span><button class="btn small" data-copy>'+icon('copy',13)+'คัดลอกเฉพาะคำสั่ง</button></div><pre class="commented-code" data-raw-command="'+esc(raw)+'" aria-label="คำสั่งพร้อมคอมเมนต์อธิบาย"><code>'+annotated+'</code></pre></div>';
  }
  function commandSolution(question) {
@@ -12596,7 +12596,7 @@ const Diagrams = (() => {
   main.innerHTML = `<div class="page-head"><div><p class="chapter-label">บทเรียนภาคปฏิบัติ ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div>
    <a class="btn primary" href="#/lab-exam/${id}">ทำข้อสอบชุดนี้ ${icon('arrow',16)}</a></div>
    <div class="actions lab-links"><a class="btn small" href="#/labs">บทเรียนปฏิบัติทั้งหมด</a><a class="btn small" href="#/chapter/${id}">อ่านทฤษฎีประกอบ</a></div>
-   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านความหมายและโหมดจากคอมเมนต์ก่อนแต่ละคำสั่ง แล้วคัดลอกไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>บรรทัดขึ้นต้นด้วย ! หรือ # เป็นคอมเมนต์ประกอบการอ่าน; ปุ่มคัดลอกเฉพาะคำสั่งจะนำออกให้ และคงคำสั่งครบทุกบรรทัด</p></div>
+   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านความหมายและโหมดจากคอมเมนต์ก่อนแต่ละคำสั่ง แล้วคัดลอกไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>ข้อความหลัง ! หรือ # เป็นคอมเมนต์ประกอบการอ่าน; ปุ่มคัดลอกเฉพาะคำสั่งจะนำออกให้ และคงคำสั่งครบทุกบรรทัด</p></div>
    ${c.labs.map(labSection).join('')}
    ${id===5?'<a class="btn" href="#/lab/8">ฝึก EIGRP และ redistribution ต่อในบท 8</a>':''}
    <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ ${exam.questions.length} ข้อ</a></div>
@@ -12621,7 +12621,7 @@ const Diagrams = (() => {
     const rows=q.kind==='fill'?2:Math.min(12,Math.max(2,q.answer.split('\n').length+1));
     return `<section class="question-panel" id="lab-question-${i}"><div class="question-top"><span>ข้อ ${i+1} / ${exam.questions.length}</span><span class="command-kind">${labels[q.kind]}</span></div><h2>${esc(q.prompt)}</h2><p class="command-context">${esc(q.context)}</p>
      ${q.given?`<div class="given-commands"><p><strong>${q.kind==='fill'?'เติมบรรทัด ____ ในชุดนี้':'ชุดที่โจทย์ให้มาเพื่อแก้ไข'}</strong></p><pre><code>${esc(q.given)}</code></pre></div>`:''}
-     <label class="answer-label" for="${q.id}">${q.kind==='fill'?'คำสั่งเฉพาะช่องว่าง':'คำสั่งของคุณ'}</label><textarea class="cli-answer" id="${q.id}" data-lab-answer="${q.id}" data-set="${id}" rows="${rows}" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="หนึ่งคำสั่งต่อบรรทัด ไม่ต้องพิมพ์ prompt" ${run.finished?'readonly':''}>${esc(run.answers[q.id]||'')}</textarea>
+     <label class="answer-label" for="${q.id}">${q.kind==='fill'?'คำสั่งเฉพาะช่องว่าง':'คำสั่งของคุณ'}</label><textarea class="cli-answer" id="${q.id}" data-lab-answer="${q.id}" data-set="${id}" rows="${rows}" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="พิมพ์เฉพาะคำสั่ง ไม่รวมคอมเมนต์หรือ prompt" ${run.finished?'readonly':''}>${esc(run.answers[q.id]||'')}</textarea>
      ${run.finished?`<div class="feedback ${correct?'':'wrong'}"><strong>${correct?'คำสั่งครบและถูกต้อง':'ตรวจบรรทัดที่ต้องแก้'}</strong>${commandFeedback(q,run.answers[q.id]||'')}${commandSolution(q)}</div>`:`<details class="command-solution"><summary>เปิดเฉลยและความหมายทีละบรรทัด</summary>${commandSolution(q)}</details>`}</section>`;
    }).join('')}
    <div class="quiz-bottom">${run.finished?`<button class="btn" data-lab-retry="${id}">ทำชุดนี้ใหม่</button><a class="btn primary" href="#/${id<8?'lab-exam/'+(id+1):'lab-exams'}">${id<8?'ไปชุดถัดไป':'ดูชุดข้อสอบทั้งหมด'}</a>`:`<p id="lab-answer-count" role="status">ตอบแล้ว ${exam.questions.filter(q=>run.answers[q.id]?.trim()).length} / ${exam.questions.length} ข้อ</p><button class="btn primary" data-lab-submit="${id}">ส่งคำตอบและตรวจทั้งชุด</button>`}</div>

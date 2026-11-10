@@ -8,7 +8,7 @@ Author practical questions in `content/practical-exams.json`. Each question supp
 
 ## Command annotations and checks
 
-`command-notes.mjs` annotates all 435 lab lines during the build. Each generated `step.notes` entry retains the original command, line number, mode before/after, and a Thai explanation. Unknown IOS/shell commands fail validation, so a new command needs an explanation rule. Lessons display explanations as comment lines inside the code block: `!` for IOS, `#` for terminal/filter study notes. Copy buttons use the original command string and omit study comments. The same view is used for practical solutions.
+`command-notes.mjs` annotates all 435 lab lines during the build. Each generated `step.notes` entry retains the original command, line number, mode before/after, and a Thai explanation. Unknown IOS/shell commands fail validation, so a new command needs an explanation rule. Lessons display explanations as trailing comments beside each command inside the same code block: `!` for IOS, `#` for terminal/filter study notes. Copy buttons use the original command string and omit study comments. The same view is used for practical solutions.
 
 `dist/practical-tools.js` supplies the same line checker to the UI and Node tests. Run `node --test practical-tools.test.mjs` and `node validate.mjs`. The current practical bank has 8 sets × 8 questions = 64. Practical storage schema 2 retains existing drafts and reading progress while reopening expanded sets and resetting best scores to the new denominator. Theory progress and question IDs are unchanged.
 
