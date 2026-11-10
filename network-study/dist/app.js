@@ -76,9 +76,7 @@
  function commentedCommandBlock(notes,title) {
   const raw=notes.map(note=>note.command).join('\n');
   const annotated=notes.map(note=>{
-   const prefix=note.inputType==='ios'?'!':'#';
-   const mode=note.mode+(note.mode!==note.nextMode?' → '+note.nextMode:'');
-   return '<span class="code-command">'+esc(note.command)+'</span>  <span class="code-comment">'+esc(prefix+' '+note.meaning+' ['+mode+']')+'</span>';
+   return '<span class="code-instruction"><span class="code-prompt">'+esc(note.prompt)+' </span><span class="code-command">'+esc(note.command.trim())+'</span></span>  <span class="code-comment">'+esc('// '+note.meaning)+'</span>';
   }).join('\n');
   return '<div class="command-block"><div class="code-header"><span>'+esc(title)+'</span><button class="btn small" data-copy>'+icon('copy',13)+'คัดลอกเฉพาะคำสั่ง</button></div><pre class="commented-code" data-raw-command="'+esc(raw)+'" aria-label="คำสั่งพร้อมคอมเมนต์อธิบาย"><code>'+annotated+'</code></pre></div>';
  }
@@ -275,7 +273,7 @@
   main.innerHTML = `<div class="page-head"><div><p class="chapter-label">บทเรียนภาคปฏิบัติ ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div>
    <a class="btn primary" href="#/lab-exam/${id}">ทำข้อสอบชุดนี้ ${icon('arrow',16)}</a></div>
    <div class="actions lab-links"><a class="btn small" href="#/labs">บทเรียนปฏิบัติทั้งหมด</a><a class="btn small" href="#/chapter/${id}">อ่านทฤษฎีประกอบ</a></div>
-   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านความหมายและโหมดจากคอมเมนต์ก่อนแต่ละคำสั่ง แล้วคัดลอกไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>ข้อความหลัง ! หรือ # เป็นคอมเมนต์ประกอบการอ่าน; ปุ่มคัดลอกเฉพาะคำสั่งจะนำออกให้ และคงคำสั่งครบทุกบรรทัด</p></div>
+   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>ดูชื่ออุปกรณ์และโหมดจาก prompt หน้าคำสั่ง อ่านความหมายจาก // ด้านข้าง แล้วคัดลอกไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>// เป็นคอมเมนต์ประกอบการอ่าน; ปุ่มคัดลอกจะนำ prompt และคอมเมนต์ออก เหลือเฉพาะคำสั่งครบทุกบรรทัด</p></div>
    ${c.labs.map(labSection).join('')}
    ${id===5?'<a class="btn" href="#/lab/8">ฝึก EIGRP และ redistribution ต่อในบท 8</a>':''}
    <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ ${exam.questions.length} ข้อ</a></div>

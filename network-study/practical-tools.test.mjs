@@ -42,3 +42,14 @@ test('annotation follows modes and explains save, wildcard, bandwidth and route-
  assert.equal(notes[7].nextMode,'#');assert.match(notes[8].meaning,/บันทึก/);
  assert.throws(()=>annotateCommands('not-a-real-command'),/Missing IOS/);
 });
+test('CLI prompts use the mode before each command and apply hostname changes afterwards',()=>{
+ const notes=annotateCommands('enable\nconfigure terminal\nhostname SW1\nline console 0\npassword cisco\nexit\ninterface gi0/0.10\nexit\nrouter ospf 1\nend\nshow ip ospf neighbor',{device:'SW1 · console'});
+ assert.deepEqual(notes.map(n=>n.prompt),['Switch>','Switch#','Switch(config)#','SW1(config)#','SW1(config-line)#','SW1(config-line)#','SW1(config)#','SW1(config-subif)#','SW1(config)#','SW1(config-router)#','SW1#']);
+ assert.equal(notes[2].nextPrompt,'SW1(config)#');
+ assert.equal(annotateCommands('show ip ospf neighbor',{device:'R2 · router'})[0].prompt,'R2#');
+ assert.equal(annotateCommands('ip -br addr',{inputType:'shell',device:'Kali-1'})[0].prompt,'kali@kali-1:~$');
+ assert.equal(annotateCommands('ospf',{inputType:'filter'})[0].prompt,'Display Filter:');
+ const range=annotateCommands('configure terminal\ninterface range fa0/1 - 3\nswitchport mode access\nexit',{device:'SW2'});
+ assert.equal(range[2].prompt,'SW2(config-if-range)#');
+ assert.equal(range[3].nextPrompt,'SW2(config)#');
+});

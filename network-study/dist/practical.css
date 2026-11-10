@@ -2,7 +2,8 @@
 #main pre.commented-code{font-size:calc(14px + var(--font-step,0px));line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;max-width:100%}
 #main .commented-code>code{font:inherit;white-space:inherit}
 .commented-code .code-comment{color:#b5d6c3;font-family:Tahoma,'Noto Sans Thai',sans-serif;white-space:pre-wrap;overflow-wrap:anywhere}
-.commented-code .code-command{white-space:pre}
+.commented-code .code-instruction,.commented-code .code-command{white-space:pre}
+.commented-code .code-prompt{color:#9edbe7;white-space:pre}
 :root[data-theme="dark"] .commented-code .code-comment{color:#a6cdb9}
 .command-solution>summary,.command-alternatives>summary{cursor:pointer;font-weight:700;color:var(--blue);line-height:1.8;padding:12px 0}
 .command-solution{margin-top:22px;padding-top:8px;border-top:1px solid var(--line)}
@@ -28,4 +29,5 @@
 @media print{
  #main pre.commented-code{font-size:10pt;background:#fff!important;color:#111!important}
  .commented-code .code-comment,:root[data-theme="dark"] .commented-code .code-comment{color:#445d50!important}
+ .commented-code .code-prompt{color:#245764!important}
 }

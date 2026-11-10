@@ -15,7 +15,7 @@ for (const [i, unit] of review.entries()) {
    assert(step.device && step.code.trim());
    step.notes=annotateCommands(step.code,{device:step.device});
    assert.equal(step.notes.length,step.code.split('\n').length);
-   assert(step.notes.every(note=>note.meaning && note.mode));
+   assert(step.notes.every(note=>note.meaning && note.mode && note.prompt && note.nextPrompt));
   }
  }
  chapter.sections.push(...unit.theory);
@@ -50,9 +50,9 @@ for (const [i, exam] of practicalExams.entries()) {
    assert(practicalTools.commandMatches({accept:[question.solution],inputType:question.inputType},question.given.replace('____',question.answer)), 'Fill answer must complete the displayed solution');
   }
   if(question.kind==='repair')assert(question.given);
-  const initialMode=question.solution?'exec':question.context.includes('(config-subif)')?'sub':question.context.includes('(config-if)')?'iface':question.context.includes('(config-router)')?'router':question.context.includes('(config-ext-nacl)')?'acl':question.context.includes('(config)#')?'global':'exec';
-  question.notes=annotateCommands(question.solution||question.answer,{inputType:question.inputType,initialMode});
-  assert(question.notes.every(note=>note.meaning && note.mode));
+  const initialMode=question.solution?'exec':question.context.includes('(config-subif)')?'sub':question.context.includes('(config-if-range)')?'range':question.context.includes('(config-if)')?'iface':question.context.includes('(config-router)')?'router':question.context.includes('(config-ext-nacl)')?'acl':question.context.includes('(config)#')?'global':'exec';
+  question.notes=annotateCommands(question.solution||question.answer,{inputType:question.inputType,initialMode,device:question.context+' '+question.prompt});
+  assert(question.notes.every(note=>note.meaning && note.mode && note.prompt && note.nextPrompt));
  }
 }
 const openbook = JSON.parse(fs.readFileSync('content/openbook.json', 'utf8'));

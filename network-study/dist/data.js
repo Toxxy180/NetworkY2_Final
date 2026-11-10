@@ -431,6 +431,8 @@ window.CHAPTERS = [
                 "command": "enable",
                 "mode": ">",
                 "nextMode": "#",
+                "prompt": "Switch>",
+                "nextPrompt": "Switch#",
                 "meaning": "เข้า privileged EXEC (#) เพื่อใช้คำสั่งตรวจสอบและเข้าสู่การตั้งค่า",
                 "inputType": "ios"
               },
@@ -439,6 +441,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "Switch#",
+                "nextPrompt": "Switch(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -447,6 +451,8 @@ window.CHAPTERS = [
                 "command": "hostname SW1",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "Switch(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ตั้งชื่ออุปกรณ์เป็น SW1; ชื่อนี้จะแสดงใน CLI prompt",
                 "inputType": "ios"
               },
@@ -455,6 +461,8 @@ window.CHAPTERS = [
                 "command": "enable secret cisco123",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ตั้งรหัสผ่านสำหรับเข้า privileged EXEC; ค่าที่ตั้งอยู่ใน running-config",
                 "inputType": "ios"
               },
@@ -463,6 +471,8 @@ window.CHAPTERS = [
                 "command": "line console 0",
                 "mode": "(config)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "เลือก สาย console สำหรับเข้าเครื่องโดยตรง หมายเลข 0 เพื่อกำหนดการ login",
                 "inputType": "ios"
               },
@@ -471,6 +481,8 @@ window.CHAPTERS = [
                 "command": " password cisco",
                 "mode": "(config-line)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "ตั้งรหัสผ่านของ line ที่เลือก; ใช้คู่กับ login ตามรูปแบบแลปนี้",
                 "inputType": "ios"
               },
@@ -479,6 +491,8 @@ window.CHAPTERS = [
                 "command": " login",
                 "mode": "(config-line)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "ให้ line นี้ตรวจรหัสผ่านที่กำหนดด้วย password ก่อนเข้าใช้งาน",
                 "inputType": "ios"
               },
@@ -487,6 +501,8 @@ window.CHAPTERS = [
                 "command": " exec-timeout 5 0",
                 "mode": "(config-line)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "ตัด session เมื่อไม่มีการใช้งาน 5 นาที 0 วินาที",
                 "inputType": "ios"
               },
@@ -495,6 +511,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-line)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-line)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -503,6 +521,8 @@ window.CHAPTERS = [
                 "command": "line vty 0 4",
                 "mode": "(config)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "เลือก ช่วงสาย VTY สำหรับ remote session หมายเลข 0 4 เพื่อกำหนดการ login",
                 "inputType": "ios"
               },
@@ -511,6 +531,8 @@ window.CHAPTERS = [
                 "command": " password cisco",
                 "mode": "(config-line)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "ตั้งรหัสผ่านของ line ที่เลือก; ใช้คู่กับ login ตามรูปแบบแลปนี้",
                 "inputType": "ios"
               },
@@ -519,6 +541,8 @@ window.CHAPTERS = [
                 "command": " login",
                 "mode": "(config-line)#",
                 "nextMode": "(config-line)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config-line)#",
                 "meaning": "ให้ line นี้ตรวจรหัสผ่านที่กำหนดด้วย password ก่อนเข้าใช้งาน",
                 "inputType": "ios"
               },
@@ -527,6 +551,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-line)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-line)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-line)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -535,6 +561,8 @@ window.CHAPTERS = [
                 "command": "interface vlan 1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface vlan 1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -543,6 +571,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.1.2 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.1.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -551,6 +581,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -559,6 +591,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -567,6 +601,8 @@ window.CHAPTERS = [
                 "command": "ip default-gateway 192.168.1.1",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ตั้ง gateway 192.168.1.1 ให้สวิตช์ L2 ตอบกลับไป subnet อื่น เมื่อไม่ได้เปิด IP routing",
                 "inputType": "ios"
               },
@@ -575,6 +611,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config)#",
                 "nextMode": "#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -583,6 +621,8 @@ window.CHAPTERS = [
                 "command": "show ip interface brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู IP กับสถานะ Status/Protocol ของแต่ละ interface แบบย่อ",
                 "inputType": "ios"
               },
@@ -591,6 +631,8 @@ window.CHAPTERS = [
                 "command": "show running-config",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูค่าตั้งที่กำลังใช้งาน; ยังไม่ใช่การ save",
                 "inputType": "ios"
               },
@@ -599,6 +641,8 @@ window.CHAPTERS = [
                 "command": "copy running-config startup-config",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "บันทึกค่าที่ใช้งานปัจจุบันไปยังค่าที่อ่านตอนบูต; ยืนยันชื่อปลายทางด้วย Enter ตาม prompt",
                 "inputType": "ios"
               },
@@ -607,6 +651,8 @@ window.CHAPTERS = [
                 "command": "show version",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูรุ่นอุปกรณ์, IOS และข้อมูลระบบ",
                 "inputType": "ios"
               }
@@ -638,6 +684,8 @@ window.CHAPTERS = [
                 "command": "show interfaces status",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูสถานะพอร์ต, VLAN และความเร็ว/duplex ที่รายงาน",
                 "inputType": "ios"
               },
@@ -646,6 +694,8 @@ window.CHAPTERS = [
                 "command": "clear mac address-table dynamic",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ล้าง MAC ที่เรียนรู้แบบ dynamic เพื่อเริ่มสังเกตการเรียนรู้ใหม่; ไม่ใช่การลบ VLAN",
                 "inputType": "ios"
               },
@@ -654,6 +704,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table dynamic",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตาราง MAC แบบ dynamic; เทียบ VLAN, MAC และพอร์ต",
                 "inputType": "ios"
               }
@@ -668,6 +720,8 @@ window.CHAPTERS = [
                 "command": "ping -c 4 192.168.1.20",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.1.20 จำนวน 4 ครั้ง เพื่อวัด reachability/packet loss"
               }
@@ -682,6 +736,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table dynamic",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตาราง MAC แบบ dynamic; เทียบ VLAN, MAC และพอร์ต",
                 "inputType": "ios"
               },
@@ -690,6 +746,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table aging-time",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูเวลา aging ของรายการ MAC แบบ dynamic",
                 "inputType": "ios"
               },
@@ -698,6 +756,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -706,6 +766,8 @@ window.CHAPTERS = [
                 "command": "mac address-table static 0011.2233.4455 vlan 1 interface fastEthernet 0/1",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ผูก MAC 0011.2233.4455 ใน VLAN 1 ไปพอร์ต fastEthernet 0/1 แบบ static",
                 "inputType": "ios"
               },
@@ -714,6 +776,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config)#",
                 "nextMode": "#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -722,6 +786,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table static",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตาราง MAC แบบ static; เทียบ VLAN, MAC และพอร์ต",
                 "inputType": "ios"
               }
@@ -753,6 +819,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -760,48 +828,60 @@ window.CHAPTERS = [
                 "line": 2,
                 "command": "interface range fastEthernet 0/1 - 3",
                 "mode": "(config)#",
-                "nextMode": "(config-if)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เลือกหลาย interface (fastEthernet 0/1 - 3) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง",
                 "inputType": "ios"
               },
               {
                 "line": 3,
                 "command": " switchport mode access",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
               {
                 "line": 4,
                 "command": " switchport port-security",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เปิด Port Security บนพอร์ต; คำสั่ง maximum/sticky/violation ด้านล่างกำหนดนโยบายเพิ่ม",
                 "inputType": "ios"
               },
               {
                 "line": 5,
                 "command": " switchport port-security maximum 2",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "อนุญาต secure MAC สูงสุด 2 รายการบนพอร์ต",
                 "inputType": "ios"
               },
               {
                 "line": 6,
                 "command": " switchport port-security mac-address sticky",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เรียน secure MAC แบบ sticky แล้วเพิ่มลง running-config; ต้อง save เพื่อคงไว้หลัง reboot",
                 "inputType": "ios"
               },
               {
                 "line": 7,
                 "command": " exit",
-                "mode": "(config-if)#",
+                "mode": "(config-if-range)#",
                 "nextMode": "(config)#",
-                "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config)#",
+                "meaning": "ออกจาก (config-if-range)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
               {
@@ -809,6 +889,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -817,6 +899,8 @@ window.CHAPTERS = [
                 "command": " switchport port-security violation protect",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เมื่อ MAC ผิดเงื่อนไข ให้ drop เฟรม แต่พอร์ตยังทำงาน โดยไม่มีการแจ้งแบบ restrict",
                 "inputType": "ios"
               },
@@ -825,6 +909,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -833,6 +919,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/2",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/2 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -841,6 +929,8 @@ window.CHAPTERS = [
                 "command": " switchport port-security violation restrict",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เมื่อ MAC ผิดเงื่อนไข ให้ drop พร้อมนับ violation/แจ้งตามระบบ โดยพอร์ตยังทำงาน",
                 "inputType": "ios"
               },
@@ -849,6 +939,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -857,6 +949,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/3",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/3 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -865,6 +959,8 @@ window.CHAPTERS = [
                 "command": " switchport port-security violation shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เมื่อ MAC ผิดเงื่อนไข ให้พอร์ตเข้า err-disabled; แก้ต้นเหตุก่อน shutdown/no shutdown",
                 "inputType": "ios"
               },
@@ -873,6 +969,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               }
@@ -887,6 +985,8 @@ window.CHAPTERS = [
                 "command": "sudo ip link set eth0 down",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; ปิด interface eth0 บน Kali เพื่อเตรียมเปลี่ยน MAC ตามแลป"
               },
@@ -895,6 +995,8 @@ window.CHAPTERS = [
                 "command": "sudo macchanger -r eth0",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; สุ่ม MAC ของ eth0 ในวงทดสอบ Port Security แล้วสร้าง traffic เพื่อสังเกต violation"
               },
@@ -903,6 +1005,8 @@ window.CHAPTERS = [
                 "command": "sudo ip link set eth0 up",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; เปิด interface eth0 บน Kali เพื่อเตรียมเปลี่ยน MAC ตามแลป"
               },
@@ -911,6 +1015,8 @@ window.CHAPTERS = [
                 "command": "ping -c 2 192.168.1.2",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.1.2 จำนวน 2 ครั้ง เพื่อวัด reachability/packet loss"
               }
@@ -925,6 +1031,8 @@ window.CHAPTERS = [
                 "command": "show port-security address",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู secure MAC ที่ Port Security เรียนรู้หรือกำหนดไว้",
                 "inputType": "ios"
               },
@@ -933,6 +1041,8 @@ window.CHAPTERS = [
                 "command": "show port-security interface fa0/2",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู maximum, secure MAC, violation mode และ counter ของ fa0/2",
                 "inputType": "ios"
               },
@@ -941,6 +1051,8 @@ window.CHAPTERS = [
                 "command": "show interfaces status err-disabled",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ค้นพอร์ตที่อยู่ err-disabled เพื่อระบุพอร์ตที่ต้องตรวจสาเหตุ",
                 "inputType": "ios"
               },
@@ -949,6 +1061,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -957,6 +1071,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/3",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/3 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -965,6 +1081,8 @@ window.CHAPTERS = [
                 "command": " shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "ปิด interface ที่เลือกในทาง administrative; ใช้ตัดลิงก์หรือเป็นขั้นตอนกู้พอร์ตตามแลป",
                 "inputType": "ios"
               },
@@ -973,6 +1091,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -981,6 +1101,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -989,6 +1111,8 @@ window.CHAPTERS = [
                 "command": "show port-security interface fa0/3",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู maximum, secure MAC, violation mode และ counter ของ fa0/3",
                 "inputType": "ios"
               }
@@ -1425,6 +1549,8 @@ window.CHAPTERS = [
                 "command": "show cdp neighbors",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูอุปกรณ์ Cisco ที่อยู่ติดกันกับพอร์ตเชื่อมต่อ",
                 "inputType": "ios"
               },
@@ -1433,6 +1559,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -1441,6 +1569,8 @@ window.CHAPTERS = [
                 "command": "vtp domain LABCORP",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้าร่วม VTP domain ชื่อ LABCORP; ชื่อต้องตรงกับสมาชิกในแลป",
                 "inputType": "ios"
               },
@@ -1449,6 +1579,8 @@ window.CHAPTERS = [
                 "command": "vtp mode server",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ตั้ง VTP เป็น server: แก้และประกาศฐาน VLAN",
                 "inputType": "ios"
               },
@@ -1457,6 +1589,8 @@ window.CHAPTERS = [
                 "command": "vtp version 2",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ใช้ VTP version 2 ตามใบงาน",
                 "inputType": "ios"
               },
@@ -1465,6 +1599,8 @@ window.CHAPTERS = [
                 "command": "vtp password vtp123",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "กำหนด VTP password ให้ตรงกันระหว่างสมาชิกของ domain",
                 "inputType": "ios"
               },
@@ -1472,24 +1608,30 @@ window.CHAPTERS = [
                 "line": 7,
                 "command": "interface range gi0/1 - 2",
                 "mode": "(config)#",
-                "nextMode": "(config-if)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เลือกหลาย interface (gi0/1 - 2) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง",
                 "inputType": "ios"
               },
               {
                 "line": 8,
                 "command": " switchport mode trunk",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
                 "inputType": "ios"
               },
               {
                 "line": 9,
                 "command": " exit",
-                "mode": "(config-if)#",
+                "mode": "(config-if-range)#",
                 "nextMode": "(config)#",
-                "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config)#",
+                "meaning": "ออกจาก (config-if-range)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
               {
@@ -1497,6 +1639,8 @@ window.CHAPTERS = [
                 "command": "vlan 10",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 10 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -1505,6 +1649,8 @@ window.CHAPTERS = [
                 "command": " name SALES",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น SALES",
                 "inputType": "ios"
               },
@@ -1513,6 +1659,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -1521,6 +1669,8 @@ window.CHAPTERS = [
                 "command": "vlan 20",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 20 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -1529,6 +1679,8 @@ window.CHAPTERS = [
                 "command": " name IT",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น IT",
                 "inputType": "ios"
               },
@@ -1537,6 +1689,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -1545,6 +1699,8 @@ window.CHAPTERS = [
                 "command": "vlan 30",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 30 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -1553,6 +1709,8 @@ window.CHAPTERS = [
                 "command": " name HR",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น HR",
                 "inputType": "ios"
               },
@@ -1561,6 +1719,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -1569,6 +1729,8 @@ window.CHAPTERS = [
                 "command": "vlan 999",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 999 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -1577,6 +1739,8 @@ window.CHAPTERS = [
                 "command": " name NATIVE_UNUSED",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น NATIVE_UNUSED",
                 "inputType": "ios"
               },
@@ -1585,6 +1749,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-vlan)#",
                 "nextMode": "#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               }
@@ -1599,6 +1765,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -1607,6 +1775,8 @@ window.CHAPTERS = [
                 "command": "vtp domain LABCORP",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "เข้าร่วม VTP domain ชื่อ LABCORP; ชื่อต้องตรงกับสมาชิกในแลป",
                 "inputType": "ios"
               },
@@ -1615,6 +1785,8 @@ window.CHAPTERS = [
                 "command": "vtp mode client",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "ตั้ง VTP เป็น client: รับฐาน VLAN จาก domain",
                 "inputType": "ios"
               },
@@ -1623,6 +1795,8 @@ window.CHAPTERS = [
                 "command": "vtp password vtp123",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "กำหนด VTP password ให้ตรงกันระหว่างสมาชิกของ domain",
                 "inputType": "ios"
               },
@@ -1631,6 +1805,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -1639,6 +1815,8 @@ window.CHAPTERS = [
                 "command": " switchport mode trunk",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
                 "inputType": "ios"
               },
@@ -1647,6 +1825,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -1655,6 +1835,8 @@ window.CHAPTERS = [
                 "command": "show vtp status",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดู VTP domain, version, mode และ revision ก่อนเชื่อม switch เข้าวง",
                 "inputType": "ios"
               },
@@ -1663,6 +1845,8 @@ window.CHAPTERS = [
                 "command": "show vlan brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดู VLAN ที่มีอยู่กับพอร์ต access ที่เป็นสมาชิก; ไม่ใช้แทน show interfaces trunk",
                 "inputType": "ios"
               },
@@ -1671,6 +1855,8 @@ window.CHAPTERS = [
                 "command": "show interfaces trunk",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดูพอร์ต trunk, native VLAN และ VLAN ที่ allowed/active/forwarding",
                 "inputType": "ios"
               }
@@ -1701,6 +1887,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "Switch#",
+                "nextPrompt": "Switch(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -1709,6 +1897,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "Switch(config)#",
+                "nextPrompt": "Switch(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -1717,6 +1907,8 @@ window.CHAPTERS = [
                 "command": " switchport trunk native vlan 999",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "Switch(config-if)#",
+                "nextPrompt": "Switch(config-if)#",
                 "meaning": "ตั้ง native VLAN เป็น 999; ปลาย trunk อีกด้านต้องตั้งตรงกัน",
                 "inputType": "ios"
               },
@@ -1725,6 +1917,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "Switch(config-if)#",
+                "nextPrompt": "Switch#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -1733,6 +1927,8 @@ window.CHAPTERS = [
                 "command": "show interfaces trunk",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "Switch#",
+                "nextPrompt": "Switch#",
                 "meaning": "ดูพอร์ต trunk, native VLAN และ VLAN ที่ allowed/active/forwarding",
                 "inputType": "ios"
               },
@@ -1741,6 +1937,8 @@ window.CHAPTERS = [
                 "command": "show cdp neighbors detail",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "Switch#",
+                "nextPrompt": "Switch#",
                 "meaning": "ดูอุปกรณ์ Cisco ที่อยู่ติดกันกับพอร์ตเชื่อมต่อ พร้อมรายละเอียดของเพื่อนบ้าน",
                 "inputType": "ios"
               }
@@ -1755,6 +1953,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -1762,40 +1962,50 @@ window.CHAPTERS = [
                 "line": 2,
                 "command": "interface range fa0/1 - 2",
                 "mode": "(config)#",
-                "nextMode": "(config-if)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เลือกหลาย interface (fa0/1 - 2) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง",
                 "inputType": "ios"
               },
               {
                 "line": 3,
                 "command": " switchport mode access",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
               {
                 "line": 4,
                 "command": " switchport access vlan 10",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ให้ data traffic แบบ access ของพอร์ตอยู่ VLAN 10",
                 "inputType": "ios"
               },
               {
                 "line": 5,
                 "command": " switchport protected",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "แยกพอร์ตนี้จาก protected port อื่นบนสวิตช์เดียวกัน; ยังติดต่อ unprotected port ตามปกติได้",
                 "inputType": "ios"
               },
               {
                 "line": 6,
                 "command": " exit",
-                "mode": "(config-if)#",
+                "mode": "(config-if-range)#",
                 "nextMode": "(config)#",
-                "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config)#",
+                "meaning": "ออกจาก (config-if-range)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
               {
@@ -1803,6 +2013,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/4",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/4 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -1811,6 +2023,8 @@ window.CHAPTERS = [
                 "command": " switchport mode access",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
@@ -1819,6 +2033,8 @@ window.CHAPTERS = [
                 "command": " switchport access vlan 10",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "ให้ data traffic แบบ access ของพอร์ตอยู่ VLAN 10",
                 "inputType": "ios"
               },
@@ -1827,6 +2043,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -1835,6 +2053,8 @@ window.CHAPTERS = [
                 "command": "show interfaces fa0/1 switchport",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู Administrative/Operational Mode, access VLAN และ trunk settings ของ fa0/1",
                 "inputType": "ios"
               }
@@ -1866,6 +2086,8 @@ window.CHAPTERS = [
                 "command": "sudo yersinia dtp -attack 1 -interface eth0",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; ส่ง DTP ตามตัวเลือก -attack 1 ผ่าน -interface eth0 เพื่อเปรียบเทียบก่อนและหลังปิด DTP ในวงแลป"
               }
@@ -1880,6 +2102,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -1888,6 +2112,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/2",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/2 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -1896,6 +2122,8 @@ window.CHAPTERS = [
                 "command": " switchport mode access",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
@@ -1904,6 +2132,8 @@ window.CHAPTERS = [
                 "command": " switchport nonegotiate",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "หยุดส่ง DTP เพื่อเจรจา trunk; กำหนด mode access/trunk เองให้ตรงบทบาทก่อน",
                 "inputType": "ios"
               },
@@ -1912,6 +2142,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -1920,6 +2152,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -1928,6 +2162,8 @@ window.CHAPTERS = [
                 "command": " switchport trunk allowed vlan remove 999",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "นำออก VLAN 999 จาก allowed list ของ trunk",
                 "inputType": "ios"
               },
@@ -1936,6 +2172,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -1944,6 +2182,8 @@ window.CHAPTERS = [
                 "command": "show interfaces fa0/2 switchport",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดู Administrative/Operational Mode, access VLAN และ trunk settings ของ fa0/2",
                 "inputType": "ios"
               },
@@ -1952,6 +2192,8 @@ window.CHAPTERS = [
                 "command": "show interfaces trunk",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดูพอร์ต trunk, native VLAN และ VLAN ที่ allowed/active/forwarding",
                 "inputType": "ios"
               }
@@ -2405,6 +2647,8 @@ window.CHAPTERS = [
                 "command": "show spanning-tree vlan 1",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
                 "inputType": "ios"
               },
@@ -2413,6 +2657,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table dynamic",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตาราง MAC แบบ dynamic; เทียบ VLAN, MAC และพอร์ต",
                 "inputType": "ios"
               },
@@ -2421,6 +2667,8 @@ window.CHAPTERS = [
                 "command": "show interfaces counters",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตัวนับรับส่งเฟรมของพอร์ตเพื่อเทียบก่อนและหลังทดลอง",
                 "inputType": "ios"
               }
@@ -2435,6 +2683,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -2443,6 +2693,8 @@ window.CHAPTERS = [
                 "command": "no spanning-tree vlan 1",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ปิด STP ของ VLAN 1 สำหรับช่วงทดลอง loop ในวงแลป; คืน STP ตามขั้นตอนใบงาน",
                 "inputType": "ios"
               },
@@ -2451,6 +2703,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config)#",
                 "nextMode": "#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               }
@@ -2465,6 +2719,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -2473,6 +2729,8 @@ window.CHAPTERS = [
                 "command": "spanning-tree vlan 1",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เปิด STP ของ VLAN 1 คืนหลังการทดลอง",
                 "inputType": "ios"
               },
@@ -2481,6 +2739,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config)#",
                 "nextMode": "#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -2489,6 +2749,8 @@ window.CHAPTERS = [
                 "command": "show spanning-tree vlan 1",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
                 "inputType": "ios"
               }
@@ -2503,6 +2765,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -2511,6 +2775,8 @@ window.CHAPTERS = [
                 "command": "spanning-tree vlan 1 root primary",
                 "mode": "(config)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ให้ IOS ปรับ priority เพื่อพยายามให้อุปกรณ์เป็น root หลักของ VLAN 1; ตรวจผลด้วย show spanning-tree",
                 "inputType": "ios"
               },
@@ -2519,6 +2785,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config)#",
                 "nextMode": "#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -2527,6 +2795,8 @@ window.CHAPTERS = [
                 "command": "show spanning-tree vlan 1",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
                 "inputType": "ios"
               }
@@ -2541,6 +2811,8 @@ window.CHAPTERS = [
                 "command": "stp.type == 0x00",
                 "mode": "Wireshark · Display Filter",
                 "nextMode": "Wireshark · Display Filter",
+                "prompt": "Display Filter:",
+                "nextPrompt": "Display Filter:",
                 "inputType": "filter",
                 "meaning": "แสดงเฉพาะ STP Configuration BPDU (type 0x00); ใส่ในช่อง Display Filter ไม่ใช่ terminal"
               }
@@ -2571,6 +2843,8 @@ window.CHAPTERS = [
                 "command": "sudo yersinia -G",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; เปิดหน้าต่าง Yersinia ตามแลป; เลือก STP → Claiming Root Role ในขั้นทดลอง BPDU"
               }
@@ -2585,6 +2859,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -2593,6 +2869,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -2601,6 +2879,8 @@ window.CHAPTERS = [
                 "command": " switchport mode access",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
@@ -2609,6 +2889,8 @@ window.CHAPTERS = [
                 "command": " spanning-tree portfast",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "ให้พอร์ตปลายทางเข้าสู่ Forwarding เร็ว; STP ยังทำงาน ไม่ใช่การปิด STP",
                 "inputType": "ios"
               },
@@ -2617,6 +2899,8 @@ window.CHAPTERS = [
                 "command": " spanning-tree bpduguard enable",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2(config-if)#",
                 "meaning": "เปิด BPDU Guard; ถ้าพอร์ตได้รับ BPDU จะเข้า err-disabled",
                 "inputType": "ios"
               },
@@ -2625,6 +2909,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW2(config-if)#",
+                "nextPrompt": "SW2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -2633,6 +2919,8 @@ window.CHAPTERS = [
                 "command": "show interfaces status err-disabled",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ค้นพอร์ตที่อยู่ err-disabled เพื่อระบุพอร์ตที่ต้องตรวจสาเหตุ",
                 "inputType": "ios"
               },
@@ -2641,6 +2929,8 @@ window.CHAPTERS = [
                 "command": "show spanning-tree vlan 1",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW2#",
+                "nextPrompt": "SW2#",
                 "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
                 "inputType": "ios"
               }
@@ -3066,6 +3356,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -3074,6 +3366,8 @@ window.CHAPTERS = [
                 "command": "vlan 10",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 10 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -3082,6 +3376,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3090,6 +3386,8 @@ window.CHAPTERS = [
                 "command": "vlan 20",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 20 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -3098,6 +3396,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3106,6 +3406,8 @@ window.CHAPTERS = [
                 "command": "vlan 99",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 99 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -3114,6 +3416,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3122,6 +3426,8 @@ window.CHAPTERS = [
                 "command": "vlan 666",
                 "mode": "(config)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "สร้างหรือเลือก VLAN 666 แล้วเข้าโหมด config-vlan",
                 "inputType": "ios"
               },
@@ -3130,6 +3436,8 @@ window.CHAPTERS = [
                 "command": " name Unused_Native_VLAN",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config-vlan)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config-vlan)#",
                 "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น Unused_Native_VLAN",
                 "inputType": "ios"
               },
@@ -3138,6 +3446,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-vlan)#",
                 "nextMode": "(config)#",
+                "prompt": "SW1(config-vlan)#",
+                "nextPrompt": "SW1(config)#",
                 "meaning": "ออกจาก (config-vlan)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3145,56 +3455,70 @@ window.CHAPTERS = [
                 "line": 11,
                 "command": "interface range gi0/0, gi0/4",
                 "mode": "(config)#",
-                "nextMode": "(config-if)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เลือกหลาย interface (gi0/0, gi0/4) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง",
                 "inputType": "ios"
               },
               {
                 "line": 12,
                 "command": " switchport mode trunk",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
                 "inputType": "ios"
               },
               {
                 "line": 13,
                 "command": " switchport trunk native vlan 666",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "ตั้ง native VLAN เป็น 666; ปลาย trunk อีกด้านต้องตั้งตรงกัน",
                 "inputType": "ios"
               },
               {
                 "line": 14,
                 "command": " switchport trunk allowed vlan 10,20,99",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "แทนรายการเดิมด้วย VLAN 10,20,99 ใน allowed list ของ trunk",
                 "inputType": "ios"
               },
               {
                 "line": 15,
                 "command": " switchport nonegotiate",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "หยุดส่ง DTP เพื่อเจรจา trunk; กำหนด mode access/trunk เองให้ตรงบทบาทก่อน",
                 "inputType": "ios"
               },
               {
                 "line": 16,
                 "command": " no shutdown",
-                "mode": "(config-if)#",
-                "nextMode": "(config-if)#",
+                "mode": "(config-if-range)#",
+                "nextMode": "(config-if-range)#",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config-if-range)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
               {
                 "line": 17,
                 "command": " exit",
-                "mode": "(config-if)#",
+                "mode": "(config-if-range)#",
                 "nextMode": "(config)#",
-                "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
+                "prompt": "SW1(config-if-range)#",
+                "nextPrompt": "SW1(config)#",
+                "meaning": "ออกจาก (config-if-range)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
               {
@@ -3202,6 +3526,8 @@ window.CHAPTERS = [
                 "command": "interface fa0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface fa0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3210,6 +3536,8 @@ window.CHAPTERS = [
                 "command": " switchport mode access",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
                 "inputType": "ios"
               },
@@ -3218,6 +3546,8 @@ window.CHAPTERS = [
                 "command": " switchport access vlan 10",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "ให้ data traffic แบบ access ของพอร์ตอยู่ VLAN 10",
                 "inputType": "ios"
               },
@@ -3226,6 +3556,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -3234,6 +3566,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "SW1(config-if)#",
+                "nextPrompt": "SW1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -3242,6 +3576,8 @@ window.CHAPTERS = [
                 "command": "show vlan brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดู VLAN ที่มีอยู่กับพอร์ต access ที่เป็นสมาชิก; ไม่ใช้แทน show interfaces trunk",
                 "inputType": "ios"
               },
@@ -3250,6 +3586,8 @@ window.CHAPTERS = [
                 "command": "show interfaces trunk",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูพอร์ต trunk, native VLAN และ VLAN ที่ allowed/active/forwarding",
                 "inputType": "ios"
               }
@@ -3264,6 +3602,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -3272,6 +3612,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/0",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3280,6 +3622,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -3288,6 +3632,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3296,6 +3642,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/0.10",
                 "mode": "(config)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/0.10 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3304,6 +3652,8 @@ window.CHAPTERS = [
                 "command": " encapsulation dot1Q 10",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "ผูก sub-interface กับ tag ของ VLAN 10; เลขท้ายชื่อ sub-interface อย่างเดียวไม่ได้ผูก VLAN",
                 "inputType": "ios"
               },
@@ -3312,6 +3662,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.10.1 255.255.255.0",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "กำหนด IPv4 192.168.10.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -3320,6 +3672,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-subif)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-subif)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3328,6 +3682,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/0.20",
                 "mode": "(config)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/0.20 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3336,6 +3692,8 @@ window.CHAPTERS = [
                 "command": " encapsulation dot1Q 20",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "ผูก sub-interface กับ tag ของ VLAN 20; เลขท้ายชื่อ sub-interface อย่างเดียวไม่ได้ผูก VLAN",
                 "inputType": "ios"
               },
@@ -3344,6 +3702,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.20.1 255.255.255.0",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "กำหนด IPv4 192.168.20.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -3352,6 +3712,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-subif)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-subif)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3360,6 +3722,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/0.99",
                 "mode": "(config)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/0.99 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3368,6 +3732,8 @@ window.CHAPTERS = [
                 "command": " encapsulation dot1Q 99",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "ผูก sub-interface กับ tag ของ VLAN 99; เลขท้ายชื่อ sub-interface อย่างเดียวไม่ได้ผูก VLAN",
                 "inputType": "ios"
               },
@@ -3376,6 +3742,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.99.1 255.255.255.0",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "กำหนด IPv4 192.168.99.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -3384,6 +3752,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-subif)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-subif)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3392,6 +3762,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3400,6 +3772,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.0.1 255.255.255.252",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.0.1 และ subnet mask 255.255.255.252 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -3408,6 +3782,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -3416,6 +3792,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3424,6 +3802,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -3432,6 +3812,8 @@ window.CHAPTERS = [
                 "command": " router-id 1.1.1.1",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 1.1.1.1; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -3440,6 +3822,8 @@ window.CHAPTERS = [
                 "command": " network 192.168.0.0 0.0.255.255 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 192.168.0.0 wildcard 0.0.255.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -3448,6 +3832,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.0.0 0.0.0.3 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.0.0 wildcard 0.0.0.3 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -3456,6 +3842,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -3464,6 +3852,8 @@ window.CHAPTERS = [
                 "command": "show ip interface brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู IP กับสถานะ Status/Protocol ของแต่ละ interface แบบย่อ",
                 "inputType": "ios"
               },
@@ -3472,6 +3862,8 @@ window.CHAPTERS = [
                 "command": "show ip route connected",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู route เครือข่ายที่เชื่อมต่อโดยตรงและใช้งานได้",
                 "inputType": "ios"
               }
@@ -3504,6 +3896,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -3512,6 +3906,8 @@ window.CHAPTERS = [
                 "command": "ip access-list extended FILTER_STAFF_TRAFFIC",
                 "mode": "(config)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "สร้างหรือเลือก named extended ACL FILTER_STAFF_TRAFFIC แล้วเข้าโหมด config-ext-nacl",
                 "inputType": "ios"
               },
@@ -3520,6 +3916,8 @@ window.CHAPTERS = [
                 "command": " deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "ปฏิเสธ IP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.99.100; ประมวลผล ACL จากบนลงล่าง",
                 "inputType": "ios"
               },
@@ -3528,6 +3926,8 @@ window.CHAPTERS = [
                 "command": " permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "อนุญาต TCP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10 เฉพาะ destination port 80",
                 "inputType": "ios"
               },
@@ -3536,6 +3936,8 @@ window.CHAPTERS = [
                 "command": " permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "อนุญาต TCP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10 เฉพาะ destination port 443",
                 "inputType": "ios"
               },
@@ -3544,6 +3946,8 @@ window.CHAPTERS = [
                 "command": " permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "อนุญาต ICMP Echo Request จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10",
                 "inputType": "ios"
               },
@@ -3552,6 +3956,8 @@ window.CHAPTERS = [
                 "command": " deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "ปฏิเสธ IP จาก 192.168.10.0 wildcard 0.0.0.255 ไป 192.168.20.0 wildcard 0.0.0.255",
                 "inputType": "ios"
               },
@@ -3560,6 +3966,8 @@ window.CHAPTERS = [
                 "command": " permit ip any any",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config-ext-nacl)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config-ext-nacl)#",
                 "meaning": "อนุญาต IP อื่นที่ยังไม่ match บรรทัดก่อนหน้า; ACL มี implicit deny ท้ายรายการ",
                 "inputType": "ios"
               },
@@ -3568,6 +3976,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-ext-nacl)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-ext-nacl)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-ext-nacl)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -3576,6 +3986,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/0.10",
                 "mode": "(config)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/0.10 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -3584,6 +3996,8 @@ window.CHAPTERS = [
                 "command": " ip access-group FILTER_STAFF_TRAFFIC in",
                 "mode": "(config-subif)#",
                 "nextMode": "(config-subif)#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1(config-subif)#",
                 "meaning": "ผูก ACL FILTER_STAFF_TRAFFIC กับ interface ทิศ in (แพ็กเก็ตที่รับเข้ามา จากมุม router)",
                 "inputType": "ios"
               },
@@ -3592,6 +4006,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-subif)#",
                 "nextMode": "#",
+                "prompt": "R1(config-subif)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -3600,6 +4016,8 @@ window.CHAPTERS = [
                 "command": "show ip interface gi0/0.10",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูสถานะ IPv4 ของ gi0/0.10 รวมถึง ACL ขาเข้า/ขาออกที่ผูกไว้",
                 "inputType": "ios"
               },
@@ -3608,6 +4026,8 @@ window.CHAPTERS = [
                 "command": "show access-lists FILTER_STAFF_TRAFFIC",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู ACL FILTER_STAFF_TRAFFIC และ hit counter; ส่งทราฟฟิกจากต้นทางที่ ACL ครอบคลุมแล้วเทียบ counter",
                 "inputType": "ios"
               }
@@ -3622,6 +4042,8 @@ window.CHAPTERS = [
                 "command": "ping 192.168.20.10",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "user@pc-staff:~$",
+                "nextPrompt": "user@pc-staff:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.20.10 เพื่อวัด reachability/packet loss; หยุดด้วย Ctrl+C ตาม terminal ที่ใช้"
               },
@@ -3630,6 +4052,8 @@ window.CHAPTERS = [
                 "command": "ssh 192.168.20.10",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "user@pc-staff:~$",
+                "nextPrompt": "user@pc-staff:~$",
                 "inputType": "shell",
                 "meaning": "ลองเชื่อม SSH ไป 192.168.20.10; ใช้ทดสอบ traffic TCP/22 ที่ ACL อาจอนุญาตหรือปฏิเสธ"
               },
@@ -3638,6 +4062,8 @@ window.CHAPTERS = [
                 "command": "ping 192.168.99.100",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "user@pc-staff:~$",
+                "nextPrompt": "user@pc-staff:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.99.100 เพื่อวัด reachability/packet loss; หยุดด้วย Ctrl+C ตาม terminal ที่ใช้"
               }
@@ -4143,6 +4569,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -4151,6 +4579,8 @@ window.CHAPTERS = [
                 "command": "interface loopback0",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface loopback0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4159,6 +4589,8 @@ window.CHAPTERS = [
                 "command": " ip address 1.1.1.1 255.255.255.255",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 1.1.1.1 และ subnet mask 255.255.255.255 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -4167,6 +4599,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -4175,6 +4609,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4183,6 +4619,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.100.1 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.100.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -4191,6 +4629,8 @@ window.CHAPTERS = [
                 "command": " ip ospf priority 100",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด priority เลือก DR/BDR บน interface เป็น 100; ไม่แย่ง DR เดิมทันที",
                 "inputType": "ios"
               },
@@ -4199,6 +4639,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -4207,6 +4649,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -4215,6 +4659,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/2",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/2 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4223,6 +4669,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.1.1 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.1.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -4231,6 +4679,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -4239,6 +4689,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -4247,6 +4699,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/3",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/3 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4255,6 +4709,8 @@ window.CHAPTERS = [
                 "command": " ip address 172.16.14.1 255.255.255.252",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 172.16.14.1 และ subnet mask 255.255.255.252 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -4263,6 +4719,8 @@ window.CHAPTERS = [
                 "command": " bandwidth 1544",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ใส่ค่า bandwidth 1544 Kbit/s สำหรับการคำนวณ metric; ไม่ใช่คำสั่งจำกัดความเร็วจริง",
                 "inputType": "ios"
               },
@@ -4271,6 +4729,8 @@ window.CHAPTERS = [
                 "command": " ip ospf network point-to-point",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด OSPF network type เป็น point-to-point; ลิงก์ชนิดนี้ไม่เลือก DR/BDR",
                 "inputType": "ios"
               },
@@ -4279,6 +4739,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -4287,6 +4749,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -4295,6 +4759,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -4303,6 +4769,8 @@ window.CHAPTERS = [
                 "command": " router-id 1.1.1.1",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 1.1.1.1; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -4311,6 +4779,8 @@ window.CHAPTERS = [
                 "command": " network 192.168.100.0 0.0.0.255 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 192.168.100.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -4319,6 +4789,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.1.0 0.0.0.255 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.1.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -4327,6 +4799,8 @@ window.CHAPTERS = [
                 "command": " network 172.16.14.0 0.0.0.3 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 172.16.14.0 wildcard 0.0.0.3 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -4335,6 +4809,8 @@ window.CHAPTERS = [
                 "command": " passive-interface gi0/2",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "ไม่ส่ง Hello ที่ gi0/2; เครือข่ายที่เข้าเงื่อนไขยังประกาศได้ แต่ไม่สร้าง neighbor บนพอร์ตนี้",
                 "inputType": "ios"
               },
@@ -4343,6 +4819,8 @@ window.CHAPTERS = [
                 "command": " auto-cost reference-bandwidth 10000",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "ตั้ง OSPF reference bandwidth 10000 Mbps สำหรับคำนวณ cost; ตั้งให้สอดคล้องทุก router",
                 "inputType": "ios"
               },
@@ -4351,6 +4829,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -4359,6 +4839,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf neighbor",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูเพื่อนบ้าน OSPF, state, DR/BDR และ interface ที่สร้างความสัมพันธ์",
                 "inputType": "ios"
               },
@@ -4367,6 +4849,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf interface brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู interface ที่ร่วม OSPF และข้อมูลสถานะโดยย่อ",
                 "inputType": "ios"
               }
@@ -4398,6 +4882,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -4406,6 +4892,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4414,6 +4902,8 @@ window.CHAPTERS = [
                 "command": " ip ospf authentication message-digest",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด OSPF MD5 authentication ที่ interface; ต้องตั้ง key ให้ตรงกับเพื่อนบ้าน",
                 "inputType": "ios"
               },
@@ -4422,6 +4912,8 @@ window.CHAPTERS = [
                 "command": " ip ospf message-digest-key 1 md5 CCNAlab#2024",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ใส่ MD5 key ID 1 และ shared secret สำหรับ OSPF; ตรวจ digest ไม่ได้เข้ารหัส payload ทั้งหมด",
                 "inputType": "ios"
               },
@@ -4430,6 +4922,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -4438,6 +4932,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -4446,6 +4942,8 @@ window.CHAPTERS = [
                 "command": " area 0 authentication message-digest",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "กำหนด OSPF area 0 ใช้ message-digest authentication; key ของ interface ต้องพร้อมทั้งสองฝั่ง",
                 "inputType": "ios"
               },
@@ -4454,6 +4952,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -4462,6 +4962,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf interface gi0/1",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู cost, network type, timer และ authentication ของ OSPF ที่ gi0/1",
                 "inputType": "ios"
               },
@@ -4470,6 +4972,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf neighbor",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูเพื่อนบ้าน OSPF, state, DR/BDR และ interface ที่สร้างความสัมพันธ์",
                 "inputType": "ios"
               }
@@ -4484,6 +4988,8 @@ window.CHAPTERS = [
                 "command": "show ip route 10.0.4.0",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ค้น route ที่ใช้ไปปลายทาง 10.0.4.0; ดู next hop และ metric",
                 "inputType": "ios"
               },
@@ -4492,6 +4998,8 @@ window.CHAPTERS = [
                 "command": "show ip route ospf",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู route ที่เรียนรู้จาก OSPF",
                 "inputType": "ios"
               },
@@ -4500,6 +5008,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf interface gi0/3",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู cost, network type, timer และ authentication ของ OSPF ที่ gi0/3",
                 "inputType": "ios"
               }
@@ -4514,6 +5024,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R4#",
+                "nextPrompt": "R4(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -4522,6 +5034,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R4(config)#",
+                "nextPrompt": "R4(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -4530,6 +5044,8 @@ window.CHAPTERS = [
                 "command": " shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R4(config-if)#",
+                "nextPrompt": "R4(config-if)#",
                 "meaning": "ปิด interface ที่เลือกในทาง administrative; ใช้ตัดลิงก์หรือเป็นขั้นตอนกู้พอร์ตตามแลป",
                 "inputType": "ios"
               },
@@ -4538,6 +5054,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R4(config-if)#",
+                "nextPrompt": "R4#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               }
@@ -4994,6 +5512,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5002,6 +5522,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5010,6 +5532,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.10.2 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.10.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5018,6 +5542,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5026,6 +5552,8 @@ window.CHAPTERS = [
                 "command": " standby version 2",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ให้ HSRP บน interface ใช้ version 2; ตั้งให้ตรงกับอีกฝั่ง",
                 "inputType": "ios"
               },
@@ -5034,6 +5562,8 @@ window.CHAPTERS = [
                 "command": " standby 1 ip 192.168.10.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.10.1 ให้ HSRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5042,6 +5572,8 @@ window.CHAPTERS = [
                 "command": " standby 1 priority 110",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ตั้ง priority 110 ของ HSRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5050,6 +5582,8 @@ window.CHAPTERS = [
                 "command": " standby 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "อนุญาต HSRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5058,6 +5592,8 @@ window.CHAPTERS = [
                 "command": " standby 1 timers 1 4",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ตั้ง HSRP กลุ่ม 1 hello 1 วินาที และ hold 4 วินาที; hello ไม่ใช่เวลาสลับจริง",
                 "inputType": "ios"
               },
@@ -5066,6 +5602,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5074,6 +5612,8 @@ window.CHAPTERS = [
                 "command": "show standby brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ HSRP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5088,6 +5628,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R2#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5096,6 +5638,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5104,6 +5648,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.10.3 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.10.3 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5112,6 +5658,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5120,6 +5668,8 @@ window.CHAPTERS = [
                 "command": " standby version 2",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ให้ HSRP บน interface ใช้ version 2; ตั้งให้ตรงกับอีกฝั่ง",
                 "inputType": "ios"
               },
@@ -5128,6 +5678,8 @@ window.CHAPTERS = [
                 "command": " standby 1 ip 192.168.10.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.10.1 ให้ HSRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5136,6 +5688,8 @@ window.CHAPTERS = [
                 "command": " standby 1 priority 100",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ตั้ง priority 100 ของ HSRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5144,6 +5698,8 @@ window.CHAPTERS = [
                 "command": " standby 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "อนุญาต HSRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5152,6 +5708,8 @@ window.CHAPTERS = [
                 "command": " standby 1 timers 1 4",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ตั้ง HSRP กลุ่ม 1 hello 1 วินาที และ hold 4 วินาที; hello ไม่ใช่เวลาสลับจริง",
                 "inputType": "ios"
               },
@@ -5160,6 +5718,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5168,6 +5728,8 @@ window.CHAPTERS = [
                 "command": "show standby brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ HSRP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5199,6 +5761,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5207,6 +5771,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5215,6 +5781,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.20.2 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.20.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5223,6 +5791,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5231,6 +5801,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 ip 192.168.20.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.20.1 ให้ VRRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5239,6 +5811,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 priority 110",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ตั้ง priority 110 ของ VRRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5247,6 +5821,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "อนุญาต VRRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5255,6 +5831,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 timers advertise 1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ตั้ง VRRP กลุ่ม 1 ส่ง advertisement ทุก 1 วินาที",
                 "inputType": "ios"
               },
@@ -5263,6 +5841,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5271,6 +5851,8 @@ window.CHAPTERS = [
                 "command": "show vrrp brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ VRRP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5285,6 +5867,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R2#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5293,6 +5877,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5301,6 +5887,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.20.3 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.20.3 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5309,6 +5897,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5317,6 +5907,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 ip 192.168.20.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.20.1 ให้ VRRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5325,6 +5917,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 priority 100",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ตั้ง priority 100 ของ VRRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5333,6 +5927,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "อนุญาต VRRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5341,6 +5937,8 @@ window.CHAPTERS = [
                 "command": " vrrp 1 timers advertise 1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ตั้ง VRRP กลุ่ม 1 ส่ง advertisement ทุก 1 วินาที",
                 "inputType": "ios"
               },
@@ -5349,6 +5947,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5357,6 +5957,8 @@ window.CHAPTERS = [
                 "command": "show vrrp brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ VRRP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5387,6 +5989,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5395,6 +5999,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5403,6 +6009,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.30.2 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.30.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5411,6 +6019,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5419,6 +6029,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 ip 192.168.30.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.30.1 ให้ GLBP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5427,6 +6039,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 priority 110",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ตั้ง priority 110 ของ GLBP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5435,6 +6049,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "อนุญาต GLBP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5443,6 +6059,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 load-balancing round-robin",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ใช้ GLBP กลุ่ม 1 กระจาย Virtual MAC ตามวิธี round-robin; ไม่ได้แบ่งทุก packet ของ client เดียวกัน",
                 "inputType": "ios"
               },
@@ -5451,6 +6069,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5459,6 +6079,8 @@ window.CHAPTERS = [
                 "command": "show glbp brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ GLBP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5473,6 +6095,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R2#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5481,6 +6105,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5489,6 +6115,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.30.3 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.30.3 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -5497,6 +6125,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -5505,6 +6135,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 ip 192.168.30.1",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด Virtual IP 192.168.30.1 ให้ GLBP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
                 "inputType": "ios"
               },
@@ -5513,6 +6145,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 priority 100",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ตั้ง priority 100 ของ GLBP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
                 "inputType": "ios"
               },
@@ -5521,6 +6155,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 preempt",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "อนุญาต GLBP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
                 "inputType": "ios"
               },
@@ -5529,6 +6165,8 @@ window.CHAPTERS = [
                 "command": " glbp 1 load-balancing round-robin",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "ใช้ GLBP กลุ่ม 1 กระจาย Virtual MAC ตามวิธี round-robin; ไม่ได้แบ่งทุก packet ของ client เดียวกัน",
                 "inputType": "ios"
               },
@@ -5537,6 +6175,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -5545,6 +6185,8 @@ window.CHAPTERS = [
                 "command": "show glbp brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ GLBP แบบย่อ",
                 "inputType": "ios"
               }
@@ -5575,6 +6217,8 @@ window.CHAPTERS = [
                 "command": "sudo tcpdump -ni eth0 -w hsrp-failover.pcap 'udp port 1985 or icmp or arp'",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0 (-i; -ni รวม -n ไม่แปลงชื่อ), -nn ไม่แปลงชื่อ host/port; -w เก็บไฟล์ hsrp-failover.pcap; filter เลือก HSRP UDP/1985, ICMP หรือ ARP"
               }
@@ -5589,6 +6233,8 @@ window.CHAPTERS = [
                 "command": "ping -i 0.2 192.168.10.1",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "user@pc:~$",
+                "nextPrompt": "user@pc:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.10.1 ทุก 0.2 วินาที เพื่อวัด reachability/packet loss; หยุดด้วย Ctrl+C ตาม terminal ที่ใช้"
               }
@@ -5603,6 +6249,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -5611,6 +6259,8 @@ window.CHAPTERS = [
                 "command": "interface gi0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -5619,6 +6269,8 @@ window.CHAPTERS = [
                 "command": " shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ปิด interface ที่เลือกในทาง administrative; ใช้ตัดลิงก์หรือเป็นขั้นตอนกู้พอร์ตตามแลป",
                 "inputType": "ios"
               },
@@ -5627,6 +6279,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               }
@@ -5641,6 +6295,8 @@ window.CHAPTERS = [
                 "command": "show standby brief",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดูบทบาทและ Virtual IP ของ HSRP แบบย่อ",
                 "inputType": "ios"
               }
@@ -6098,6 +6754,8 @@ window.CHAPTERS = [
                 "command": "sudo tcpdump -i eth0 -nn arp",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-2:~$",
+                "nextPrompt": "kali@kali-2:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0 (-i; -ni รวม -n ไม่แปลงชื่อ), -nn ไม่แปลงชื่อ host/port; แสดงแพ็กเก็ตบน terminal; filter arp เลือกเฉพาะ ARP"
               }
@@ -6112,6 +6770,8 @@ window.CHAPTERS = [
                 "command": "ip addr show",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ดู interface, link และ IP ที่เครื่องใช้อยู่"
               },
@@ -6120,6 +6780,8 @@ window.CHAPTERS = [
                 "command": "ping -c 2 192.168.1.99",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.1.99 จำนวน 2 ครั้ง เพื่อวัด reachability/packet loss"
               },
@@ -6128,6 +6790,8 @@ window.CHAPTERS = [
                 "command": "sudo arp-scan --interface=eth0 --localnet",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; สำรวจ IP/MAC ใน local network ของ eth0; --localnet ใช้ subnet ของ interface และ ARP ไม่ข้าม router"
               },
@@ -6136,6 +6800,8 @@ window.CHAPTERS = [
                 "command": "sudo nmap -sn 192.168.1.0/24",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; สำรวจ host ใน 192.168.1.0/24 ด้วย -sn โดยไม่ทำ port scan แบบปกติ"
               },
@@ -6144,6 +6810,8 @@ window.CHAPTERS = [
                 "command": "ip neigh",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali-1:~$",
+                "nextPrompt": "kali@kali-1:~$",
                 "inputType": "shell",
                 "meaning": "ดู neighbor/ARP cache เพื่อจับคู่ IPv4 กับ MAC บนลิงก์ local"
               }
@@ -6158,6 +6826,8 @@ window.CHAPTERS = [
                 "command": "show mac address-table dynamic",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูตาราง MAC แบบ dynamic; เทียบ VLAN, MAC และพอร์ต",
                 "inputType": "ios"
               },
@@ -6166,6 +6836,8 @@ window.CHAPTERS = [
                 "command": "show interfaces status",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูสถานะพอร์ต, VLAN และความเร็ว/duplex ที่รายงาน",
                 "inputType": "ios"
               },
@@ -6174,6 +6846,8 @@ window.CHAPTERS = [
                 "command": "show cdp neighbors",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "SW1#",
+                "nextPrompt": "SW1#",
                 "meaning": "ดูอุปกรณ์ Cisco ที่อยู่ติดกันกับพอร์ตเชื่อมต่อ",
                 "inputType": "ios"
               }
@@ -6204,6 +6878,8 @@ window.CHAPTERS = [
                 "command": "fping -a -g 192.168.10.0/24",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "สร้างรายชื่อ IP ใน 192.168.10.0/24 ด้วย -g และแสดงเครื่องที่ตอบด้วย -a"
               },
@@ -6212,6 +6888,8 @@ window.CHAPTERS = [
                 "command": "fping -a -g 192.168.20.0/24",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "สร้างรายชื่อ IP ใน 192.168.20.0/24 ด้วย -g และแสดงเครื่องที่ตอบด้วย -a"
               },
@@ -6220,6 +6898,8 @@ window.CHAPTERS = [
                 "command": "sudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; ใช้ SYN scan (-sS) ตรวจ TCP ports 21,22,23,80,443,3389 ของ 192.168.20.10"
               },
@@ -6228,6 +6908,8 @@ window.CHAPTERS = [
                 "command": "traceroute -n 192.168.20.10",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ติดตาม hop ไป 192.168.20.10; -n แสดง IP โดยไม่แปลงเป็นชื่อ"
               }
@@ -6242,6 +6924,8 @@ window.CHAPTERS = [
                 "command": "sudo tshark -i eth0 -Y vlan -T fields -e frame.number -e vlan.id -e ip.src -e ip.dst",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0; -Y vlan เป็น display filter, -T fields ให้ส่งออกเฉพาะฟิลด์ และ -e เลือกเลขเฟรม, VLAN ID, IP ต้นทาง/ปลายทาง; จุดจับต้องเห็น tag"
               }
@@ -6273,6 +6957,8 @@ window.CHAPTERS = [
                 "command": "ip -br addr",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ดูชื่อ interface กับ IP แบบย่อ; ใช้ชื่อ interface จริงแทน eth0 ในคำสั่งถัดไป"
               },
@@ -6281,6 +6967,8 @@ window.CHAPTERS = [
                 "command": "sudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "kali@kali:~$",
+                "nextPrompt": "kali@kali:~$",
                 "inputType": "shell",
                 "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0 (-i; -ni รวม -n ไม่แปลงชื่อ), -nn ไม่แปลงชื่อ host/port; -w เก็บไฟล์ routing_control.pcap; BPF เลือก EIGRP IP/88 หรือ OSPF IP/89"
               }
@@ -6295,6 +6983,8 @@ window.CHAPTERS = [
                 "command": "ip.proto == 88 || ip.proto == 89",
                 "mode": "Wireshark · Display Filter",
                 "nextMode": "Wireshark · Display Filter",
+                "prompt": "Display Filter:",
+                "nextPrompt": "Display Filter:",
                 "inputType": "filter",
                 "meaning": "แสดงแพ็กเก็ต IPv4 ของ EIGRP (88) หรือ OSPF (89); || คือ OR"
               }
@@ -6763,6 +7453,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -6771,6 +7463,8 @@ window.CHAPTERS = [
                 "command": "interface g0/0",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -6779,6 +7473,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.10.1 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.10.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -6787,6 +7483,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -6795,6 +7493,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -6803,6 +7503,8 @@ window.CHAPTERS = [
                 "command": "interface g0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -6811,6 +7513,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.12.1 255.255.255.252",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.12.1 และ subnet mask 255.255.255.252 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -6819,6 +7523,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -6827,6 +7533,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -6835,6 +7543,8 @@ window.CHAPTERS = [
                 "command": "router eigrp 100",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -6843,6 +7553,8 @@ window.CHAPTERS = [
                 "command": " eigrp router-id 1.1.1.1",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 1.1.1.1; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -6851,6 +7563,8 @@ window.CHAPTERS = [
                 "command": " network 192.168.10.0 0.0.0.255",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 192.168.10.0 wildcard 0.0.0.255 ให้ร่วม EIGRP ตาม AS ที่เลือก",
                 "inputType": "ios"
               },
@@ -6859,6 +7573,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.12.0 0.0.0.3",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.12.0 wildcard 0.0.0.3 ให้ร่วม EIGRP ตาม AS ที่เลือก",
                 "inputType": "ios"
               },
@@ -6867,6 +7583,8 @@ window.CHAPTERS = [
                 "command": " passive-interface g0/0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "ไม่ส่ง Hello ที่ g0/0; เครือข่ายที่เข้าเงื่อนไขยังประกาศได้ แต่ไม่สร้าง neighbor บนพอร์ตนี้",
                 "inputType": "ios"
               },
@@ -6875,6 +7593,8 @@ window.CHAPTERS = [
                 "command": " no auto-summary",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1(config-router)#",
                 "meaning": "ปิด automatic classful summarization ใน EIGRP แบบที่ใช้ในแลป",
                 "inputType": "ios"
               },
@@ -6883,6 +7603,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R1(config-router)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -6891,6 +7613,8 @@ window.CHAPTERS = [
                 "command": "show ip eigrp neighbors",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู EIGRP neighbor ว่าสร้างความสัมพันธ์สำเร็จหรือไม่",
                 "inputType": "ios"
               }
@@ -6905,6 +7629,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R2#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -6913,6 +7639,8 @@ window.CHAPTERS = [
                 "command": "interface g0/0",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -6921,6 +7649,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.12.2 255.255.255.252",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.12.2 และ subnet mask 255.255.255.252 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -6929,6 +7659,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -6937,6 +7669,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -6945,6 +7679,8 @@ window.CHAPTERS = [
                 "command": "interface g0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -6953,6 +7689,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.23.1 255.255.255.248",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.23.1 และ subnet mask 255.255.255.248 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -6961,6 +7699,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -6969,6 +7709,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-if)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -6977,6 +7719,8 @@ window.CHAPTERS = [
                 "command": "router eigrp 100",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -6985,6 +7729,8 @@ window.CHAPTERS = [
                 "command": " eigrp router-id 2.2.2.2",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 2.2.2.2; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -6993,6 +7739,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.12.0 0.0.0.3",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.12.0 wildcard 0.0.0.3 ให้ร่วม EIGRP ตาม AS ที่เลือก",
                 "inputType": "ios"
               },
@@ -7001,6 +7749,8 @@ window.CHAPTERS = [
                 "command": " no auto-summary",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "ปิด automatic classful summarization ใน EIGRP แบบที่ใช้ในแลป",
                 "inputType": "ios"
               },
@@ -7009,6 +7759,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-router)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-router)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7017,6 +7769,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -7025,6 +7779,8 @@ window.CHAPTERS = [
                 "command": " router-id 2.2.2.2",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 2.2.2.2; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -7033,6 +7789,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.23.0 0.0.0.7 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.23.0 wildcard 0.0.0.7 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -7041,6 +7799,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -7049,6 +7809,8 @@ window.CHAPTERS = [
                 "command": "show ip protocols",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดู routing protocol ที่รัน, network, passive interface และข้อมูล redistribution",
                 "inputType": "ios"
               }
@@ -7063,6 +7825,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R3#",
+                "nextPrompt": "R3(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -7071,6 +7835,8 @@ window.CHAPTERS = [
                 "command": "interface g0/0",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -7079,6 +7845,8 @@ window.CHAPTERS = [
                 "command": " ip address 10.0.23.2 255.255.255.248",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "กำหนด IPv4 10.0.23.2 และ subnet mask 255.255.255.248 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -7087,6 +7855,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -7095,6 +7865,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7103,6 +7875,8 @@ window.CHAPTERS = [
                 "command": "interface g0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -7111,6 +7885,8 @@ window.CHAPTERS = [
                 "command": " ip address 192.168.30.1 255.255.255.0",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "กำหนด IPv4 192.168.30.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
                 "inputType": "ios"
               },
@@ -7119,6 +7895,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -7127,6 +7905,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-if)#",
                 "nextMode": "(config)#",
+                "prompt": "R3(config-if)#",
+                "nextPrompt": "R3(config)#",
                 "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7135,6 +7915,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R3(config)#",
+                "nextPrompt": "R3(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -7143,6 +7925,8 @@ window.CHAPTERS = [
                 "command": " router-id 3.3.3.3",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R3(config-router)#",
+                "nextPrompt": "R3(config-router)#",
                 "meaning": "กำหนด Router ID เป็น 3.3.3.3; ให้ไม่ซ้ำกับ router อื่นในระบบ",
                 "inputType": "ios"
               },
@@ -7151,6 +7935,8 @@ window.CHAPTERS = [
                 "command": " network 10.0.23.0 0.0.0.7 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R3(config-router)#",
+                "nextPrompt": "R3(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 10.0.23.0 wildcard 0.0.0.7 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -7159,6 +7945,8 @@ window.CHAPTERS = [
                 "command": " network 192.168.30.0 0.0.0.255 area 0",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R3(config-router)#",
+                "nextPrompt": "R3(config-router)#",
                 "meaning": "เลือก local interface ที่ IP ตรง 192.168.30.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
                 "inputType": "ios"
               },
@@ -7167,6 +7955,8 @@ window.CHAPTERS = [
                 "command": " passive-interface g0/1",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R3(config-router)#",
+                "nextPrompt": "R3(config-router)#",
                 "meaning": "ไม่ส่ง Hello ที่ g0/1; เครือข่ายที่เข้าเงื่อนไขยังประกาศได้ แต่ไม่สร้าง neighbor บนพอร์ตนี้",
                 "inputType": "ios"
               },
@@ -7175,6 +7965,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R3(config-router)#",
+                "nextPrompt": "R3#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -7183,6 +7975,8 @@ window.CHAPTERS = [
                 "command": "show ip ospf neighbor",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R3#",
+                "nextPrompt": "R3#",
                 "meaning": "ดูเพื่อนบ้าน OSPF, state, DR/BDR และ interface ที่สร้างความสัมพันธ์",
                 "inputType": "ios"
               },
@@ -7191,6 +7985,8 @@ window.CHAPTERS = [
                 "command": "show ip route",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R3#",
+                "nextPrompt": "R3#",
                 "meaning": "ดู routing table เพื่อพิสูจน์เส้นทางไปและกลับ",
                 "inputType": "ios"
               }
@@ -7221,6 +8017,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R2#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -7229,6 +8027,8 @@ window.CHAPTERS = [
                 "command": "route-map EIGRP-TO-OSPF deny 10",
                 "mode": "(config)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "เข้า route-map EIGRP-TO-OSPF ลำดับ 10 แบบ deny; ในแลป redistribution กัน route ที่ match ไม่ให้นำเข้า",
                 "inputType": "ios"
               },
@@ -7237,6 +8037,8 @@ window.CHAPTERS = [
                 "command": " match tag 200",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "ให้ sequence นี้ match route ที่มี tag 200; ใช้กัน route feedback ตามทิศทางในใบงาน",
                 "inputType": "ios"
               },
@@ -7245,6 +8047,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-route-map)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7253,6 +8057,8 @@ window.CHAPTERS = [
                 "command": "route-map EIGRP-TO-OSPF permit 20",
                 "mode": "(config)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "เข้า route-map EIGRP-TO-OSPF ลำดับ 20 แบบ permit; ในแลป redistribution อนุญาต route ที่ match เพื่อนำเข้า",
                 "inputType": "ios"
               },
@@ -7261,6 +8067,8 @@ window.CHAPTERS = [
                 "command": " set tag 100",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "ใส่ tag 100 ให้ route ที่ผ่าน sequence นี้ เพื่อจำทิศทางที่นำเข้ามา",
                 "inputType": "ios"
               },
@@ -7269,6 +8077,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-route-map)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7277,6 +8087,8 @@ window.CHAPTERS = [
                 "command": "route-map OSPF-TO-EIGRP deny 10",
                 "mode": "(config)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "เข้า route-map OSPF-TO-EIGRP ลำดับ 10 แบบ deny; ในแลป redistribution กัน route ที่ match ไม่ให้นำเข้า",
                 "inputType": "ios"
               },
@@ -7285,6 +8097,8 @@ window.CHAPTERS = [
                 "command": " match tag 100",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "ให้ sequence นี้ match route ที่มี tag 100; ใช้กัน route feedback ตามทิศทางในใบงาน",
                 "inputType": "ios"
               },
@@ -7293,6 +8107,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-route-map)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7301,6 +8117,8 @@ window.CHAPTERS = [
                 "command": "route-map OSPF-TO-EIGRP permit 20",
                 "mode": "(config)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "เข้า route-map OSPF-TO-EIGRP ลำดับ 20 แบบ permit; ในแลป redistribution อนุญาต route ที่ match เพื่อนำเข้า",
                 "inputType": "ios"
               },
@@ -7309,6 +8127,8 @@ window.CHAPTERS = [
                 "command": " set tag 200",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config-route-map)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config-route-map)#",
                 "meaning": "ใส่ tag 200 ให้ route ที่ผ่าน sequence นี้ เพื่อจำทิศทางที่นำเข้ามา",
                 "inputType": "ios"
               },
@@ -7317,6 +8137,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-route-map)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-route-map)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-route-map)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7325,6 +8147,8 @@ window.CHAPTERS = [
                 "command": "router ospf 1",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -7333,6 +8157,8 @@ window.CHAPTERS = [
                 "command": " redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "นำ route จาก EIGRP AS 100 เข้า OSPF พร้อม subnets และกรอง/ตั้ง tag ด้วย EIGRP-TO-OSPF",
                 "inputType": "ios"
               },
@@ -7341,6 +8167,8 @@ window.CHAPTERS = [
                 "command": " exit",
                 "mode": "(config-router)#",
                 "nextMode": "(config)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config)#",
                 "meaning": "ออกจาก (config-router)# กลับ global configuration (config)# หนึ่งระดับ",
                 "inputType": "ios"
               },
@@ -7349,6 +8177,8 @@ window.CHAPTERS = [
                 "command": "router eigrp 100",
                 "mode": "(config)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
                 "inputType": "ios"
               },
@@ -7357,6 +8187,8 @@ window.CHAPTERS = [
                 "command": " redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP",
                 "mode": "(config-router)#",
                 "nextMode": "(config-router)#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2(config-router)#",
                 "meaning": "นำ OSPF process 1 เข้า EIGRP; seed metric = bandwidth 10000 Kbit/s, delay 100 หน่วย 10µs, reliability 255, load 1, MTU 1500; ใช้ route-map OSPF-TO-EIGRP",
                 "inputType": "ios"
               },
@@ -7365,6 +8197,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-router)#",
                 "nextMode": "#",
+                "prompt": "R2(config-router)#",
+                "nextPrompt": "R2#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -7373,6 +8207,8 @@ window.CHAPTERS = [
                 "command": "show route-map",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดู route-map แต่ละ sequence พร้อมเงื่อนไข match และ set ที่ตั้งไว้",
                 "inputType": "ios"
               },
@@ -7381,6 +8217,8 @@ window.CHAPTERS = [
                 "command": "show ip protocols",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R2#",
+                "nextPrompt": "R2#",
                 "meaning": "ดู routing protocol ที่รัน, network, passive interface และข้อมูล redistribution",
                 "inputType": "ios"
               }
@@ -7395,6 +8233,8 @@ window.CHAPTERS = [
                 "command": "show ip eigrp topology",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู topology table ของ EIGRP รวมข้อมูล successor, distance และเส้นทางที่เรียนรู้",
                 "inputType": "ios"
               },
@@ -7403,6 +8243,8 @@ window.CHAPTERS = [
                 "command": "show ip route 192.168.30.0",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ค้น route ที่ใช้ไปปลายทาง 192.168.30.0; ดู next hop และ metric",
                 "inputType": "ios"
               }
@@ -7417,6 +8259,8 @@ window.CHAPTERS = [
                 "command": "show ip route 192.168.10.0",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R3#",
+                "nextPrompt": "R3#",
                 "meaning": "ค้น route ที่ใช้ไปปลายทาง 192.168.10.0; ดู next hop และ metric",
                 "inputType": "ios"
               }
@@ -7447,6 +8291,8 @@ window.CHAPTERS = [
                 "command": "ping -i 1 192.168.30.30",
                 "mode": "Terminal $",
                 "nextMode": "Terminal $",
+                "prompt": "user@pc1:~$",
+                "nextPrompt": "user@pc1:~$",
                 "inputType": "shell",
                 "meaning": "ส่ง ICMP Echo ไป 192.168.30.30 ทุก 1 วินาที เพื่อวัด reachability/packet loss; หยุดด้วย Ctrl+C ตาม terminal ที่ใช้"
               }
@@ -7461,6 +8307,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -7469,6 +8317,8 @@ window.CHAPTERS = [
                 "command": "interface g0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -7477,6 +8327,8 @@ window.CHAPTERS = [
                 "command": " shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "ปิด interface ที่เลือกในทาง administrative; ใช้ตัดลิงก์หรือเป็นขั้นตอนกู้พอร์ตตามแลป",
                 "inputType": "ios"
               },
@@ -7485,6 +8337,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -7493,6 +8347,8 @@ window.CHAPTERS = [
                 "command": "show ip eigrp neighbors",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู EIGRP neighbor ว่าสร้างความสัมพันธ์สำเร็จหรือไม่",
                 "inputType": "ios"
               },
@@ -7501,6 +8357,8 @@ window.CHAPTERS = [
                 "command": "show ip route",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู routing table เพื่อพิสูจน์เส้นทางไปและกลับ",
                 "inputType": "ios"
               }
@@ -7515,6 +8373,8 @@ window.CHAPTERS = [
                 "command": "configure terminal",
                 "mode": "#",
                 "nextMode": "(config)#",
+                "prompt": "R1#",
+                "nextPrompt": "R1(config)#",
                 "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
                 "inputType": "ios"
               },
@@ -7523,6 +8383,8 @@ window.CHAPTERS = [
                 "command": "interface g0/1",
                 "mode": "(config)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เลือกหรือสร้าง interface g0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
                 "inputType": "ios"
               },
@@ -7531,6 +8393,8 @@ window.CHAPTERS = [
                 "command": " no shutdown",
                 "mode": "(config-if)#",
                 "nextMode": "(config-if)#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1(config-if)#",
                 "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
                 "inputType": "ios"
               },
@@ -7539,6 +8403,8 @@ window.CHAPTERS = [
                 "command": "end",
                 "mode": "(config-if)#",
                 "nextMode": "#",
+                "prompt": "R1(config-if)#",
+                "nextPrompt": "R1#",
                 "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
                 "inputType": "ios"
               },
@@ -7547,6 +8413,8 @@ window.CHAPTERS = [
                 "command": "show ip eigrp neighbors",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ดู EIGRP neighbor ว่าสร้างความสัมพันธ์สำเร็จหรือไม่",
                 "inputType": "ios"
               },
@@ -7555,6 +8423,8 @@ window.CHAPTERS = [
                 "command": "show ip route 192.168.30.0",
                 "mode": "#",
                 "nextMode": "#",
+                "prompt": "R1#",
+                "nextPrompt": "R1#",
                 "meaning": "ค้น route ที่ใช้ไปปลายทาง 192.168.30.0; ดู next hop และ metric",
                 "inputType": "ios"
               }
@@ -7600,6 +8470,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           }
@@ -7622,6 +8494,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip address 192.168.1.2 255.255.255.0",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "กำหนด IPv4 192.168.1.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
             "inputType": "ios"
           }
@@ -7644,6 +8518,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show mac address-table dynamic",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1#",
             "meaning": "ดูตาราง MAC แบบ dynamic; เทียบ VLAN, MAC และพอร์ต",
             "inputType": "ios"
           }
@@ -7666,6 +8542,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport port-security maximum 2",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "อนุญาต secure MAC สูงสุด 2 รายการบนพอร์ต",
             "inputType": "ios"
           }
@@ -7688,6 +8566,8 @@ window.PRACTICAL_EXAMS = [
             "command": "no shutdown",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
             "inputType": "ios"
           }
@@ -7711,6 +8591,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -7719,6 +8601,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface fa0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface fa0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -7727,6 +8611,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport mode access",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
             "inputType": "ios"
           },
@@ -7735,6 +8621,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport port-security",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เปิด Port Security บนพอร์ต; คำสั่ง maximum/sticky/violation ด้านล่างกำหนดนโยบายเพิ่ม",
             "inputType": "ios"
           },
@@ -7743,6 +8631,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport port-security maximum 2",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "อนุญาต secure MAC สูงสุด 2 รายการบนพอร์ต",
             "inputType": "ios"
           },
@@ -7751,6 +8641,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport port-security mac-address sticky",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เรียน secure MAC แบบ sticky แล้วเพิ่มลง running-config; ต้อง save เพื่อคงไว้หลัง reboot",
             "inputType": "ios"
           },
@@ -7759,6 +8651,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport port-security violation restrict",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เมื่อ MAC ผิดเงื่อนไข ให้ drop พร้อมนับ violation/แจ้งตามระบบ โดยพอร์ตยังทำงาน",
             "inputType": "ios"
           },
@@ -7767,6 +8661,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -7791,6 +8687,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -7799,6 +8697,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface vlan 1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface vlan 1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -7807,6 +8707,8 @@ window.PRACTICAL_EXAMS = [
             "command": " ip address 192.168.1.2 255.255.255.0",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "กำหนด IPv4 192.168.1.2 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
             "inputType": "ios"
           },
@@ -7815,6 +8717,8 @@ window.PRACTICAL_EXAMS = [
             "command": " no shutdown",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
             "inputType": "ios"
           },
@@ -7823,6 +8727,8 @@ window.PRACTICAL_EXAMS = [
             "command": "exit",
             "mode": "(config-if)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ออกจาก (config-if)# กลับ global configuration (config)# หนึ่งระดับ",
             "inputType": "ios"
           },
@@ -7831,6 +8737,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip default-gateway 192.168.1.1",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ตั้ง gateway 192.168.1.1 ให้สวิตช์ L2 ตอบกลับไป subnet อื่น เมื่อไม่ได้เปิด IP routing",
             "inputType": "ios"
           },
@@ -7839,6 +8747,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config)#",
             "nextMode": "#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -7862,6 +8772,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -7870,6 +8782,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface fa0/3",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface fa0/3 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -7878,6 +8792,8 @@ window.PRACTICAL_EXAMS = [
             "command": "shutdown",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ปิด interface ที่เลือกในทาง administrative; ใช้ตัดลิงก์หรือเป็นขั้นตอนกู้พอร์ตตามแลป",
             "inputType": "ios"
           },
@@ -7886,6 +8802,8 @@ window.PRACTICAL_EXAMS = [
             "command": "no shutdown",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
             "inputType": "ios"
           },
@@ -7894,6 +8812,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -7924,6 +8844,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vtp domain LABCORP",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้าร่วม VTP domain ชื่อ LABCORP; ชื่อต้องตรงกับสมาชิกในแลป",
             "inputType": "ios"
           }
@@ -7946,6 +8868,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport mode trunk",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
             "inputType": "ios"
           }
@@ -7968,6 +8892,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport trunk native vlan 999",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ตั้ง native VLAN เป็น 999; ปลาย trunk อีกด้านต้องตั้งตรงกัน",
             "inputType": "ios"
           }
@@ -7990,6 +8916,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport nonegotiate",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "หยุดส่ง DTP เพื่อเจรจา trunk; กำหนด mode access/trunk เองให้ตรงบทบาทก่อน",
             "inputType": "ios"
           }
@@ -8012,6 +8940,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show interfaces trunk",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1#",
             "meaning": "ดูพอร์ต trunk, native VLAN และ VLAN ที่ allowed/active/forwarding",
             "inputType": "ios"
           }
@@ -8035,6 +8965,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8043,6 +8975,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vtp domain LABCORP",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้าร่วม VTP domain ชื่อ LABCORP; ชื่อต้องตรงกับสมาชิกในแลป",
             "inputType": "ios"
           },
@@ -8051,6 +8985,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vtp version 2",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ใช้ VTP version 2 ตามใบงาน",
             "inputType": "ios"
           },
@@ -8059,6 +8995,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vtp mode server",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ตั้ง VTP เป็น server: แก้และประกาศฐาน VLAN",
             "inputType": "ios"
           },
@@ -8067,6 +9005,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vtp password vtp123",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "กำหนด VTP password ให้ตรงกันระหว่างสมาชิกของ domain",
             "inputType": "ios"
           },
@@ -8075,6 +9015,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vlan 10",
             "mode": "(config)#",
             "nextMode": "(config-vlan)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config-vlan)#",
             "meaning": "สร้างหรือเลือก VLAN 10 แล้วเข้าโหมด config-vlan",
             "inputType": "ios"
           },
@@ -8083,6 +9025,8 @@ window.PRACTICAL_EXAMS = [
             "command": "name SALES",
             "mode": "(config-vlan)#",
             "nextMode": "(config-vlan)#",
+            "prompt": "SW1(config-vlan)#",
+            "nextPrompt": "SW1(config-vlan)#",
             "meaning": "ตั้งชื่อ VLAN ที่กำลังเลือกเป็น SALES",
             "inputType": "ios"
           },
@@ -8091,6 +9035,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-vlan)#",
             "nextMode": "#",
+            "prompt": "SW1(config-vlan)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8115,6 +9061,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "Switch#",
+            "nextPrompt": "Switch(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8123,6 +9071,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8131,6 +9081,8 @@ window.PRACTICAL_EXAMS = [
             "command": " switchport mode trunk",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
             "inputType": "ios"
           },
@@ -8139,6 +9091,8 @@ window.PRACTICAL_EXAMS = [
             "command": " switchport trunk native vlan 999",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "ตั้ง native VLAN เป็น 999; ปลาย trunk อีกด้านต้องตั้งตรงกัน",
             "inputType": "ios"
           },
@@ -8147,6 +9101,8 @@ window.PRACTICAL_EXAMS = [
             "command": " switchport trunk allowed vlan 10,20,30",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "แทนรายการเดิมด้วย VLAN 10,20,30 ใน allowed list ของ trunk",
             "inputType": "ios"
           },
@@ -8155,6 +9111,8 @@ window.PRACTICAL_EXAMS = [
             "command": " switchport nonegotiate",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "หยุดส่ง DTP เพื่อเจรจา trunk; กำหนด mode access/trunk เองให้ตรงบทบาทก่อน",
             "inputType": "ios"
           },
@@ -8163,6 +9121,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8186,6 +9146,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8194,6 +9156,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8202,6 +9166,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport mode trunk",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น trunk เพื่อขนส่งหลาย VLAN",
             "inputType": "ios"
           },
@@ -8210,6 +9176,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport trunk native vlan 999",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "ตั้ง native VLAN เป็น 999; ปลาย trunk อีกด้านต้องตั้งตรงกัน",
             "inputType": "ios"
           },
@@ -8218,6 +9186,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport nonegotiate",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1(config-if)#",
             "meaning": "หยุดส่ง DTP เพื่อเจรจา trunk; กำหนด mode access/trunk เองให้ตรงบทบาทก่อน",
             "inputType": "ios"
           },
@@ -8226,6 +9196,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "SW1(config-if)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8256,6 +9228,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree vlan 1 root primary",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ให้ IOS ปรับ priority เพื่อพยายามให้อุปกรณ์เป็น root หลักของ VLAN 1; ตรวจผลด้วย show spanning-tree",
             "inputType": "ios"
           }
@@ -8278,6 +9252,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show spanning-tree vlan 1",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW2#",
+            "nextPrompt": "SW2#",
             "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
             "inputType": "ios"
           }
@@ -8300,6 +9276,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree portfast",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "ให้พอร์ตปลายทางเข้าสู่ Forwarding เร็ว; STP ยังทำงาน ไม่ใช่การปิด STP",
             "inputType": "ios"
           }
@@ -8322,6 +9300,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree bpduguard enable",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "เปิด BPDU Guard; ถ้าพอร์ตได้รับ BPDU จะเข้า err-disabled",
             "inputType": "ios"
           }
@@ -8344,6 +9324,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show interfaces status err-disabled",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW2#",
+            "nextPrompt": "SW2#",
             "meaning": "ค้นพอร์ตที่อยู่ err-disabled เพื่อระบุพอร์ตที่ต้องตรวจสาเหตุ",
             "inputType": "ios"
           }
@@ -8367,6 +9349,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8375,6 +9359,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree vlan 1 root primary",
             "mode": "(config)#",
             "nextMode": "(config)#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1(config)#",
             "meaning": "ให้ IOS ปรับ priority เพื่อพยายามให้อุปกรณ์เป็น root หลักของ VLAN 1; ตรวจผลด้วย show spanning-tree",
             "inputType": "ios"
           },
@@ -8383,6 +9369,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config)#",
             "nextMode": "#",
+            "prompt": "SW1(config)#",
+            "nextPrompt": "SW1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           },
@@ -8391,6 +9379,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show spanning-tree vlan 1",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1#",
             "meaning": "ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN 1",
             "inputType": "ios"
           }
@@ -8415,6 +9405,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "Switch#",
+            "nextPrompt": "Switch(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8423,6 +9415,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8431,6 +9425,8 @@ window.PRACTICAL_EXAMS = [
             "command": " switchport mode access",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
             "inputType": "ios"
           },
@@ -8439,6 +9435,8 @@ window.PRACTICAL_EXAMS = [
             "command": " spanning-tree portfast",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "ให้พอร์ตปลายทางเข้าสู่ Forwarding เร็ว; STP ยังทำงาน ไม่ใช่การปิด STP",
             "inputType": "ios"
           },
@@ -8447,6 +9445,8 @@ window.PRACTICAL_EXAMS = [
             "command": " spanning-tree bpduguard enable",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "เปิด BPDU Guard; ถ้าพอร์ตได้รับ BPDU จะเข้า err-disabled",
             "inputType": "ios"
           },
@@ -8455,6 +9455,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8478,6 +9480,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "SW2#",
+            "nextPrompt": "SW2(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8486,6 +9490,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8494,6 +9500,8 @@ window.PRACTICAL_EXAMS = [
             "command": "switchport mode access",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "ล็อกพอร์ตเป็น access สำหรับ data VLAN ของเครื่องปลายทาง",
             "inputType": "ios"
           },
@@ -8502,6 +9510,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree portfast",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "ให้พอร์ตปลายทางเข้าสู่ Forwarding เร็ว; STP ยังทำงาน ไม่ใช่การปิด STP",
             "inputType": "ios"
           },
@@ -8510,6 +9520,8 @@ window.PRACTICAL_EXAMS = [
             "command": "spanning-tree bpduguard enable",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2(config-if)#",
             "meaning": "เปิด BPDU Guard; ถ้าพอร์ตได้รับ BPDU จะเข้า err-disabled",
             "inputType": "ios"
           },
@@ -8518,6 +9530,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "SW2(config-if)#",
+            "nextPrompt": "SW2#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8548,6 +9562,8 @@ window.PRACTICAL_EXAMS = [
             "command": "encapsulation dot1Q 10",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "ผูก sub-interface กับ tag ของ VLAN 10; เลขท้ายชื่อ sub-interface อย่างเดียวไม่ได้ผูก VLAN",
             "inputType": "ios"
           }
@@ -8570,6 +9586,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip address 192.168.10.1 255.255.255.0",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "กำหนด IPv4 192.168.10.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
             "inputType": "ios"
           }
@@ -8592,6 +9610,8 @@ window.PRACTICAL_EXAMS = [
             "command": "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "R1(config-ext-nacl)#",
+            "nextPrompt": "R1(config-ext-nacl)#",
             "meaning": "อนุญาต TCP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10 เฉพาะ destination port 443",
             "inputType": "ios"
           }
@@ -8614,6 +9634,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip access-group FILTER_STAFF_TRAFFIC in",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "ผูก ACL FILTER_STAFF_TRAFFIC กับ interface ทิศ in (แพ็กเก็ตที่รับเข้ามา จากมุม router)",
             "inputType": "ios"
           }
@@ -8637,6 +9659,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show access-lists FILTER_STAFF_TRAFFIC",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "R1#",
+            "nextPrompt": "R1#",
             "meaning": "ดู ACL FILTER_STAFF_TRAFFIC และ hit counter; ส่งทราฟฟิกจากต้นทางที่ ACL ครอบคลุมแล้วเทียบ counter",
             "inputType": "ios"
           }
@@ -8660,6 +9684,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8668,6 +9694,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/0",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/0 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8676,6 +9704,8 @@ window.PRACTICAL_EXAMS = [
             "command": "no shutdown",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้",
             "inputType": "ios"
           },
@@ -8684,6 +9714,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/0.10",
             "mode": "(config-if)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "เลือกหรือสร้าง interface gi0/0.10 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8692,6 +9724,8 @@ window.PRACTICAL_EXAMS = [
             "command": "encapsulation dot1Q 10",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "ผูก sub-interface กับ tag ของ VLAN 10; เลขท้ายชื่อ sub-interface อย่างเดียวไม่ได้ผูก VLAN",
             "inputType": "ios"
           },
@@ -8700,6 +9734,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip address 192.168.10.1 255.255.255.0",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "กำหนด IPv4 192.168.10.1 และ subnet mask 255.255.255.0 ให้ interface/SVI ที่กำลังเลือก",
             "inputType": "ios"
           },
@@ -8708,6 +9744,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-subif)#",
             "nextMode": "#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8732,6 +9770,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "Switch#",
+            "nextPrompt": "Switch(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8740,6 +9780,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip access-list extended FILTER_STAFF_TRAFFIC",
             "mode": "(config)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "สร้างหรือเลือก named extended ACL FILTER_STAFF_TRAFFIC แล้วเข้าโหมด config-ext-nacl",
             "inputType": "ios"
           },
@@ -8748,6 +9790,8 @@ window.PRACTICAL_EXAMS = [
             "command": " deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "ปฏิเสธ IP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.99.100; ประมวลผล ACL จากบนลงล่าง",
             "inputType": "ios"
           },
@@ -8756,6 +9800,8 @@ window.PRACTICAL_EXAMS = [
             "command": " permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "อนุญาต TCP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10 เฉพาะ destination port 80",
             "inputType": "ios"
           },
@@ -8764,6 +9810,8 @@ window.PRACTICAL_EXAMS = [
             "command": " permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "อนุญาต TCP จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10 เฉพาะ destination port 443",
             "inputType": "ios"
           },
@@ -8772,6 +9820,8 @@ window.PRACTICAL_EXAMS = [
             "command": " permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "อนุญาต ICMP Echo Request จาก 192.168.10.0 wildcard 0.0.0.255 ไป host 192.168.20.10",
             "inputType": "ios"
           },
@@ -8780,6 +9830,8 @@ window.PRACTICAL_EXAMS = [
             "command": " deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "ปฏิเสธ IP จาก 192.168.10.0 wildcard 0.0.0.255 ไป 192.168.20.0 wildcard 0.0.0.255",
             "inputType": "ios"
           },
@@ -8788,6 +9840,8 @@ window.PRACTICAL_EXAMS = [
             "command": " permit ip any any",
             "mode": "(config-ext-nacl)#",
             "nextMode": "(config-ext-nacl)#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch(config-ext-nacl)#",
             "meaning": "อนุญาต IP อื่นที่ยังไม่ match บรรทัดก่อนหน้า; ACL มี implicit deny ท้ายรายการ",
             "inputType": "ios"
           },
@@ -8796,6 +9850,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-ext-nacl)#",
             "nextMode": "#",
+            "prompt": "Switch(config-ext-nacl)#",
+            "nextPrompt": "Switch#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8819,6 +9875,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8827,6 +9885,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/0.10",
             "mode": "(config)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "เลือกหรือสร้าง interface gi0/0.10 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -8835,6 +9895,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip access-group FILTER_STAFF_TRAFFIC in",
             "mode": "(config-subif)#",
             "nextMode": "(config-subif)#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1(config-subif)#",
             "meaning": "ผูก ACL FILTER_STAFF_TRAFFIC กับ interface ทิศ in (แพ็กเก็ตที่รับเข้ามา จากมุม router)",
             "inputType": "ios"
           },
@@ -8843,6 +9905,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-subif)#",
             "nextMode": "#",
+            "prompt": "R1(config-subif)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -8873,6 +9937,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 192.168.100.0 0.0.0.255 area 0",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 192.168.100.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
             "inputType": "ios"
           }
@@ -8895,6 +9961,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip ospf priority 0",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R4(config-if)#",
+            "nextPrompt": "R4(config-if)#",
             "meaning": "กำหนด priority เลือก DR/BDR บน interface เป็น 0 จึงไม่มีสิทธิ์เป็น DR/BDR; ไม่แย่ง DR เดิมทันที",
             "inputType": "ios"
           }
@@ -8917,6 +9985,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip ospf network point-to-point",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด OSPF network type เป็น point-to-point; ลิงก์ชนิดนี้ไม่เลือก DR/BDR",
             "inputType": "ios"
           }
@@ -8939,6 +10009,8 @@ window.PRACTICAL_EXAMS = [
             "command": "auto-cost reference-bandwidth 10000",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "ตั้ง OSPF reference bandwidth 10000 Mbps สำหรับคำนวณ cost; ตั้งให้สอดคล้องทุก router",
             "inputType": "ios"
           }
@@ -8961,6 +10033,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show ip ospf neighbor",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "R1#",
+            "nextPrompt": "R1#",
             "meaning": "ดูเพื่อนบ้าน OSPF, state, DR/BDR และ interface ที่สร้างความสัมพันธ์",
             "inputType": "ios"
           }
@@ -8984,6 +10058,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -8992,6 +10068,8 @@ window.PRACTICAL_EXAMS = [
             "command": "router ospf 1",
             "mode": "(config)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เข้าโหมด OSPF process 1 เพื่อใส่ค่าของ routing protocol",
             "inputType": "ios"
           },
@@ -9000,6 +10078,8 @@ window.PRACTICAL_EXAMS = [
             "command": "router-id 1.1.1.1",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "กำหนด Router ID เป็น 1.1.1.1; ให้ไม่ซ้ำกับ router อื่นในระบบ",
             "inputType": "ios"
           },
@@ -9008,6 +10088,8 @@ window.PRACTICAL_EXAMS = [
             "command": "auto-cost reference-bandwidth 10000",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "ตั้ง OSPF reference bandwidth 10000 Mbps สำหรับคำนวณ cost; ตั้งให้สอดคล้องทุก router",
             "inputType": "ios"
           },
@@ -9016,6 +10098,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 192.168.100.0 0.0.0.255 area 0",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 192.168.100.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
             "inputType": "ios"
           },
@@ -9024,6 +10108,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 10.0.1.0 0.0.0.255 area 0",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 10.0.1.0 wildcard 0.0.0.255 ให้ร่วม OSPF area 0; ไม่ใช่สร้าง IP ให้ interface",
             "inputType": "ios"
           },
@@ -9032,6 +10118,8 @@ window.PRACTICAL_EXAMS = [
             "command": "passive-interface gi0/2",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "ไม่ส่ง Hello ที่ gi0/2; เครือข่ายที่เข้าเงื่อนไขยังประกาศได้ แต่ไม่สร้าง neighbor บนพอร์ตนี้",
             "inputType": "ios"
           },
@@ -9040,6 +10128,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-router)#",
             "nextMode": "#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9064,6 +10154,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "Switch#",
+            "nextPrompt": "Switch(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9072,6 +10164,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -9080,6 +10174,8 @@ window.PRACTICAL_EXAMS = [
             "command": " ip ospf authentication message-digest",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "เปิด OSPF MD5 authentication ที่ interface; ต้องตั้ง key ให้ตรงกับเพื่อนบ้าน",
             "inputType": "ios"
           },
@@ -9088,6 +10184,8 @@ window.PRACTICAL_EXAMS = [
             "command": " ip ospf message-digest-key 1 md5 CCNAlab#2024",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch(config-if)#",
             "meaning": "ใส่ MD5 key ID 1 และ shared secret สำหรับ OSPF; ตรวจ digest ไม่ได้เข้ารหัส payload ทั้งหมด",
             "inputType": "ios"
           },
@@ -9096,6 +10194,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "Switch(config-if)#",
+            "nextPrompt": "Switch#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9119,6 +10219,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9127,6 +10229,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/3",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/3 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -9135,6 +10239,8 @@ window.PRACTICAL_EXAMS = [
             "command": "bandwidth 1544",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ใส่ค่า bandwidth 1544 Kbit/s สำหรับการคำนวณ metric; ไม่ใช่คำสั่งจำกัดความเร็วจริง",
             "inputType": "ios"
           },
@@ -9143,6 +10249,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip ospf network point-to-point",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด OSPF network type เป็น point-to-point; ลิงก์ชนิดนี้ไม่เลือก DR/BDR",
             "inputType": "ios"
           },
@@ -9151,6 +10259,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9181,6 +10291,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 ip 192.168.10.1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด Virtual IP 192.168.10.1 ให้ HSRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
             "inputType": "ios"
           }
@@ -9203,6 +10315,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 preempt",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "อนุญาต HSRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
             "inputType": "ios"
           }
@@ -9225,6 +10339,8 @@ window.PRACTICAL_EXAMS = [
             "command": "vrrp 1 ip 192.168.20.1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด Virtual IP 192.168.20.1 ให้ VRRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
             "inputType": "ios"
           }
@@ -9247,6 +10363,8 @@ window.PRACTICAL_EXAMS = [
             "command": "glbp 1 load-balancing round-robin",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ใช้ GLBP กลุ่ม 1 กระจาย Virtual MAC ตามวิธี round-robin; ไม่ได้แบ่งทุก packet ของ client เดียวกัน",
             "inputType": "ios"
           }
@@ -9269,6 +10387,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show standby brief",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "R2#",
+            "nextPrompt": "R2#",
             "meaning": "ดูบทบาทและ Virtual IP ของ HSRP แบบย่อ",
             "inputType": "ios"
           }
@@ -9292,6 +10412,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9300,6 +10422,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -9308,6 +10432,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby version 2",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ให้ HSRP บน interface ใช้ version 2; ตั้งให้ตรงกับอีกฝั่ง",
             "inputType": "ios"
           },
@@ -9316,6 +10442,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 ip 192.168.10.1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด Virtual IP 192.168.10.1 ให้ HSRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
             "inputType": "ios"
           },
@@ -9324,6 +10452,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 priority 110",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ตั้ง priority 110 ของ HSRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
             "inputType": "ios"
           },
@@ -9332,6 +10462,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 preempt",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "อนุญาต HSRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
             "inputType": "ios"
           },
@@ -9340,6 +10472,8 @@ window.PRACTICAL_EXAMS = [
             "command": "standby 1 timers 1 4",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ตั้ง HSRP กลุ่ม 1 hello 1 วินาที และ hold 4 วินาที; hello ไม่ใช่เวลาสลับจริง",
             "inputType": "ios"
           },
@@ -9348,6 +10482,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9372,6 +10508,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9380,6 +10518,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -9388,6 +10528,8 @@ window.PRACTICAL_EXAMS = [
             "command": " vrrp 1 ip 192.168.20.1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด Virtual IP 192.168.20.1 ให้ VRRP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
             "inputType": "ios"
           },
@@ -9396,6 +10538,8 @@ window.PRACTICAL_EXAMS = [
             "command": " vrrp 1 priority 110",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ตั้ง priority 110 ของ VRRP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
             "inputType": "ios"
           },
@@ -9404,6 +10548,8 @@ window.PRACTICAL_EXAMS = [
             "command": " vrrp 1 preempt",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "อนุญาต VRRP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
             "inputType": "ios"
           },
@@ -9412,6 +10558,8 @@ window.PRACTICAL_EXAMS = [
             "command": " vrrp 1 timers advertise 1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ตั้ง VRRP กลุ่ม 1 ส่ง advertisement ทุก 1 วินาที",
             "inputType": "ios"
           },
@@ -9420,6 +10568,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9443,6 +10593,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9451,6 +10603,8 @@ window.PRACTICAL_EXAMS = [
             "command": "interface gi0/1",
             "mode": "(config)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "เลือกหรือสร้าง interface gi0/1 เพื่อรับค่าตั้งในบรรทัดถัดไป",
             "inputType": "ios"
           },
@@ -9459,6 +10613,8 @@ window.PRACTICAL_EXAMS = [
             "command": "glbp 1 ip 192.168.30.1",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "กำหนด Virtual IP 192.168.30.1 ให้ GLBP กลุ่ม 1; client ใช้ VIP นี้เป็น gateway",
             "inputType": "ios"
           },
@@ -9467,6 +10623,8 @@ window.PRACTICAL_EXAMS = [
             "command": "glbp 1 priority 110",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ตั้ง priority 110 ของ GLBP กลุ่ม 1; ค่าสูงมีสิทธิ์เหนือกว่าในการเลือกบทบาท",
             "inputType": "ios"
           },
@@ -9475,6 +10633,8 @@ window.PRACTICAL_EXAMS = [
             "command": "glbp 1 preempt",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "อนุญาต GLBP กลุ่ม 1 ที่ priority เหมาะสมกว่าแย่งบทบาทหลักกลับตามเงื่อนไข",
             "inputType": "ios"
           },
@@ -9483,6 +10643,8 @@ window.PRACTICAL_EXAMS = [
             "command": "glbp 1 load-balancing round-robin",
             "mode": "(config-if)#",
             "nextMode": "(config-if)#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1(config-if)#",
             "meaning": "ใช้ GLBP กลุ่ม 1 กระจาย Virtual MAC ตามวิธี round-robin; ไม่ได้แบ่งทุก packet ของ client เดียวกัน",
             "inputType": "ios"
           },
@@ -9491,6 +10653,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-if)#",
             "nextMode": "#",
+            "prompt": "R1(config-if)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9522,6 +10686,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip -br addr",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ดูชื่อ interface กับ IP แบบย่อ; ใช้ชื่อ interface จริงแทน eth0 ในคำสั่งถัดไป"
           }
@@ -9545,6 +10711,8 @@ window.PRACTICAL_EXAMS = [
             "command": "sudo arp-scan --interface=eth0 --localnet",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ใช้สิทธิ์ผู้ดูแล; สำรวจ IP/MAC ใน local network ของ eth0; --localnet ใช้ subnet ของ interface และ ARP ไม่ข้าม router"
           }
@@ -9569,6 +10737,8 @@ window.PRACTICAL_EXAMS = [
             "command": "sudo tcpdump -i eth0 -nn arp",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0 (-i; -ni รวม -n ไม่แปลงชื่อ), -nn ไม่แปลงชื่อ host/port; แสดงแพ็กเก็ตบน terminal; filter arp เลือกเฉพาะ ARP"
           }
@@ -9591,6 +10761,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ospf",
             "mode": "Wireshark · Display Filter",
             "nextMode": "Wireshark · Display Filter",
+            "prompt": "Display Filter:",
+            "nextPrompt": "Display Filter:",
             "inputType": "filter",
             "meaning": "แสดงเฉพาะแพ็กเก็ตที่ Wireshark ถอดรหัสเป็น OSPF"
           }
@@ -9613,6 +10785,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show cdp neighbors",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "SW1#",
+            "nextPrompt": "SW1#",
             "meaning": "ดูอุปกรณ์ Cisco ที่อยู่ติดกันกับพอร์ตเชื่อมต่อ",
             "inputType": "ios"
           }
@@ -9636,6 +10810,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip -br addr",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ดูชื่อ interface กับ IP แบบย่อ; ใช้ชื่อ interface จริงแทน eth0 ในคำสั่งถัดไป"
           },
@@ -9644,6 +10820,8 @@ window.PRACTICAL_EXAMS = [
             "command": "sudo arp-scan --interface=eth0 --localnet",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ใช้สิทธิ์ผู้ดูแล; สำรวจ IP/MAC ใน local network ของ eth0; --localnet ใช้ subnet ของ interface และ ARP ไม่ข้าม router"
           },
@@ -9652,6 +10830,8 @@ window.PRACTICAL_EXAMS = [
             "command": "sudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "kali@kali:~$",
+            "nextPrompt": "kali@kali:~$",
             "inputType": "shell",
             "meaning": "ใช้สิทธิ์ผู้ดูแล; ใช้ SYN scan (-sS) ตรวจ TCP ports 21,22,23,80,443,3389 ของ 192.168.20.10"
           }
@@ -9677,6 +10857,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip -br addr",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "user@pc:~$",
+            "nextPrompt": "user@pc:~$",
             "inputType": "shell",
             "meaning": "ดูชื่อ interface กับ IP แบบย่อ; ใช้ชื่อ interface จริงแทน eth0 ในคำสั่งถัดไป"
           },
@@ -9685,6 +10867,8 @@ window.PRACTICAL_EXAMS = [
             "command": "sudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap",
             "mode": "Terminal $",
             "nextMode": "Terminal $",
+            "prompt": "user@pc:~$",
+            "nextPrompt": "user@pc:~$",
             "inputType": "shell",
             "meaning": "ใช้สิทธิ์ผู้ดูแล; จับบน eth0 (-i; -ni รวม -n ไม่แปลงชื่อ), -nn ไม่แปลงชื่อ host/port; -w เก็บไฟล์ routing_control.pcap; BPF เลือก EIGRP IP/88 หรือ OSPF IP/89"
           }
@@ -9708,6 +10892,8 @@ window.PRACTICAL_EXAMS = [
             "command": "ip.proto == 88 || ip.proto == 89",
             "mode": "Wireshark · Display Filter",
             "nextMode": "Wireshark · Display Filter",
+            "prompt": "Display Filter:",
+            "nextPrompt": "Display Filter:",
             "inputType": "filter",
             "meaning": "แสดงแพ็กเก็ต IPv4 ของ EIGRP (88) หรือ OSPF (89); || คือ OR"
           }
@@ -9738,6 +10924,8 @@ window.PRACTICAL_EXAMS = [
             "command": "router eigrp 100",
             "mode": "(config)#",
             "nextMode": "(config-router)#",
+            "prompt": "R2(config)#",
+            "nextPrompt": "R2(config-router)#",
             "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
             "inputType": "ios"
           }
@@ -9760,6 +10948,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 10.0.12.0 0.0.0.3",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 10.0.12.0 wildcard 0.0.0.3 ให้ร่วม EIGRP ตาม AS ที่เลือก",
             "inputType": "ios"
           }
@@ -9782,6 +10972,8 @@ window.PRACTICAL_EXAMS = [
             "command": "redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R2(config-router)#",
+            "nextPrompt": "R2(config-router)#",
             "meaning": "นำ route จาก EIGRP AS 100 เข้า OSPF พร้อม subnets และกรอง/ตั้ง tag ด้วย EIGRP-TO-OSPF",
             "inputType": "ios"
           }
@@ -9804,6 +10996,8 @@ window.PRACTICAL_EXAMS = [
             "command": "redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R2(config-router)#",
+            "nextPrompt": "R2(config-router)#",
             "meaning": "นำ OSPF process 1 เข้า EIGRP; seed metric = bandwidth 10000 Kbit/s, delay 100 หน่วย 10µs, reliability 255, load 1, MTU 1500; ใช้ route-map OSPF-TO-EIGRP",
             "inputType": "ios"
           }
@@ -9826,6 +11020,8 @@ window.PRACTICAL_EXAMS = [
             "command": "show ip route 192.168.30.0",
             "mode": "#",
             "nextMode": "#",
+            "prompt": "R1#",
+            "nextPrompt": "R1#",
             "meaning": "ค้น route ที่ใช้ไปปลายทาง 192.168.30.0; ดู next hop และ metric",
             "inputType": "ios"
           }
@@ -9849,6 +11045,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R1#",
+            "nextPrompt": "R1(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9857,6 +11055,8 @@ window.PRACTICAL_EXAMS = [
             "command": "router eigrp 100",
             "mode": "(config)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
             "inputType": "ios"
           },
@@ -9865,6 +11065,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 192.168.10.0 0.0.0.255",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 192.168.10.0 wildcard 0.0.0.255 ให้ร่วม EIGRP ตาม AS ที่เลือก",
             "inputType": "ios"
           },
@@ -9873,6 +11075,8 @@ window.PRACTICAL_EXAMS = [
             "command": "network 10.0.12.0 0.0.0.3",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "เลือก local interface ที่ IP ตรง 10.0.12.0 wildcard 0.0.0.3 ให้ร่วม EIGRP ตาม AS ที่เลือก",
             "inputType": "ios"
           },
@@ -9881,6 +11085,8 @@ window.PRACTICAL_EXAMS = [
             "command": "passive-interface g0/0",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "ไม่ส่ง Hello ที่ g0/0; เครือข่ายที่เข้าเงื่อนไขยังประกาศได้ แต่ไม่สร้าง neighbor บนพอร์ตนี้",
             "inputType": "ios"
           },
@@ -9889,6 +11095,8 @@ window.PRACTICAL_EXAMS = [
             "command": "no auto-summary",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1(config-router)#",
             "meaning": "ปิด automatic classful summarization ใน EIGRP แบบที่ใช้ในแลป",
             "inputType": "ios"
           },
@@ -9897,6 +11105,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-router)#",
             "nextMode": "#",
+            "prompt": "R1(config-router)#",
+            "nextPrompt": "R1#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9921,6 +11131,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "Router#",
+            "nextPrompt": "Router(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9929,6 +11141,8 @@ window.PRACTICAL_EXAMS = [
             "command": "route-map OSPF-TO-EIGRP deny 10",
             "mode": "(config)#",
             "nextMode": "(config-route-map)#",
+            "prompt": "Router(config)#",
+            "nextPrompt": "Router(config-route-map)#",
             "meaning": "เข้า route-map OSPF-TO-EIGRP ลำดับ 10 แบบ deny; ในแลป redistribution กัน route ที่ match ไม่ให้นำเข้า",
             "inputType": "ios"
           },
@@ -9937,6 +11151,8 @@ window.PRACTICAL_EXAMS = [
             "command": " match tag 100",
             "mode": "(config-route-map)#",
             "nextMode": "(config-route-map)#",
+            "prompt": "Router(config-route-map)#",
+            "nextPrompt": "Router(config-route-map)#",
             "meaning": "ให้ sequence นี้ match route ที่มี tag 100; ใช้กัน route feedback ตามทิศทางในใบงาน",
             "inputType": "ios"
           },
@@ -9945,6 +11161,8 @@ window.PRACTICAL_EXAMS = [
             "command": "route-map OSPF-TO-EIGRP permit 20",
             "mode": "(config-route-map)#",
             "nextMode": "(config-route-map)#",
+            "prompt": "Router(config-route-map)#",
+            "nextPrompt": "Router(config-route-map)#",
             "meaning": "เข้า route-map OSPF-TO-EIGRP ลำดับ 20 แบบ permit; ในแลป redistribution อนุญาต route ที่ match เพื่อนำเข้า",
             "inputType": "ios"
           },
@@ -9953,6 +11171,8 @@ window.PRACTICAL_EXAMS = [
             "command": " set tag 200",
             "mode": "(config-route-map)#",
             "nextMode": "(config-route-map)#",
+            "prompt": "Router(config-route-map)#",
+            "nextPrompt": "Router(config-route-map)#",
             "meaning": "ใส่ tag 200 ให้ route ที่ผ่าน sequence นี้ เพื่อจำทิศทางที่นำเข้ามา",
             "inputType": "ios"
           },
@@ -9961,6 +11181,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-route-map)#",
             "nextMode": "#",
+            "prompt": "Router(config-route-map)#",
+            "nextPrompt": "Router#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }
@@ -9984,6 +11206,8 @@ window.PRACTICAL_EXAMS = [
             "command": "configure terminal",
             "mode": "#",
             "nextMode": "(config)#",
+            "prompt": "R2#",
+            "nextPrompt": "R2(config)#",
             "meaning": "เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์",
             "inputType": "ios"
           },
@@ -9992,6 +11216,8 @@ window.PRACTICAL_EXAMS = [
             "command": "router eigrp 100",
             "mode": "(config)#",
             "nextMode": "(config-router)#",
+            "prompt": "R2(config)#",
+            "nextPrompt": "R2(config-router)#",
             "meaning": "เข้าโหมด EIGRP AS 100 เพื่อใส่ค่าของ routing protocol",
             "inputType": "ios"
           },
@@ -10000,6 +11226,8 @@ window.PRACTICAL_EXAMS = [
             "command": "redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP",
             "mode": "(config-router)#",
             "nextMode": "(config-router)#",
+            "prompt": "R2(config-router)#",
+            "nextPrompt": "R2(config-router)#",
             "meaning": "นำ OSPF process 1 เข้า EIGRP; seed metric = bandwidth 10000 Kbit/s, delay 100 หน่วย 10µs, reliability 255, load 1, MTU 1500; ใช้ route-map OSPF-TO-EIGRP",
             "inputType": "ios"
           },
@@ -10008,6 +11236,8 @@ window.PRACTICAL_EXAMS = [
             "command": "end",
             "mode": "(config-router)#",
             "nextMode": "#",
+            "prompt": "R2(config-router)#",
+            "nextPrompt": "R2#",
             "meaning": "ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config",
             "inputType": "ios"
           }

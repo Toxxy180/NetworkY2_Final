@@ -1,5 +1,5 @@
 // Shared by the content builder and tests. Unknown commands fail the build.
-const modes = {exec:'#',user:'>',global:'(config)#',iface:'(config-if)#',sub:'(config-subif)#',line:'(config-line)#',vlan:'(config-vlan)#',router:'(config-router)#',acl:'(config-ext-nacl)#',map:'(config-route-map)#'};
+const modes = {exec:'#',user:'>',global:'(config)#',iface:'(config-if)#',range:'(config-if-range)#',sub:'(config-subif)#',line:'(config-line)#',vlan:'(config-vlan)#',router:'(config-router)#',acl:'(config-ext-nacl)#',map:'(config-route-map)#'};
 const rules = [
  [/^enable$/,()=> 'เข้า privileged EXEC (#) เพื่อใช้คำสั่งตรวจสอบและเข้าสู่การตั้งค่า', 'exec'],
  [/^(?:configure terminal|conf t)$/,()=> 'เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์', 'global'],
@@ -9,7 +9,7 @@ const rules = [
  [/^password (.+)$/,()=> 'ตั้งรหัสผ่านของ line ที่เลือก; ใช้คู่กับ login ตามรูปแบบแลปนี้'],
  [/^login$/,()=> 'ให้ line นี้ตรวจรหัสผ่านที่กำหนดด้วย password ก่อนเข้าใช้งาน'],
  [/^exec-timeout (\d+) (\d+)$/,m=>`ตัด session เมื่อไม่มีการใช้งาน ${m[1]} นาที ${m[2]} วินาที`],
- [/^interface range (.+)$/,m=>`เลือกหลาย interface (${m[1]}) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง`, 'iface'],
+ [/^interface range (.+)$/,m=>`เลือกหลาย interface (${m[1]}) เพื่อใช้ค่าตั้งถัดไปกับทุกพอร์ตในช่วง`, 'range'],
  [/^interface (.+)$/,m=>`เลือกหรือสร้าง interface ${m[1]} เพื่อรับค่าตั้งในบรรทัดถัดไป`,m=>m[1].includes('.')?'sub':'iface'],
  [/^ip address (\S+) (\S+)$/,m=>`กำหนด IPv4 ${m[1]} และ subnet mask ${m[2]} ให้ interface/SVI ที่กำลังเลือก`],
  [/^no shutdown$/,()=> 'เปิด interface ที่เลือกในทาง administrative; สาย/โปรโตคอลยังต้องพร้อมจึงจะ up ได้'],
@@ -131,16 +131,23 @@ function terminalNote(command) {
  if(c.startsWith('tshark '))return sudo+'จับบน eth0; -Y vlan เป็น display filter, -T fields ให้ส่งออกเฉพาะฟิลด์ และ -e เลือกเลขเฟรม, VLAN ID, IP ต้นทาง/ปลายทาง; จุดจับต้องเห็น tag';
  throw new Error('Missing terminal explanation: '+command);
 }
-export function annotateCommands(code, {inputType, device='', initialMode}={}) {
+export function annotateCommands(code, {inputType, device='', initialMode, initialHostname}={}) {
  const first=code.split('\n').find(s=>s.trim())||'';
  const type=inputType||(/Wireshark|Display filter/i.test(device)?'filter':/Kali|PC[- ]|PC1/.test(device)&&!/SW\d/.test(device)?'shell':/^(sudo |ping |ssh |ip -|ip addr|ip neigh|fping |traceroute )/.test(first)?'shell':'ios');
  let state=initialMode||'exec';
  if(type==='ios'&&first.trim()==='enable'&&!initialMode)state='user';
+ const namedDevice=device.match(/\b(SW\d+|R\d+)\b/i)?.[1];
+ const defaultHost=/router|ospf|eigrp/i.test(device)||/^R\d/i.test(namedDevice||'')?'Router':'Switch';
+ // The console setup starts before the hostname command has taken effect.
+ const freshConsole=first.trim()==='enable'&&/^hostname\s+/m.test(code);
+ let host=initialHostname||(freshConsole?defaultHost:namedDevice||defaultHost);
+ const shellHost=(device.match(/\b(Kali(?:-\d+)?|PC(?:-[\w-]+|\d+)?)/i)?.[1]||'kali').toLowerCase();
+ const shellPrompt=(shellHost.startsWith('kali')?'kali':'user')+'@'+shellHost+':~$';
  return code.split('\n').map((original,index)=>{
   const command=original.trim();if(!command)return {line:index+1,command:original,mode:'',nextMode:'',meaning:'บรรทัดว่าง แยกช่วงคำสั่ง',inputType:type};
-  if(type==='filter')return {line:index+1,command:original,mode:'Wireshark · Display Filter',nextMode:'Wireshark · Display Filter',inputType:type,meaning:command==='stp.type == 0x00'?'แสดงเฉพาะ STP Configuration BPDU (type 0x00); ใส่ในช่อง Display Filter ไม่ใช่ terminal':command==='ospf'?'แสดงเฉพาะแพ็กเก็ตที่ Wireshark ถอดรหัสเป็น OSPF':command==='ip.proto == 88 || ip.proto == 89'?'แสดงแพ็กเก็ต IPv4 ของ EIGRP (88) หรือ OSPF (89); || คือ OR':'แสดงแพ็กเก็ตตาม display filter ที่ระบุ'};
-  if(type==='shell')return {line:index+1,command:original,mode:'Terminal $',nextMode:'Terminal $',inputType:type,meaning:terminalNote(command)};
-  const before=modes[state];let meaning;
+  if(type==='filter')return {line:index+1,command:original,mode:'Wireshark · Display Filter',nextMode:'Wireshark · Display Filter',prompt:'Display Filter:',nextPrompt:'Display Filter:',inputType:type,meaning:command==='stp.type == 0x00'?'แสดงเฉพาะ STP Configuration BPDU (type 0x00); ใส่ในช่อง Display Filter ไม่ใช่ terminal':command==='ospf'?'แสดงเฉพาะแพ็กเก็ตที่ Wireshark ถอดรหัสเป็น OSPF':command==='ip.proto == 88 || ip.proto == 89'?'แสดงแพ็กเก็ต IPv4 ของ EIGRP (88) หรือ OSPF (89); || คือ OR':'แสดงแพ็กเก็ตตาม display filter ที่ระบุ'};
+  if(type==='shell')return {line:index+1,command:original,mode:'Terminal $',nextMode:'Terminal $',prompt:shellPrompt,nextPrompt:shellPrompt,inputType:type,meaning:terminalNote(command)};
+  const before=modes[state],prompt=host+before;let meaning;
   if(command==='exit'){meaning=`ออกจาก ${before} กลับ ${state==='global'?'privileged EXEC (#)':'global configuration (config)#'} หนึ่งระดับ`;state=state==='global'?'exec':'global';}
   else if(command==='end'){meaning='ออกจากโหมดตั้งค่ากลับ privileged EXEC (#); ยังไม่ได้บันทึก startup-config';state='exec';}
   else {
@@ -148,6 +155,8 @@ export function annotateCommands(code, {inputType, device='', initialMode}={}) {
    if(show){const match=command.match(show[0]);meaning=typeof show[1]==='function'?show[1](match):show[1];}
    else {const rule=rules.find(([pattern])=>pattern.test(command));if(!rule)throw new Error('Missing IOS explanation: '+command);const match=command.match(rule[0]);meaning=rule[1](match);if(rule[2])state=typeof rule[2]==='function'?rule[2](match):rule[2];}
   }
-  return {line:index+1,command:original,mode:before,nextMode:modes[state],meaning,inputType:type};
+  const renamed=command.match(/^hostname\s+(\S+)$/);
+  if(renamed)host=renamed[1];
+  return {line:index+1,command:original,mode:before,nextMode:modes[state],prompt,nextPrompt:host+modes[state],meaning,inputType:type};
  });
 }
