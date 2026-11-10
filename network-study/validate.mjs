@@ -1,5 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
+import {annotateCommands} from './command-notes.mjs';
+import practicalTools from './dist/practical-tools.js';
 const chapters=['content/chapters-1-4.json','content/chapters-5-8.json'].flatMap(p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,'')));
 const review = JSON.parse(fs.readFileSync('content/course-review.json', 'utf8'));
 assert.equal(review.length, chapters.length);
@@ -9,7 +11,12 @@ for (const [i, unit] of review.entries()) {
  assert(unit.refs.length && unit.theory.length && unit.labs.length);
  for (const lab of unit.labs) {
   assert(lab.title && lab.body.length && lab.steps.length && lab.example.body.length);
-  for (const step of lab.steps) assert(step.device && step.code.trim());
+  for (const step of lab.steps) {
+   assert(step.device && step.code.trim());
+   step.notes=annotateCommands(step.code,{device:step.device});
+   assert.equal(step.notes.length,step.code.split('\n').length);
+   assert(step.notes.every(note=>note.meaning && note.mode));
+  }
  }
  chapter.sections.push(...unit.theory);
  chapter.labs = unit.labs;
@@ -27,13 +34,25 @@ assert.equal(practicalExams.length, chapters.length);
 const practicalIds = new Set();
 for (const [i, exam] of practicalExams.entries()) {
  assert.equal(exam.id, chapters[i].id);
- assert(exam.title && exam.scenario && exam.questions.length === 5);
+ assert(exam.title && exam.scenario && exam.questions.length === 8);
+ assert.equal(exam.revision,2);
  for (const question of exam.questions) {
   assert(!practicalIds.has(question.id));
   practicalIds.add(question.id);
   assert(question.prompt && question.context && question.answer && question.explanation);
   assert(question.accept.includes(question.answer));
   assert(['ios', 'shell', 'filter'].includes(question.inputType));
+  assert(['single','block','fill','repair'].includes(question.kind));
+  if(question.kind==='block')assert(question.answer.includes('\n'));
+  if(question.kind==='fill'){
+   assert.equal(question.given.split('____').length,2,'Exactly one blank per fill task');
+   assert(question.solution);
+   assert(practicalTools.commandMatches({accept:[question.solution],inputType:question.inputType},question.given.replace('____',question.answer)), 'Fill answer must complete the displayed solution');
+  }
+  if(question.kind==='repair')assert(question.given);
+  const initialMode=question.solution?'exec':question.context.includes('(config-subif)')?'sub':question.context.includes('(config-if)')?'iface':question.context.includes('(config-router)')?'router':question.context.includes('(config-ext-nacl)')?'acl':question.context.includes('(config)#')?'global':'exec';
+  question.notes=annotateCommands(question.solution||question.answer,{inputType:question.inputType,initialMode});
+  assert(question.notes.every(note=>note.meaning && note.mode));
  }
 }
 const openbook = JSON.parse(fs.readFileSync('content/openbook.json', 'utf8'));
@@ -74,4 +93,4 @@ const offline = template
  .replace(/<script src="[^"]+" defer><\/script>/g, '')
  .replace('</body>', () => `<script>${script}</script></body>`);
 fs.writeFileSync('../index.html', offline);
-console.log(JSON.stringify({chapters:chapters.length,questions:ids.size,practicalSets:practicalExams.length,practicalQuestions:practicalIds.size,sections:chapters.reduce((n,c)=>n+c.sections.length,0),diagramQuestions:chapters.reduce((n,c)=>n+c.questions.filter(q=>q.diagram).length,0),status:'pass'}));
+console.log(JSON.stringify({chapters:chapters.length,questions:ids.size,practicalSets:practicalExams.length,practicalQuestions:practicalIds.size,annotatedLabLines:chapters.reduce((n,c)=>n+c.labs.reduce((n,l)=>n+l.steps.reduce((n,s)=>n+s.notes.length,0),0),0),sections:chapters.reduce((n,c)=>n+c.sections.length,0),diagramQuestions:chapters.reduce((n,c)=>n+c.questions.filter(q=>q.diagram).length,0),status:'pass'}));

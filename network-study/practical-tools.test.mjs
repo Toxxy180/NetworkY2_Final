@@ -1,0 +1,44 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import tools from './dist/practical-tools.js';
+import {annotateCommands} from './command-notes.mjs';
+const q=(answer,inputType='ios')=>({answer,accept:[answer],inputType});
+test('multi-line IOS accepts prompts, CRLF, blank lines and supported abbreviations',()=>{
+ assert(tools.commandMatches(q('configure terminal\ninterface gi0/1\nno shutdown\nend'),
+  'SW1# conf t\r\n\r\nSW1(config)# int GigabitEthernet 0/1\r\nSW1(config-if)# no shut\r\nend'));
+});
+test('single-command answers still support the old displayed aliases and filter answers',()=>{
+ assert(tools.commandMatches(q('show ip interface brief'),'sh ip int br'));
+ assert(tools.commandMatches(q('configure terminal'),'CONF T'));
+ assert(tools.commandMatches(q('no shutdown'),'no shut'));
+ assert(tools.commandMatches(q('ospf','filter'),' ospf '));
+ assert(!tools.commandMatches(q('ospf','filter'),'OSPF'));
+});
+test('missing, extra, reordered and wrong parameter lines are rejected with feedback',()=>{
+ const question=q('configure terminal\ninterface gi0/1\nswitchport access vlan 10\nend');
+ for(const input of ['configure terminal\ninterface gi0/1\nend','configure terminal\ninterface gi0/1\nswitchport access vlan 20\nend','interface gi0/1\nconfigure terminal\nswitchport access vlan 10\nend',question.answer+'\nshow vlan brief']){
+  const result=tools.check(question,input);assert.equal(result.correct,false);assert(result.rows.some(row=>!row.correct));
+ }
+});
+test('keywords ignore case; identifiers, secrets and parameter t retain case and meaning',()=>{
+ assert(tools.commandMatches(q('vtp domain LABCORP'),'VTP DOMAIN LABCORP'));
+ assert(!tools.commandMatches(q('vtp domain LABCORP'),'vtp domain labcorp'));
+ assert(!tools.commandMatches(q('ip access-group FILTER_STAFF_TRAFFIC in'),'ip access-group filter_staff_traffic in'));
+ assert(!tools.commandMatches(q('redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF'),'redistribute eigrp 100 subnets route-map eigrp-to-ospf'));
+ assert(tools.commandMatches(q('enable secret t'),'enable secret t'));
+ assert(!tools.commandMatches(q('enable secret t'),'enable secret terminal'));
+ assert(!tools.commandMatches(q('enable secret GigabitEthernet0/1'),'enable secret gi0/1'));
+ assert(!tools.commandMatches(q('ip ospf message-digest-key 1 md5 KeyAbC'),'ip ospf message-digest-key 1 md5 keyabc'));
+});
+test('shell flag case and quoted whitespace matter; display filter ignores operator spacing',()=>{
+ assert(!tools.commandMatches(q('sudo nmap -sS -p 443 192.168.20.10','shell'),'sudo nmap -ss -p 443 192.168.20.10'));
+ assert(!tools.commandMatches(q("tcpdump 'a  b'",'shell'),"tcpdump 'a b'"));
+ assert(tools.commandMatches(q('ip.proto == 88 || ip.proto == 89','filter'),'ip.proto==88||ip.proto==89'));
+});
+test('annotation follows modes and explains save, wildcard, bandwidth and route-map separately',()=>{
+ const notes=annotateCommands('enable\nconfigure terminal\ninterface gi0/0.10\nencapsulation dot1Q 10\nexit\nrouter ospf 1\nnetwork 10.0.0.0 0.0.0.3 area 0\nend\ncopy running-config startup-config');
+ assert.equal(notes[0].mode,'>');assert.equal(notes[2].nextMode,'(config-subif)#');
+ assert.equal(notes[4].nextMode,'(config)#');assert.match(notes[6].meaning,/wildcard/);
+ assert.equal(notes[7].nextMode,'#');assert.match(notes[8].meaning,/บันทึก/);
+ assert.throws(()=>annotateCommands('not-a-real-command'),/Missing IOS/);
+});

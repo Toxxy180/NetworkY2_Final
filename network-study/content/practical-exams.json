@@ -14,7 +14,8 @@
           "conf t"
         ],
         "explanation": "จาก privileged EXEC ใช้ configure terminal เพื่อเข้าสู่ (config)#",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-1-2",
@@ -25,7 +26,8 @@
           "ip address 192.168.1.2 255.255.255.0"
         ],
         "explanation": "Management IP ตั้งบน SVI และ /24 ใช้ mask 255.255.255.0",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-1-3",
@@ -36,7 +38,8 @@
           "show mac address-table dynamic"
         ],
         "explanation": "ดู MAC ที่เรียนรู้จากเฟรม แล้วเทียบ VLAN และพอร์ตขาเข้ากับสายจริง",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-1-4",
@@ -47,7 +50,8 @@
           "switchport port-security maximum 2"
         ],
         "explanation": "Maximum นับจำนวน MAC ที่อนุญาตบนพอร์ต เมื่อเต็มจึงเกิด violation เมื่อมี MAC ใหม่",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-1-5",
@@ -58,9 +62,51 @@
           "no shutdown"
         ],
         "explanation": "หลังแก้สาเหตุและ shutdown แล้ว ให้ no shutdown เพื่อเปิดพอร์ต ตรวจสถานะและ violation counter ซ้ำ",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-1-6",
+        "kind": "block",
+        "prompt": "เขียนชุดคำสั่งเปิด Port Security บน Fa0/1",
+        "context": "SW1#; ให้พอร์ตเป็น access, maximum 2, sticky, violation restrict แล้วกลับ #",
+        "given": "",
+        "answer": "configure terminal\ninterface fa0/1\nswitchport mode access\nswitchport port-security\nswitchport port-security maximum 2\nswitchport port-security mac-address sticky\nswitchport port-security violation restrict\nend",
+        "accept": [
+          "configure terminal\ninterface fa0/1\nswitchport mode access\nswitchport port-security\nswitchport port-security maximum 2\nswitchport port-security mac-address sticky\nswitchport port-security violation restrict\nend"
+        ],
+        "explanation": "เข้า global → เลือกพอร์ต → ล็อก access → เปิด Port Security → ตั้งจำนวน/วิธีเรียน/violation → end",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-1-7",
+        "kind": "fill",
+        "prompt": "เติมคำสั่ง gateway ที่หายไป",
+        "context": "พิมพ์เฉพาะบรรทัดแทน ____; SW1 เป็น L2 switch ใช้ gateway 192.168.1.1",
+        "given": "configure terminal\ninterface vlan 1\n ip address 192.168.1.2 255.255.255.0\n no shutdown\nexit\n____\nend",
+        "answer": "ip default-gateway 192.168.1.1",
+        "accept": [
+          "ip default-gateway 192.168.1.1"
+        ],
+        "explanation": "ใส่ ip default-gateway ใน global configuration หลัง exit ออกจาก SVI",
+        "inputType": "ios",
+        "solution": "configure terminal\ninterface vlan 1\n ip address 192.168.1.2 255.255.255.0\n no shutdown\nexit\nip default-gateway 192.168.1.1\nend"
+      },
+      {
+        "id": "lab-1-8",
+        "kind": "repair",
+        "prompt": "แก้ลำดับกู้ Fa0/3 แล้วเขียนทั้งชุด",
+        "context": "SW1#; แก้ MAC ที่ละเมิดแล้ว ต้อง shutdown ก่อน no shutdown และจบที่ #",
+        "given": "configure terminal\ninterface fa0/3\n no shutdown\n shutdown\nend",
+        "answer": "configure terminal\ninterface fa0/3\nshutdown\nno shutdown\nend",
+        "accept": [
+          "configure terminal\ninterface fa0/3\nshutdown\nno shutdown\nend"
+        ],
+        "explanation": "สลับสองบรรทัดให้ปิดก่อนเปิด; หากจบด้วย shutdown พอร์ตจะยังปิดอยู่",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 2,
@@ -76,7 +122,8 @@
           "vtp domain LABCORP"
         ],
         "explanation": "ชื่อ domain ต้องสอดคล้องกับ switch ที่จะรับฐานข้อมูล VLAN",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-2-2",
@@ -87,7 +134,8 @@
           "switchport mode trunk"
         ],
         "explanation": "กำหนด trunk เพื่อให้หลาย VLAN ผ่านลิงก์เดียวกัน",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-2-3",
@@ -98,7 +146,8 @@
           "switchport trunk native vlan 999"
         ],
         "explanation": "ตั้งปลาย trunk ทั้งสองฝั่งให้ตรงกัน และแยก native VLAN ออกจากพอร์ตผู้ใช้",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-2-4",
@@ -109,7 +158,8 @@
           "switchport nonegotiate"
         ],
         "explanation": "ปิดการส่ง DTP ร่วมกับล็อก access mode เพื่อป้องกันการเจรจาเป็น trunk",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-2-5",
@@ -120,9 +170,51 @@
           "show interfaces trunk"
         ],
         "explanation": "ผลแสดงพอร์ตที่ trunking, native VLAN และ allowed VLAN",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-2-6",
+        "kind": "block",
+        "prompt": "เขียนชุดตั้ง VTP server และ VLAN 10",
+        "context": "SW1#; เรียง domain LABCORP → version 2 → mode server → password vtp123 → VLAN 10 → name SALES แล้วกลับ #",
+        "given": "",
+        "answer": "configure terminal\nvtp domain LABCORP\nvtp version 2\nvtp mode server\nvtp password vtp123\nvlan 10\nname SALES\nend",
+        "accept": [
+          "configure terminal\nvtp domain LABCORP\nvtp version 2\nvtp mode server\nvtp password vtp123\nvlan 10\nname SALES\nend"
+        ],
+        "explanation": "ตั้ง VTP ใน global ก่อนเข้า VLAN; name อยู่ใน config-vlan",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-2-7",
+        "kind": "fill",
+        "prompt": "เติม allowed list ของ trunk",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; ให้ผ่านเฉพาะ VLAN 10,20,30 โดยแทนรายการเดิม",
+        "given": "configure terminal\ninterface gi0/1\n switchport mode trunk\n switchport trunk native vlan 999\n ____\n switchport nonegotiate\nend",
+        "answer": "switchport trunk allowed vlan 10,20,30",
+        "accept": [
+          "switchport trunk allowed vlan 10,20,30"
+        ],
+        "explanation": "allowed vlan แบบไม่มี add/remove แทนรายการเดิม; native VLAN ในแลปนี้เป็น 999",
+        "inputType": "ios",
+        "solution": "configure terminal\ninterface gi0/1\n switchport mode trunk\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,20,30\n switchport nonegotiate\nend"
+      },
+      {
+        "id": "lab-2-8",
+        "kind": "repair",
+        "prompt": "แก้ trunk ที่ตั้ง mode และ native ผิด",
+        "context": "SW1#; Gi0/1 ไปสวิตช์อีกตัวซึ่งใช้ native 999; เขียนทั้งชุดที่แก้สองจุดแล้ว",
+        "given": "configure terminal\ninterface gi0/1\n switchport mode access\n switchport trunk native vlan 1\n switchport nonegotiate\nend",
+        "answer": "configure terminal\ninterface gi0/1\nswitchport mode trunk\nswitchport trunk native vlan 999\nswitchport nonegotiate\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/1\nswitchport mode trunk\nswitchport trunk native vlan 999\nswitchport nonegotiate\nend"
+        ],
+        "explanation": "ใช้ mode trunk และ native 999 ให้ตรงปลายอีกฝั่ง; nonegotiate คงไว้เมื่อกำหนด trunk เอง",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 3,
@@ -138,7 +230,8 @@
           "spanning-tree vlan 1 root primary"
         ],
         "explanation": "คำสั่งปรับ priority เพื่อให้ switch เป็น root หลักตามเงื่อนไขที่ตรวจพบ",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-3-2",
@@ -149,7 +242,8 @@
           "show spanning-tree vlan 1"
         ],
         "explanation": "เทียบ Root ID กับ Bridge ID แล้วอ่าน Role คู่กับ State ของแต่ละพอร์ต",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-3-3",
@@ -160,7 +254,8 @@
           "spanning-tree portfast"
         ],
         "explanation": "PortFast ใช้กับปลายทางเพื่อข้ามการรอ listening/learning ตอนเปิดพอร์ต",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-3-4",
@@ -171,7 +266,8 @@
           "spanning-tree bpduguard enable"
         ],
         "explanation": "เมื่อพอร์ตรับ BPDU จะเข้าสู่ err-disabled ต้องแก้ต้นทางก่อนกู้พอร์ต",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-3-5",
@@ -182,9 +278,51 @@
           "show interfaces status err-disabled"
         ],
         "explanation": "ดูว่าพอร์ตใด err-disabled หลังทดสอบ BPDU Guard",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-3-6",
+        "kind": "block",
+        "prompt": "ตั้ง SW1 เป็น root แล้วสั่งตรวจผล",
+        "context": "SW1#; ทำ VLAN 1 เป็น root primary, กลับ # แล้วแสดง STP VLAN 1",
+        "given": "",
+        "answer": "configure terminal\nspanning-tree vlan 1 root primary\nend\nshow spanning-tree vlan 1",
+        "accept": [
+          "configure terminal\nspanning-tree vlan 1 root primary\nend\nshow spanning-tree vlan 1"
+        ],
+        "explanation": "root primary ใช้ใน global; show ใช้หลัง end แล้วเปรียบเทียบ Root ID กับ Bridge ID",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-3-7",
+        "kind": "fill",
+        "prompt": "เติมบรรทัดเร่งพอร์ต PC เข้า Forwarding",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; Gi0/1 ต่อ PC ตามผัง ไม่ใช่ลิงก์ระหว่างสวิตช์",
+        "given": "configure terminal\ninterface gi0/1\n switchport mode access\n ____\n spanning-tree bpduguard enable\nend",
+        "answer": "spanning-tree portfast",
+        "accept": [
+          "spanning-tree portfast"
+        ],
+        "explanation": "PortFast ใช้กับพอร์ตปลายทาง; BPDU Guard เป็นอีกคำสั่งที่แยกหน้าที่กัน",
+        "inputType": "ios",
+        "solution": "configure terminal\ninterface gi0/1\n switchport mode access\n spanning-tree portfast\n spanning-tree bpduguard enable\nend"
+      },
+      {
+        "id": "lab-3-8",
+        "kind": "repair",
+        "prompt": "แก้คำสั่ง BPDU Guard ที่ปิดผิด",
+        "context": "SW2#; Gi0/1 ต่อ PC ต้องเปิด PortFast และ BPDU Guard; เขียนทั้งชุดให้ถูก",
+        "given": "configure terminal\ninterface gi0/1\n switchport mode access\n spanning-tree portfast\n spanning-tree bpduguard disable\nend",
+        "answer": "configure terminal\ninterface gi0/1\nswitchport mode access\nspanning-tree portfast\nspanning-tree bpduguard enable\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/1\nswitchport mode access\nspanning-tree portfast\nspanning-tree bpduguard enable\nend"
+        ],
+        "explanation": "แก้ disable เป็น enable เพื่อให้ Guard ปิดพอร์ตเมื่อรับ BPDU",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 4,
@@ -200,7 +338,8 @@
           "encapsulation dot1Q 10"
         ],
         "explanation": "เลขหลัง dot1Q ต้องตรง VLAN tag ที่รับจาก trunk",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-4-2",
@@ -211,7 +350,8 @@
           "ip address 192.168.10.1 255.255.255.0"
         ],
         "explanation": "PC ใน VLAN 10 ใช้ IP นี้เป็น default gateway",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-4-3",
@@ -222,7 +362,8 @@
           "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443"
         ],
         "explanation": "HTTPS ใช้ TCP 443 ส่วน wildcard ของ /24 คือ 0.0.0.255",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-4-4",
@@ -233,7 +374,8 @@
           "ip access-group FILTER_STAFF_TRAFFIC in"
         ],
         "explanation": "ทิศ in ตรวจแพ็กเก็ตที่เข้ามาจาก VLAN 10 ก่อนเลือกทางออก",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-4-5",
@@ -245,9 +387,51 @@
           "show ip access-lists FILTER_STAFF_TRAFFIC"
         ],
         "explanation": "เทียบจำนวน match ที่เพิ่มกับการ ping หรือเรียกบริการจาก Staff",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-4-6",
+        "kind": "block",
+        "prompt": "เขียนชุด ROAS ของ VLAN 10 บน R1",
+        "context": "R1#; เปิด Gi0/0, สร้าง Gi0/0.10, tag VLAN 10, gateway 192.168.10.1/24 แล้วกลับ #",
+        "given": "",
+        "answer": "configure terminal\ninterface gi0/0\nno shutdown\ninterface gi0/0.10\nencapsulation dot1Q 10\nip address 192.168.10.1 255.255.255.0\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/0\nno shutdown\ninterface gi0/0.10\nencapsulation dot1Q 10\nip address 192.168.10.1 255.255.255.0\nend"
+        ],
+        "explanation": "เปิดพอร์ตจริงก่อน; encapsulation ผูก VLAN ส่วน ip address ตั้ง gateway บน sub-interface",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-4-7",
+        "kind": "fill",
+        "prompt": "เติม ACL อนุญาต HTTPS ไป Web Server",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; Staff 192.168.10.0/24 → host 192.168.20.10 TCP/443",
+        "given": "configure terminal\nip access-list extended FILTER_STAFF_TRAFFIC\n deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80\n ____\n permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo\n deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255\n permit ip any any\nend",
+        "answer": "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443",
+        "accept": [
+          "permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443"
+        ],
+        "explanation": "permit TCP/443 ต้องอยู่ก่อน deny ของ server subnet เพราะ ACL เลือก match แรก",
+        "inputType": "ios",
+        "solution": "configure terminal\nip access-list extended FILTER_STAFF_TRAFFIC\n deny ip 192.168.10.0 0.0.0.255 host 192.168.99.100\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 80\n permit tcp 192.168.10.0 0.0.0.255 host 192.168.20.10 eq 443\n permit icmp 192.168.10.0 0.0.0.255 host 192.168.20.10 echo\n deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255\n permit ip any any\nend"
+      },
+      {
+        "id": "lab-4-8",
+        "kind": "repair",
+        "prompt": "แก้ทิศของ ACL บน VLAN Staff",
+        "context": "R1#; ต้องกรองแพ็กเก็ตที่รับจาก Staff เข้า Gi0/0.10; เขียนชุดที่แก้แล้ว",
+        "given": "configure terminal\ninterface gi0/0.10\n ip access-group FILTER_STAFF_TRAFFIC out\nend",
+        "answer": "configure terminal\ninterface gi0/0.10\nip access-group FILTER_STAFF_TRAFFIC in\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/0.10\nip access-group FILTER_STAFF_TRAFFIC in\nend"
+        ],
+        "explanation": "เปลี่ยน out เป็น in เมื่อรับ traffic จาก Staff เข้าสู่ router",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 5,
@@ -263,7 +447,8 @@
           "network 192.168.100.0 0.0.0.255 area 0"
         ],
         "explanation": "Wildcard /24 คือ 0.0.0.255 เลือก interface ในวงนี้เข้าร่วม Area 0",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-5-2",
@@ -274,7 +459,8 @@
           "ip ospf priority 0"
         ],
         "explanation": "Priority 0 บน interface ทำให้ไม่เข้าร่วมการเลือก DR/BDR ของ segment นี้",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-5-3",
@@ -285,7 +471,8 @@
           "ip ospf network point-to-point"
         ],
         "explanation": "Point-to-point ไม่มีการเลือก DR/BDR ให้ตั้งทั้งสองฝั่ง",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-5-4",
@@ -296,7 +483,8 @@
           "auto-cost reference-bandwidth 10000"
         ],
         "explanation": "ใช้ค่าเดียวกันทุก router เพื่อให้การคำนวณ cost สอดคล้องกัน",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-5-5",
@@ -307,9 +495,51 @@
           "show ip ospf neighbor"
         ],
         "explanation": "อ่าน Neighbor ID, State และ Interface เพื่อตรวจ adjacency",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-5-6",
+        "kind": "block",
+        "prompt": "ตั้ง OSPF R1 สำหรับ broadcast และ LAN",
+        "context": "R1#; process 1, RID 1.1.1.1, reference 10000; network broadcast 192.168.100.0/24, LAN 10.0.1.0/24, passive Gi0/2; เรียงตามนี้",
+        "given": "",
+        "answer": "configure terminal\nrouter ospf 1\nrouter-id 1.1.1.1\nauto-cost reference-bandwidth 10000\nnetwork 192.168.100.0 0.0.0.255 area 0\nnetwork 10.0.1.0 0.0.0.255 area 0\npassive-interface gi0/2\nend",
+        "accept": [
+          "configure terminal\nrouter ospf 1\nrouter-id 1.1.1.1\nauto-cost reference-bandwidth 10000\nnetwork 192.168.100.0 0.0.0.255 area 0\nnetwork 10.0.1.0 0.0.0.255 area 0\npassive-interface gi0/2\nend"
+        ],
+        "explanation": "ใส่ network ด้วย wildcard /24 และ passive เฉพาะ LAN ที่ไม่ต้องสร้าง neighbor",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-5-7",
+        "kind": "fill",
+        "prompt": "เติม MD5 key ของ Gi0/1",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; Key ID 1, secret CCNAlab#2024 ต้องตรงตัวพิมพ์",
+        "given": "configure terminal\ninterface gi0/1\n ip ospf authentication message-digest\n ____\nend",
+        "answer": "ip ospf message-digest-key 1 md5 CCNAlab#2024",
+        "accept": [
+          "ip ospf message-digest-key 1 md5 CCNAlab#2024"
+        ],
+        "explanation": "เปิด authentication แล้วต้องมี key ID และ secret ที่ตรงกับอีกฝั่งด้วย",
+        "inputType": "ios",
+        "solution": "configure terminal\ninterface gi0/1\n ip ospf authentication message-digest\n ip ospf message-digest-key 1 md5 CCNAlab#2024\nend"
+      },
+      {
+        "id": "lab-5-8",
+        "kind": "repair",
+        "prompt": "แก้ bandwidth กับ network type ของลิงก์สำรอง",
+        "context": "R1#; Gi0/3 เป็น 1.544 Mbps แบบ OSPF point-to-point; เขียนทั้งชุดให้ถูก",
+        "given": "configure terminal\ninterface gi0/3\n bandwidth 10000\n ip ospf network broadcast\nend",
+        "answer": "configure terminal\ninterface gi0/3\nbandwidth 1544\nip ospf network point-to-point\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/3\nbandwidth 1544\nip ospf network point-to-point\nend"
+        ],
+        "explanation": "bandwidth ใช้ Kbit/s จึงเป็น 1544; reference-bandwidth 10000 เป็นอีกคำสั่งในโหมด router",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 6,
@@ -325,7 +555,8 @@
           "standby 1 ip 192.168.10.1"
         ],
         "explanation": "Client ใช้ virtual IP เป็น gateway ส่วน router แต่ละตัวมี IP จริงคนละหมายเลข",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-6-2",
@@ -336,7 +567,8 @@
           "standby 1 preempt"
         ],
         "explanation": "Preempt อนุญาตให้เครื่องที่พร้อมและ priority สูงกว่าเข้ารับบทบาท",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-6-3",
@@ -347,7 +579,8 @@
           "vrrp 1 ip 192.168.20.1"
         ],
         "explanation": "ให้ทั้งสอง router ใช้ VRID และ virtual IP ตรงกัน",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-6-4",
@@ -358,7 +591,8 @@
           "glbp 1 load-balancing round-robin"
         ],
         "explanation": "AVG สลับแจก virtual MAC ของ AVF ตามคำขอ ARP และ client ใช้ MAC นั้นส่งข้อมูล",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-6-5",
@@ -369,9 +603,51 @@
           "show standby brief"
         ],
         "explanation": "ดู State, Active, Standby, Virtual IP และ priority หลังทดสอบ failover",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-6-6",
+        "kind": "block",
+        "prompt": "เขียนชุด HSRPv2 ของ R1",
+        "context": "R1#; Gi0/1 มี real IP แล้ว; group 1, VIP 192.168.10.1, priority 110, preempt, hello 1/hold 4; เรียงตามนี้",
+        "given": "",
+        "answer": "configure terminal\ninterface gi0/1\nstandby version 2\nstandby 1 ip 192.168.10.1\nstandby 1 priority 110\nstandby 1 preempt\nstandby 1 timers 1 4\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/1\nstandby version 2\nstandby 1 ip 192.168.10.1\nstandby 1 priority 110\nstandby 1 preempt\nstandby 1 timers 1 4\nend"
+        ],
+        "explanation": "คำสั่ง standby อยู่ใต้ interface; version ใช้ก่อนกำหนดรายละเอียดกลุ่ม",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-6-7",
+        "kind": "fill",
+        "prompt": "เติม VRRP priority ของ R1",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; group 1 ใช้ priority 110",
+        "given": "configure terminal\ninterface gi0/1\n vrrp 1 ip 192.168.20.1\n ____\n vrrp 1 preempt\n vrrp 1 timers advertise 1\nend",
+        "answer": "vrrp 1 priority 110",
+        "accept": [
+          "vrrp 1 priority 110"
+        ],
+        "explanation": "ใช้ vrrp พร้อม group 1 และ priority 110 ตามผัง",
+        "inputType": "ios",
+        "solution": "configure terminal\ninterface gi0/1\n vrrp 1 ip 192.168.20.1\n vrrp 1 priority 110\n vrrp 1 preempt\n vrrp 1 timers advertise 1\nend"
+      },
+      {
+        "id": "lab-6-8",
+        "kind": "repair",
+        "prompt": "แก้ GLBP ที่ใส่ VIP และวิธีกระจายโหลดผิด",
+        "context": "R1#; กลุ่ม 1 ใช้ VIP 192.168.30.1 และ round-robin; เขียนทั้งชุดที่แก้แล้ว",
+        "given": "configure terminal\ninterface gi0/1\n glbp 1 ip 192.168.10.1\n glbp 1 priority 110\n glbp 1 preempt\n glbp 1 load-balancing host-dependent\nend",
+        "answer": "configure terminal\ninterface gi0/1\nglbp 1 ip 192.168.30.1\nglbp 1 priority 110\nglbp 1 preempt\nglbp 1 load-balancing round-robin\nend",
+        "accept": [
+          "configure terminal\ninterface gi0/1\nglbp 1 ip 192.168.30.1\nglbp 1 priority 110\nglbp 1 preempt\nglbp 1 load-balancing round-robin\nend"
+        ],
+        "explanation": "แก้ VIP ให้เป็น subnet ของแลป GLBP และเปลี่ยน method เป็น round-robin",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 7,
@@ -388,7 +664,8 @@
           "ip -br address"
         ],
         "explanation": "ตรวจชื่อ interface และ IP ก่อนระบุ eth0 ในเครื่องมือจับ packet",
-        "inputType": "shell"
+        "inputType": "shell",
+        "kind": "single"
       },
       {
         "id": "lab-7-2",
@@ -400,7 +677,8 @@
           "sudo arp-scan --interface eth0 --localnet"
         ],
         "explanation": "ARP scan ส่งคำขอใน Layer 2 จึงขึ้นกับ VLAN ที่ Kali ต่ออยู่",
-        "inputType": "shell"
+        "inputType": "shell",
+        "kind": "single"
       },
       {
         "id": "lab-7-3",
@@ -413,7 +691,8 @@
           "sudo tcpdump -nni eth0 arp"
         ],
         "explanation": "แสดง ARP Request/Reply ที่จุดจับมองเห็น โดยใช้เลขที่อยู่และพอร์ตตรง ๆ",
-        "inputType": "shell"
+        "inputType": "shell",
+        "kind": "single"
       },
       {
         "id": "lab-7-4",
@@ -424,7 +703,8 @@
           "ospf"
         ],
         "explanation": "ชื่อ ospf เป็น display filter ส่วน capture filter ของ tcpdump ใช้ ip proto 89",
-        "inputType": "filter"
+        "inputType": "filter",
+        "kind": "single"
       },
       {
         "id": "lab-7-5",
@@ -435,9 +715,52 @@
           "show cdp neighbors"
         ],
         "explanation": "ใช้ Local Interface ระบุ uplink แล้วตาม MAC ไปตรวจ switch ถัดไป",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-7-6",
+        "kind": "block",
+        "prompt": "เขียนสามคำสั่งสำรวจบน Kali ตามลำดับ",
+        "context": "Kali terminal; ดู IP แบบย่อ → arp-scan localnet บน eth0 → SYN scan ports 21,22,23,80,443,3389 ของ 192.168.20.10",
+        "given": "",
+        "answer": "ip -br addr\nsudo arp-scan --interface=eth0 --localnet\nsudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10",
+        "accept": [
+          "ip -br addr\nsudo arp-scan --interface=eth0 --localnet\nsudo nmap -sS -p 21,22,23,80,443,3389 192.168.20.10"
+        ],
+        "explanation": "แต่ละคำสั่งคนละบรรทัด; flag -sS ต้องตัวพิมพ์เล็ก s และตัวพิมพ์ใหญ่ S",
+        "inputType": "shell"
+      },
+      {
+        "id": "lab-7-7",
+        "kind": "fill",
+        "prompt": "เติมคำสั่งจับ EIGRP และ OSPF ลง pcap",
+        "context": "พิมพ์คำสั่งเต็มแทน ____; eth0, ไม่แปลงชื่อ, ใช้ BPF ตามตัวอย่าง และบันทึก routing_control.pcap",
+        "given": "ip -br addr\n____",
+        "answer": "sudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap",
+        "accept": [
+          "sudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap",
+          "sudo tcpdump -ni eth0 -w routing_control.pcap 'ip proto 88 or ip proto 89'"
+        ],
+        "explanation": "ip proto 88/89 เป็น BPF สำหรับ capture; -w เขียน pcap แทนการพิมพ์ทุก packet บนจอ",
+        "inputType": "shell",
+        "solution": "ip -br addr\nsudo tcpdump -ni eth0 'ip proto 88 or ip proto 89' -w routing_control.pcap"
+      },
+      {
+        "id": "lab-7-8",
+        "kind": "repair",
+        "prompt": "แก้ display filter ที่ใช้ layer ผิด",
+        "context": "Wireshark Display Filter; ต้องดู EIGRP หรือ OSPF ของ IPv4; พิมพ์ตัวกรองที่ถูกหนึ่งบรรทัด",
+        "given": "udp.port == 88 || udp.port == 89",
+        "answer": "ip.proto == 88 || ip.proto == 89",
+        "accept": [
+          "ip.proto == 88 || ip.proto == 89"
+        ],
+        "explanation": "OSPF และ EIGRP ใช้ IP protocol number; เปลี่ยน udp.port เป็น ip.proto ทั้งสองเงื่อนไข",
+        "inputType": "filter"
       }
-    ]
+    ],
+    "revision": 2
   },
   {
     "id": 8,
@@ -453,7 +776,8 @@
           "router eigrp 100"
         ],
         "explanation": "AS ต้องตรงกับเพื่อนบ้านใน EIGRP domain ที่จะเชื่อมต่อ",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-8-2",
@@ -464,7 +788,8 @@
           "network 10.0.12.0 0.0.0.3"
         ],
         "explanation": "Wildcard /30 คือ 0.0.0.3 และตรงกับลิงก์ R1–R2",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-8-3",
@@ -475,7 +800,8 @@
           "redistribute eigrp 100 subnets route-map EIGRP-TO-OSPF"
         ],
         "explanation": "subnets ให้นำ subnet routes เข้าได้ ส่วน route-map ใช้กรองและกำหนด tag",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-8-4",
@@ -486,7 +812,8 @@
           "redistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP"
         ],
         "explanation": "Metric เรียงเป็น bandwidth, delay, reliability, load, MTU เพื่อให้ EIGRP นำ route ไปคำนวณได้",
-        "inputType": "ios"
+        "inputType": "ios",
+        "kind": "single"
       },
       {
         "id": "lab-8-5",
@@ -497,8 +824,50 @@
           "show ip route 192.168.30.0"
         ],
         "explanation": "หลัง redistribution ควรมี D EX ไป LAN ฝั่ง OSPF และต้องมีเส้นทางย้อนกลับด้วย",
+        "inputType": "ios",
+        "kind": "single"
+      },
+      {
+        "id": "lab-8-6",
+        "kind": "block",
+        "prompt": "เขียนชุด EIGRP ฝั่ง R1",
+        "context": "R1#; AS 100, LAN 192.168.10.0/24, link 10.0.12.0/30, passive g0/0, ปิด auto-summary; เรียงตามนี้",
+        "given": "",
+        "answer": "configure terminal\nrouter eigrp 100\nnetwork 192.168.10.0 0.0.0.255\nnetwork 10.0.12.0 0.0.0.3\npassive-interface g0/0\nno auto-summary\nend",
+        "accept": [
+          "configure terminal\nrouter eigrp 100\nnetwork 192.168.10.0 0.0.0.255\nnetwork 10.0.12.0 0.0.0.3\npassive-interface g0/0\nno auto-summary\nend"
+        ],
+        "explanation": "LAN ใช้ wildcard .255; /30 ใช้ .3; passive ที่ LAN ไม่ใช่ลิงก์ไป R2",
+        "inputType": "ios"
+      },
+      {
+        "id": "lab-8-7",
+        "kind": "fill",
+        "prompt": "เติม match tag เพื่อกัน route feedback",
+        "context": "พิมพ์เฉพาะบรรทัดที่หาย; OSPF-TO-EIGRP ต้อง deny tag 100 แล้วตั้ง tag 200 ให้ route ที่เหลือ",
+        "given": "configure terminal\nroute-map OSPF-TO-EIGRP deny 10\n ____\nroute-map OSPF-TO-EIGRP permit 20\n set tag 200\nend",
+        "answer": "match tag 100",
+        "accept": [
+          "match tag 100"
+        ],
+        "explanation": "deny 10 จับ route tag 100 ที่เคยออกจาก EIGRP ไป OSPF เพื่อกันนำกลับ",
+        "inputType": "ios",
+        "solution": "configure terminal\nroute-map OSPF-TO-EIGRP deny 10\n match tag 100\nroute-map OSPF-TO-EIGRP permit 20\n set tag 200\nend"
+      },
+      {
+        "id": "lab-8-8",
+        "kind": "repair",
+        "prompt": "แก้ route-map ของ redistribution เข้า EIGRP",
+        "context": "R2#; นำ OSPF process 1 เข้า EIGRP AS100 ด้วย metric 10000 100 255 1 1500 และ OSPF-TO-EIGRP; เขียนชุดที่แก้แล้ว",
+        "given": "configure terminal\nrouter eigrp 100\n redistribute ospf 1 metric 10000 100 255 1 1500 route-map EIGRP-TO-OSPF\nend",
+        "answer": "configure terminal\nrouter eigrp 100\nredistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP\nend",
+        "accept": [
+          "configure terminal\nrouter eigrp 100\nredistribute ospf 1 metric 10000 100 255 1 1500 route-map OSPF-TO-EIGRP\nend"
+        ],
+        "explanation": "ขาเข้า EIGRP ต้องใช้ OSPF-TO-EIGRP; อีกชื่อเป็นทิศ EIGRP เข้า OSPF",
         "inputType": "ios"
       }
-    ]
+    ],
+    "revision": 2
   }
 ]

@@ -69,9 +69,19 @@
  }
  function labSection(s, i) {
   return `<section class="lesson-section" id="section-${i}"><h2>${esc(s.title)}</h2><div class="lab-brief"><h3>เตรียมและทำตามลำดับ</h3><ol>${s.body.map(p=>`<li>${fmt(p)}</li>`).join('')}</ol></div>
-   <details class="lab-answer"><summary>ดูคำสั่งและวิธีตรวจผล</summary>
-    ${s.steps.map(step=>`<div class="command-block"><div class="code-header"><span>${esc(step.device)}</span><button class="btn small" data-copy>${icon('copy',13)}คัดลอก</button></div><pre><code>${esc(step.code)}</code></pre></div>`).join('')}
+   <details class="lab-answer" open><summary>คำสั่งพร้อมความหมายและวิธีตรวจผล</summary>
+    ${s.steps.map(step=>`<div class="command-block"><div class="code-header"><span>${esc(step.device)}</span><button class="btn small" data-copy>${icon('copy',13)}คัดลอกทั้งชุด</button></div><pre><code>${esc(step.code)}</code></pre><details class="command-meaning" open><summary>ความหมายทีละบรรทัด · ${step.notes.length} บรรทัด</summary>${commandNotes(step.notes)}</details></div>`).join('')}
     <div class="example"><h3>${esc(s.example.title)}</h3>${s.example.body.map(p=>`<p>${fmt(p)}</p>`).join('')}</div></details></section>`;
+ }
+ function commandNotes(notes) {
+  return `<ol class="command-notes" aria-label="ความหมายของคำสั่งทีละบรรทัด">${notes.map(note=>`<li><div class="command-note-code"><span class="command-line-number">บรรทัด ${note.line}</span><code>${esc(note.command)}</code><span class="command-mode">${esc(note.mode)}${note.nextMode!==note.mode?' → '+esc(note.nextMode):''}</span></div><p>${esc(note.meaning)}</p></li>`).join('')}</ol>`;
+ }
+ function commandSolution(question) {
+  return `<p><strong>${question.kind==='fill'?'คำสั่งที่เติมในช่องว่าง':'ชุดคำสั่งเฉลย'}</strong></p><pre><code>${esc(question.answer)}</code></pre>${paragraphs(question.explanation)}<h3>${question.kind==='fill'?'ชุดที่เติมครบ พร้อมความหมาย':'ความหมายทีละบรรทัด'}</h3>${commandNotes(question.notes)}${question.accept.length>1?`<details class="command-alternatives"><summary>คำตอบทางเลือกที่รับได้</summary>${question.accept.slice(1).map(value=>`<pre><code>${esc(value)}</code></pre>`).join('')}</details>`:''}`;
+ }
+ function commandFeedback(question,answer) {
+  const result=window.PracticalTools.check(question,answer);
+  return `<div class="command-line-result"><p>ตรงตามชุดคำตอบ ${result.matched} / ${result.total} บรรทัด</p><ol>${result.rows.map(row=>`<li class="${row.correct?'line-correct':'line-wrong'}"><strong>บรรทัด ${row.line} · ${row.correct?'ถูกต้อง':!row.actual?'ยังขาดคำสั่ง':!row.expected?'มีคำสั่งเกิน':'คำสั่งหรือลำดับยังไม่ตรง'}</strong>${row.correct?'':`<p>คุณพิมพ์: <code>${esc(row.actual||'(ว่าง)')}</code></p><p>ตามชุดเฉลย: <code>${esc(row.expected||'(ไม่มีบรรทัดนี้)')}</code></p>`}</li>`).join('')}</ol></div>`;
  }
  function practice(){sidebar('quiz');breadcrumb('ข้อสอบทฤษฎี');main.innerHTML=`<div class="page-head"><div><h1>ข้อสอบภาคทฤษฎี</h1><p class="lead">เลือกฝึกพร้อมเฉลยทีละข้อ หรือทำครบชุดแล้วตรวจคะแนน<br>โจทย์แต่งขึ้นตามขอบเขตอาจารย์ มีทั้งพื้นฐาน การอ่านคำสั่ง และวิเคราะห์ภาพ</p></div></div>${session&&!session.finished?`<div class="note">${icon('info')}<div>คุณมีชุดที่กำลังทำอยู่: ${esc(session.title)}<br><a href="#/quiz">กลับไปทำต่อ ${icon('arrow',14)}</a></div></div>`:''}<div class="mock-banner"><div><h3>ชุดทบทวนรวม 30 ข้อ</h3><p>สุ่มจากคลังทั้ง 8 บท · ตรวจคะแนนเมื่อทำครบ · ไม่จำกัดเวลา</p></div><button class="btn" data-start="mock" data-mode="exam">เริ่มชุดรวม ${icon('arrow',17)}</button></div><div class="quiz-chooser">${chapters.map(c=>{const results=state.history.filter(h=>h.chapter===c.id);const best=results.length?Math.max(...results.map(r=>r.score)):null;return `<section class="quiz-choice"><span class="label">บท ${String(c.id).padStart(2,'0')} · 15 ข้อ</span><h3>${esc(c.shortTitle)}</h3><p>${esc(c.subtitle)}</p><div class="actions"><button class="btn primary small" data-start="${c.id}">ฝึกพร้อมเฉลย</button><button class="btn small" data-start="${c.id}" data-mode="exam">ทำครบแล้วตรวจ</button></div><p class="tiny-note">${best===null?'ยังไม่เคยทำครบชุด':`คะแนนสูงสุด ${best}/15 · ทำครบ ${results.length} ครั้ง`}</p></section>`}).join('')}</div>`;}
  const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b};
@@ -214,28 +224,18 @@
  window.addEventListener('scroll', () => {
   if (readingContext && readingFrame === null) readingFrame = requestAnimationFrame(updateReadingPosition);
  }, {passive: true});
- let labState = {done: [], runs: {}, best: {}};
+ let labState = {schemaVersion:2,done: [], runs: {}, best: {}};
+ let labMigrated=false;
  try {
   const saved = JSON.parse(localStorage.getItem(LAB_KEY));
-  if (saved && Array.isArray(saved.done) && saved.runs && saved.best) labState = saved;
+  if (saved && Array.isArray(saved.done) && saved.runs && saved.best) { labState = saved; if(saved.schemaVersion!==2){labState.schemaVersion=2;labState.best={};for(const run of Object.values(labState.runs)){run.finished=false;run.revision=2;}labMigrated=true;} }
  } catch { storageOK = false; }
  function saveLabState() {
   try { localStorage.setItem(LAB_KEY, JSON.stringify(labState)); }
   catch { storageOK = false; toast('เบราว์เซอร์ไม่อนุญาตให้บันทึก คำตอบจะอยู่จนกว่าจะปิดหน้านี้'); }
  }
- function normalizeCommand(value, inputType = 'ios') {
-  const command = value.trim().replace(/^[\w()./-]+[#$>]\s*/, '').replace(/\s+/g, ' ');
-  if (inputType !== 'ios') return command;
-  const aliases = {sh:'show',conf:'configure',t:'terminal',int:'interface',shut:'shutdown'};
-  return command
-   .split(' ').map(word => aliases[word.toLowerCase()] || (
-    /^(LABCORP|FILTER_STAFF_TRAFFIC|EIGRP-TO-OSPF|OSPF-TO-EIGRP)$/.test(word.toUpperCase())
-     ? word : word.toLowerCase()
-   )).join(' ');
- }
- function commandMatches(question, answer) {
-  return question.accept.some(value => normalizeCommand(value, question.inputType) === normalizeCommand(answer, question.inputType));
- }
+ if(labMigrated)saveLabState();
+ function commandMatches(question,answer) { return window.PracticalTools.commandMatches(question,answer); }
  function practicalCard(exam, exams) {
   const chapter = chapters.find(c => c.id === exam.id);
   const run = labState.runs[exam.id];
@@ -252,8 +252,8 @@
   const title = exams ? 'ข้อสอบภาคปฏิบัติ' : 'บทเรียนภาคปฏิบัติ';
   breadcrumb(title);
   main.innerHTML = `<div class="page-head"><div><h1>${title}</h1><p class="lead">${exams
-   ? '8 ชุดตามเรื่อง · ชุดละ 5 ข้อ · พิมพ์คำสั่งแล้วตรวจพร้อมเฉลยเมื่อทำครบ'
-   : 'เลือกเรียนตามงานที่เคยทำ ดูขั้นตอนบนแต่ละอุปกรณ์ แล้วตรวจผลด้วยคำสั่ง show และเครื่องมือในแลบ'}</p></div>
+   ? '8 ชุดตามเรื่อง · ชุดละ 8 ข้อ · เขียนคำสั่ง เติมบรรทัด และแก้ชุดคำสั่ง พร้อมเฉลยทีละบรรทัด'
+   : 'คำสั่งจาก 22 งานแลบ แสดงพร้อมความหมายทีละบรรทัด โหมดที่ใช้ และวิธีตรวจผล'}</p></div>
    <a class="btn" href="#/${exams?'labs':'lab-exams'}">${exams?'อ่านบทเรียนปฏิบัติ':'เลือกชุดข้อสอบปฏิบัติ'} ${icon('arrow',16)}</a></div>
    <div class="quiz-chooser">${practicalExams.map(exam=>practicalCard(exam,exams)).join('')}</div>`;
  }
@@ -266,39 +266,36 @@
   main.innerHTML = `<div class="page-head"><div><p class="chapter-label">บทเรียนภาคปฏิบัติ ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div>
    <a class="btn primary" href="#/lab-exam/${id}">ทำข้อสอบชุดนี้ ${icon('arrow',16)}</a></div>
    <div class="actions lab-links"><a class="btn small" href="#/labs">บทเรียนปฏิบัติทั้งหมด</a><a class="btn small" href="#/chapter/${id}">อ่านทฤษฎีประกอบ</a></div>
-   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกจากโจทย์ไปถึงการตรวจผล</strong><p>ระบุอุปกรณ์และโหมดก่อนพิมพ์คำสั่ง ลองทำตามโจทย์ แล้วเปิดดูขั้นตอนเพื่อตรวจการตั้งค่าและผลที่ควรพบ</p></div>
+   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านคำสั่งคู่กับความหมายทีละบรรทัด ดูโหมดก่อนและหลังพิมพ์ แล้วคัดลอกทั้งชุดไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>คำสั่งยาวในกรอบเลื่อนแนวนอนได้; ปุ่มคัดลอกทั้งชุดเก็บคำสั่งครบตามบรรทัด</p></div>
    ${c.labs.map(labSection).join('')}
    ${id===5?'<a class="btn" href="#/lab/8">ฝึก EIGRP และ redistribution ต่อในบท 8</a>':''}
-   <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ 5 ข้อ</a></div>
+   <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ ${exam.questions.length} ข้อ</a></div>
    <details class="sources"><summary>ใบงานประกอบบทนี้</summary><ul>${c.courseFiles.map(ref=>`<li>${esc(ref)}</li>`).join('')}</ul></details></article>
    <aside class="toc"><h2>งานในบทนี้</h2>${c.labs.map((s,i)=>`<a href="#/lab/${id}" data-scroll="section-${i}">${esc(s.title)}</a>`).join('')}<a href="#/lab-exam/${id}">ทำข้อสอบชุดนี้</a></aside></div>`;
   setupReading("lab", id, c.labs);
  }
  function practicalExam(id) {
-  const exam = practicalExams.find(item=>item.id===id);
-  if (!exam) { location.hash = '#/lab-exams'; return; }
-  let run = labState.runs[id];
-  if (!run || !run.answers || typeof run.answers !== 'object') {
-   run = {answers: {}, finished: false};
-   labState.runs[id] = run;
-  }
-  sidebar('labQuiz', id);
-  breadcrumb('ข้อสอบปฏิบัติ · ชุด ' + id);
-  const score = exam.questions.filter(q=>commandMatches(q,run.answers[q.id]||'')).length;
-  main.innerHTML = `<div class="quiz-shell"><div class="page-head"><div><p class="chapter-label">ข้อสอบภาคปฏิบัติ ชุด ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div></div>
-   <div class="actions lab-links"><a class="btn small" href="#/lab-exams">เลือกชุดข้อสอบ</a><a class="btn small" href="#/lab/${id}">บทเรียนประกอบชุดนี้</a></div>
-   ${run.finished ? `<div class="result-head"><h2>ผลชุดที่ ${id}</h2><p class="lab-score">${score} / ${exam.questions.length}</p><p>ดูคำตอบและเหตุผลของแต่ละข้อด้านล่าง</p><button class="btn primary" data-lab-retry="${id}">ทำชุดนี้ใหม่</button></div>`
-    : '<div class="note"><div><strong>วิธีตอบข้อสอบปฏิบัติ</strong><ul><li>พิมพ์คำสั่งเดียว ตามโหมดที่โจทย์กำหนด</li><li>ใช้คำเต็มหรือคำย่อที่รองรับ เช่น <code>sh</code>, <code>conf t</code>, <code>int</code> และ <code>shut</code></li><li>ชื่อ ACL และ domain ต้องตรงโจทย์; ระบบตรวจเทียบเฉลยและคำตอบทางเลือก</li></ul><p>คำตอบบันทึกอัตโนมัติเมื่อเบราว์เซอร์อนุญาต</p></div></div>'}
+  const exam=practicalExams.find(item=>item.id===id);
+  if(!exam){location.hash='#/lab-exams';return;}
+  let run=labState.runs[id];
+  if(!run||!run.answers||typeof run.answers!=='object')run=labState.runs[id]={answers:{},finished:false,revision:exam.revision};
+  if(run.revision!==exam.revision){run.finished=false;run.revision=exam.revision;delete labState.best[id];saveLabState();}
+  sidebar('labQuiz',id);breadcrumb('ข้อสอบปฏิบัติ · ชุด '+id);
+  const score=exam.questions.filter(q=>commandMatches(q,run.answers[q.id]||'')).length;
+  const labels={single:'เขียนคำสั่ง',block:'เขียนทั้งชุด',fill:'เติมบรรทัดที่หาย',repair:'แก้คำสั่ง'};
+  main.innerHTML=`<div class="quiz-shell practical-exam"><div class="page-head"><div><p class="chapter-label">ข้อสอบภาคปฏิบัติ ชุด ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div></div>
+   <div class="actions lab-links"><a class="btn small" href="#/lab-exams">เลือกชุดข้อสอบ</a><a class="btn small" href="#/lab/${id}">ดูคำสั่งพร้อมความหมาย</a></div>
+   ${run.finished?`<div class="result-head"><h2>ผลชุดที่ ${id}</h2><p class="lab-score">${score} / ${exam.questions.length}</p><p>ตรวจทั้งชุดและลำดับบรรทัด; ดูจุดที่ต้องแก้กับเฉลยด้านล่าง</p><button class="btn primary" data-lab-retry="${id}">ทำชุดนี้ใหม่</button></div>`:'<div class="note"><div><strong>ซ้อมคำสั่งล้วน 8 ข้อ</strong><ul><li>เขียนหนึ่งคำสั่งต่อบรรทัด; ข้อเขียนชุดและข้อแก้คำสั่งให้ตอบทั้งชุดตามลำดับที่โจทย์ระบุ</li><li>ข้อเติมบรรทัด ให้พิมพ์เฉพาะคำสั่งแทน ____</li><li>รองรับคำย่อที่แสดงในบทเรียน เช่น sh, conf t, int, shut; ชื่อ ACL, route-map และ secret ต้องตรงตัวพิมพ์</li><li>เปิดเฉลยรายข้อเพื่อทบทวนได้ก่อนส่ง; คะแนนนี้ใช้ฝึกเทียบแม่แบบคำสั่งตามลำดับที่โจทย์กำหนด</li></ul></div></div>'}
    ${exam.questions.map((q,i)=>{
     const correct=commandMatches(q,run.answers[q.id]||'');
-    return `<section class="question-panel" id="lab-question-${i}"><p class="chapter-label">ข้อ ${i+1} / ${exam.questions.length}</p><h2>${esc(q.prompt)}</h2><p class="command-context">${esc(q.context)}</p>
-     <label class="answer-label" for="${q.id}">คำสั่งของคุณ</label><textarea class="cli-answer" id="${q.id}" data-lab-answer="${q.id}" data-set="${id}" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" ${run.finished?'readonly':''}>${esc(run.answers[q.id]||'')}</textarea>
-     ${run.finished?`<div class="feedback ${correct?'':'wrong'}"><strong>${correct?'ตอบถูก':'ทบทวนคำสั่งนี้อีกครั้ง'}</strong><pre><code>${esc(q.answer)}</code></pre>${paragraphs(q.explanation)}${q.accept.length>1?`<p>คำตอบทางเลือกที่รับได้</p><ul>${q.accept.slice(1).map(value=>`<li><code>${esc(value)}</code></li>`).join('')}</ul>`:''}</div>`:''}</section>`;
+    const rows=q.kind==='fill'?2:Math.min(12,Math.max(2,q.answer.split('\n').length+1));
+    return `<section class="question-panel" id="lab-question-${i}"><div class="question-top"><span>ข้อ ${i+1} / ${exam.questions.length}</span><span class="command-kind">${labels[q.kind]}</span></div><h2>${esc(q.prompt)}</h2><p class="command-context">${esc(q.context)}</p>
+     ${q.given?`<div class="given-commands"><p><strong>${q.kind==='fill'?'เติมบรรทัด ____ ในชุดนี้':'ชุดที่โจทย์ให้มาเพื่อแก้ไข'}</strong></p><pre><code>${esc(q.given)}</code></pre></div>`:''}
+     <label class="answer-label" for="${q.id}">${q.kind==='fill'?'คำสั่งเฉพาะช่องว่าง':'คำสั่งของคุณ'}</label><textarea class="cli-answer" id="${q.id}" data-lab-answer="${q.id}" data-set="${id}" rows="${rows}" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="หนึ่งคำสั่งต่อบรรทัด ไม่ต้องพิมพ์ prompt" ${run.finished?'readonly':''}>${esc(run.answers[q.id]||'')}</textarea>
+     ${run.finished?`<div class="feedback ${correct?'':'wrong'}"><strong>${correct?'คำสั่งครบและถูกต้อง':'ตรวจบรรทัดที่ต้องแก้'}</strong>${commandFeedback(q,run.answers[q.id]||'')}${commandSolution(q)}</div>`:`<details class="command-solution"><summary>เปิดเฉลยและความหมายทีละบรรทัด</summary>${commandSolution(q)}</details>`}</section>`;
    }).join('')}
-   <div class="quiz-bottom">${run.finished
-    ? `<button class="btn" data-lab-retry="${id}">ทำชุดนี้ใหม่</button><a class="btn primary" href="#/${id<8?'lab-exam/'+(id+1):'lab-exams'}">${id<8?'ไปชุดถัดไป':'ดูชุดข้อสอบทั้งหมด'}</a>`
-    : `<p id="lab-answer-count" role="status">ตอบแล้ว ${exam.questions.filter(q=>run.answers[q.id]?.trim()).length} / ${exam.questions.length} ข้อ</p><button class="btn primary" data-lab-submit="${id}">ส่งคำตอบและตรวจทั้งชุด</button>`}</div>
-   <p class="tiny-note">${storageOK?'บันทึกคำตอบและคะแนนในเบราว์เซอร์นี้อัตโนมัติ':'เบราว์เซอร์ไม่อนุญาตให้บันทึก เก็บคำตอบได้เฉพาะขณะเปิดหน้านี้'}</p></div>`;
+   <div class="quiz-bottom">${run.finished?`<button class="btn" data-lab-retry="${id}">ทำชุดนี้ใหม่</button><a class="btn primary" href="#/${id<8?'lab-exam/'+(id+1):'lab-exams'}">${id<8?'ไปชุดถัดไป':'ดูชุดข้อสอบทั้งหมด'}</a>`:`<p id="lab-answer-count" role="status">ตอบแล้ว ${exam.questions.filter(q=>run.answers[q.id]?.trim()).length} / ${exam.questions.length} ข้อ</p><button class="btn primary" data-lab-submit="${id}">ส่งคำตอบและตรวจทั้งชุด</button>`}</div>
+   <p class="tiny-note">${storageOK?'เก็บคำตอบอัตโนมัติในเบราว์เซอร์นี้':'เบราว์เซอร์ไม่อนุญาตให้บันทึก เก็บคำตอบได้เฉพาะขณะเปิดหน้านี้'}</p></div>`;
  }
  function submitPractical(id) {
   const exam = practicalExams.find(item=>item.id===id);
@@ -328,7 +325,7 @@
  if(b.hasAttribute('data-lab-submit')) submitPractical(Number(b.dataset.labSubmit));
  if(b.hasAttribute('data-lab-retry')) {
   const id=Number(b.dataset.labRetry);
-  labState.runs[id]={answers:{},finished:false};
+  labState.runs[id]={answers:{},finished:false,revision:practicalExams.find(exam=>exam.id===id).revision};
   saveLabState(); practicalExam(id); window.scrollTo({top:0});
  }
  if(b.hasAttribute('data-section-read')) markReadingSection(Number(b.dataset.sectionRead));

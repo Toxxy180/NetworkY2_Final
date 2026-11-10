@@ -2,9 +2,15 @@
 
 Thai self-study website based on the five-page instructor final-exam scope and the lecture slides and lab sheets in `network_files/`. Each of the eight chapters has theory, guided CLI practice, a revision summary, and 15 practice questions.
 
-The main navigation has separate theory lessons, theory quizzes, practical lessons, and practical exam sets. Practical exams contain five command-entry questions per set across eight sets. Answers are checked against the authored answer variants, with results and explanations shown after submission. Drafts, best scores, and practical reading progress use a separate localStorage key ending in `-practical`.
+The main navigation has separate theory lessons, theory quizzes, practical lessons, and practical exam sets. Practical exams contain eight command-entry questions per set across eight sets. Questions combine single commands, multi-line blocks, missing lines, and repair tasks. Given blocks are visible; solutions can be expanded while studying, and submission reports mismatched or missing lines. Answers are checked in order against the authored variants. Drafts, best scores, and practical reading progress use a separate localStorage key ending in `-practical`.
 
-Author practical questions in `content/practical-exams.json`. Each question supplies a prompt, device or CLI mode, canonical answer, accepted alternatives, an explanation, and an input type (`ios`, `shell`, or `filter`). IOS keywords accept the displayed abbreviations and case variations. Named identifiers retain case, as do shell commands and display filters. The validator checks all eight sets and includes them in both generated entry points.
+Author practical questions in `content/practical-exams.json`. Each question supplies a prompt, device or CLI mode, canonical answer, accepted alternatives, an explanation, and an input type (`ios`, `shell`, or `filter`). IOS keywords accept the displayed abbreviations and case variations. Multi-line answers are checked one command per line; identifiers and secrets retain case. Named identifiers retain case, as do shell commands and display filters. The validator checks all eight sets and includes them in both generated entry points.
+
+## Command annotations and checks
+
+`command-notes.mjs` annotates all 435 lab lines during the build. Each generated `step.notes` entry retains the original command, line number, mode before/after, and a Thai explanation. Unknown IOS/shell commands fail validation, so a new command needs an explanation rule. Lessons display the full blocks and explanations by default.
+
+`dist/practical-tools.js` supplies the same line checker to the UI and Node tests. Run `node --test practical-tools.test.mjs` and `node validate.mjs`. The current practical bank has 8 sets × 8 questions = 64. Practical storage schema 2 retains existing drafts and reading progress while reopening expanded sets and resetting best scores to the new denominator. Theory progress and question IDs are unchanged.
 
 ## Preview
 
