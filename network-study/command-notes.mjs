@@ -4,6 +4,7 @@ const rules = [
  [/^enable$/,()=> 'เข้า privileged EXEC (#) เพื่อใช้คำสั่งตรวจสอบและเข้าสู่การตั้งค่า', 'exec'],
  [/^(?:configure terminal|conf t)$/,()=> 'เข้า global configuration เพื่อเริ่มแก้ค่าของอุปกรณ์', 'global'],
  [/^hostname (.+)$/,m=>`ตั้งชื่ออุปกรณ์เป็น ${m[1]}; ชื่อนี้จะแสดงใน CLI prompt`],
+ [/^no ip domain-lookup$/,()=> 'ปิด DNS lookup บน IOS เพื่อไม่ให้รอค้นชื่อเมื่อพิมพ์คำสั่งผิด'],
  [/^enable secret (.+)$/,()=> 'ตั้งรหัสผ่านสำหรับเข้า privileged EXEC; ค่าที่ตั้งอยู่ใน running-config'],
  [/^line (console|vty) (.+)$/,m=>`เลือก ${m[1]==='console'?'สาย console สำหรับเข้าเครื่องโดยตรง':'ช่วงสาย VTY สำหรับ remote session'} หมายเลข ${m[2]} เพื่อกำหนดการ login`, 'line'],
  [/^password (.+)$/,()=> 'ตั้งรหัสผ่านของ line ที่เลือก; ใช้คู่กับ login ตามรูปแบบแลปนี้'],
@@ -72,6 +73,8 @@ const rules = [
  [/^standby (\d+) timers (\S+) (\S+)$/,m=>`ตั้ง HSRP กลุ่ม ${m[1]} hello ${m[2]} วินาที และ hold ${m[3]} วินาที; hello ไม่ใช่เวลาสลับจริง`],
  [/^vrrp (\d+) timers advertise (\S+)$/,m=>`ตั้ง VRRP กลุ่ม ${m[1]} ส่ง advertisement ทุก ${m[2]} วินาที`],
  [/^glbp (\d+) load-balancing (\S+)$/,m=>`ใช้ GLBP กลุ่ม ${m[1]} กระจาย Virtual MAC ตามวิธี ${m[2]}; ไม่ได้แบ่งทุก packet ของ client เดียวกัน`],
+ [/^track (\d+) interface (\S+) line-protocol$/,m=>`สร้าง track object ${m[1]} ติดตาม line protocol ของ uplink ${m[2]}`],
+ [/^standby (\d+) track (\d+) decrement (\d+)$/,m=>`เมื่อ track ${m[2]} ลง ให้ลด HSRP กลุ่ม ${m[1]} priority ลง ${m[3]}`],
  [/^route-map (\S+) (deny|permit) (\d+)$/,m=>`เข้า route-map ${m[1]} ลำดับ ${m[3]} แบบ ${m[2]}; ในแลป redistribution ${m[2]==='deny'?'กัน route ที่ match ไม่ให้นำเข้า':'อนุญาต route ที่ match เพื่อนำเข้า'}`, 'map'],
  [/^match tag (\d+)$/,m=>`ให้ sequence นี้ match route ที่มี tag ${m[1]}; ใช้กัน route feedback ตามทิศทางในใบงาน`],
  [/^set tag (\d+)$/,m=>`ใส่ tag ${m[1]} ให้ route ที่ผ่าน sequence นี้ เพื่อจำทิศทางที่นำเข้ามา`],
@@ -90,12 +93,16 @@ const shows = [
  [/^show interfaces (.+) switchport$/, m=>`ดู Administrative/Operational Mode, access VLAN และ trunk settings ของ ${m[1]}`],
  [/^show mac address-table (dynamic|static)$/, m=>`ดูตาราง MAC แบบ ${m[1]}; เทียบ VLAN, MAC และพอร์ต`],
  [/^show mac address-table aging-time$/, 'ดูเวลา aging ของรายการ MAC แบบ dynamic'],
+ [/^show mac address-table address (\S+)$/,m=>`ค้น MAC ${m[1]} ว่าเรียนรู้ใน VLAN และพอร์ตใด`],
+ [/^show port-security$/, 'สรุปพอร์ตที่เปิด Port Security พร้อมจำนวน MAC และ violation'],
  [/^show port-security address$/, 'ดู secure MAC ที่ Port Security เรียนรู้หรือกำหนดไว้'],
  [/^show port-security interface (\S+)$/,m=>`ดู maximum, secure MAC, violation mode และ counter ของ ${m[1]}`],
  [/^show cdp neighbors( detail)?$/,m=>`ดูอุปกรณ์ Cisco ที่อยู่ติดกันกับพอร์ตเชื่อมต่อ${m[1]?' พร้อมรายละเอียดของเพื่อนบ้าน':''}`],
  [/^show vtp status$/, 'ดู VTP domain, version, mode และ revision ก่อนเชื่อม switch เข้าวง'],
  [/^show vlan brief$/, 'ดู VLAN ที่มีอยู่กับพอร์ต access ที่เป็นสมาชิก; ไม่ใช้แทน show interfaces trunk'],
  [/^show spanning-tree vlan (\d+)$/,m=>`ดู Root ID, Bridge ID, role, state และ cost ของ STP ใน VLAN ${m[1]}`],
+ [/^show spanning-tree interface (\S+) detail$/,m=>`ดูรายละเอียด role/state และ BPDU ของพอร์ต ${m[1]}`],
+ [/^show spanning-tree inconsistentports$/, 'ดูพอร์ตที่ถูก STP guard ทำให้อยู่สถานะ inconsistent'],
  [/^show ip route connected$/, 'ดู route เครือข่ายที่เชื่อมต่อโดยตรงและใช้งานได้'],
  [/^show ip route ospf$/, 'ดู route ที่เรียนรู้จาก OSPF'],
  [/^show ip route (\S+)$/,m=>`ค้น route ที่ใช้ไปปลายทาง ${m[1]}; ดู next hop และ metric`],
@@ -106,6 +113,9 @@ const shows = [
  [/^show ip ospf interface( brief)?$/, 'ดู interface ที่ร่วม OSPF และข้อมูลสถานะโดยย่อ'],
  [/^show ip ospf interface (\S+)$/,m=>`ดู cost, network type, timer และ authentication ของ OSPF ที่ ${m[1]}`],
  [/^show (standby|vrrp|glbp) brief$/,m=>`ดูบทบาทและ Virtual IP ของ ${m[1]==='standby'?'HSRP':m[1].toUpperCase()} แบบย่อ`],
+ [/^show standby (\S+)$/,m=>`ดูรายละเอียด HSRP ของ ${m[1]} รวมบทบาท, priority และ timers`],
+ [/^show glbp$/, 'ดูรายละเอียด AVG, AVF และวิธีกระจายโหลดของ GLBP'],
+ [/^show track (\d+)$/,m=>`ดูสถานะและการติดตามของ track object ${m[1]}`],
  [/^show ip eigrp neighbors$/, 'ดู EIGRP neighbor ว่าสร้างความสัมพันธ์สำเร็จหรือไม่'],
  [/^show ip eigrp topology$/, 'ดู topology table ของ EIGRP รวมข้อมูล successor, distance และเส้นทางที่เรียนรู้'],
  [/^show ip protocols$/, 'ดู routing protocol ที่รัน, network, passive interface และข้อมูล redistribution'],
@@ -116,6 +126,7 @@ function terminalNote(command) {
  if (/^ip -br addr$/.test(c)) return 'ดูชื่อ interface กับ IP แบบย่อ; ใช้ชื่อ interface จริงแทน eth0 ในคำสั่งถัดไป';
  if (/^ip addr show$/.test(c)) return 'ดู interface, link และ IP ที่เครื่องใช้อยู่';
  if (/^ip neigh$/.test(c)) return 'ดู neighbor/ARP cache เพื่อจับคู่ IPv4 กับ MAC บนลิงก์ local';
+ if (/^ip route$/.test(c)) return 'ดู route และ default gateway ที่ Kali ใช้ส่งแพ็กเก็ต';
  let m=c.match(/^ip link set (\S+) (up|down)$/);if(m)return sudo+`${m[2]==='up'?'เปิด':'ปิด'} interface ${m[1]} บน Kali เพื่อเตรียมเปลี่ยน MAC ตามแลป`;
  m=c.match(/^macchanger -r (\S+)$/);if(m)return sudo+`สุ่ม MAC ของ ${m[1]} ในวงทดสอบ Port Security แล้วสร้าง traffic เพื่อสังเกต violation`;
  if(c.startsWith('ping ')){const count=c.match(/-c (\d+)/),interval=c.match(/-i (\S+)/);return `ส่ง ICMP Echo ไป ${c.split(/\s+/).at(-1)}${count?` จำนวน ${count[1]} ครั้ง`:''}${interval?` ทุก ${interval[1]} วินาที`:''} เพื่อวัด reachability/packet loss${!count?'; หยุดด้วย Ctrl+C ตาม terminal ที่ใช้':''}`;}

@@ -5,6 +5,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
+const selected=process.argv.slice(2);
+const ids=selected.length?selected:['theory','practical'];
+if(ids.some(id=>!['theory','practical'].includes(id)))throw new Error('Choose theory or practical');
 const here = path.dirname(fileURLToPath(import.meta.url));
 const output = path.resolve(here, '../output/pdf');
 await fs.mkdir(output, { recursive: true });
@@ -12,7 +15,7 @@ const browser = await chromium.launch({channel:'chrome', headless:true});
 try {
  const page = await browser.newPage({viewport:{width:1440,height:1000}});
  await page.addInitScript(()=>localStorage.setItem('network-intro-01076040-shown','1'));
- for (const id of ['theory','practical']) {
+ for (const id of ids) {
   await page.goto(pathToFileURL(path.join(here,'dist/index.html')).href+'#/openbook/'+id);
   await page.locator('.ob-sheet').last().waitFor();
   await page.evaluate(()=>document.fonts.ready);

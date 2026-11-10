@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {annotateCommands} from './command-notes.mjs';
 import practicalTools from './dist/practical-tools.js';
+import {annotateOpenbook} from './openbook-notes.mjs';
 const chapters=['content/chapters-1-4.json','content/chapters-5-8.json'].flatMap(p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,'')));
 const review = JSON.parse(fs.readFileSync('content/course-review.json', 'utf8'));
 assert.equal(review.length, chapters.length);
@@ -64,7 +65,15 @@ for (const set of openbook) {
   assert.equal(page.columns.length, set.id === 'theory' ? 4 : 3);
   for (const column of page.columns) {
    assert(column.length);
-   for (const block of column) assert(block.title && (block.text || block.code));
+   for (const block of column) {
+    assert(block.title && (block.text || block.code));
+    if(block.code){
+     assert(block.device && block.inputType);
+     block.notes=annotateOpenbook(block);
+     assert.equal(block.notes.length,block.code.split('\n').length);
+     assert(block.notes.every(note=>note.kind==='label'||note.prompt&&note.brief&&note.meaning));
+    }
+   }
   }
  }
 }

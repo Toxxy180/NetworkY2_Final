@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import tools from './dist/practical-tools.js';
 import {annotateCommands} from './command-notes.mjs';
+import {annotateOpenbook} from './openbook-notes.mjs';
 const q=(answer,inputType='ios')=>({answer,accept:[answer],inputType});
 test('multi-line IOS accepts prompts, CRLF, blank lines and supported abbreviations',()=>{
  assert(tools.commandMatches(q('configure terminal\ninterface gi0/1\nno shutdown\nend'),
@@ -52,4 +53,18 @@ test('CLI prompts use the mode before each command and apply hostname changes af
  const range=annotateCommands('configure terminal\ninterface range fa0/1 - 3\nswitchport mode access\nexit',{device:'SW2'});
  assert.equal(range[2].prompt,'SW2(config-if-range)#');
  assert.equal(range[3].nextPrompt,'SW2(config)#');
+});
+test('A4 session labels switch routers while ordinary labels preserve the active mode',()=>{
+ const notes=annotateOpenbook({device:'R1',inputType:'ios',code:'conf t\nrouter ospf 1\nend\n! R4: ตัดลิงก์\nconf t\ninterface gi0/1\nshutdown\n! คืนลิงก์\nno shutdown\nend'});
+ assert.equal(notes[3].kind,'label');
+ assert.equal(notes[4].prompt,'R4#');
+ assert.equal(notes[6].prompt,'R4(config-if)#');
+ assert.equal(notes[8].prompt,'R4(config-if)#');
+ assert.equal(notes[8].brief,'เปิดพอร์ต');
+ const boundary=annotateOpenbook({device:'R1',inputType:'ios',code:'! R2 (conf t)\nrouter eigrp 100'});
+ assert.equal(boundary[1].prompt,'R2(config)#');
+ const mixed=annotateOpenbook({device:'Kali',inputType:'shell',code:'# Kali\nip -br addr\n# Windows\nping -t 192.168.10.1\narp -a'});
+ assert.equal(mixed[1].prompt,'kali@kali:~$');
+ assert.equal(mixed[3].prompt,'C:\\>');
+ assert.match(mixed[4].meaning,/ARP/);
 });

@@ -4,7 +4,8 @@
  const sheets = window.OPENBOOK;
  // Keep the compact text intact for print; separate sentences on screen.
  const sentences = text => text.split(/(?<=[.!?])\s+(?=[\p{L}])/u).map(part=>`<span class="ob-sentence">${esc(part)}</span>`).join(' ');
- const block = item => `<section class="ob-block"><h3>${esc(item.title)}</h3>${item.text ? item.text.split('\n').map(p=>`<p>${sentences(p)}</p>`).join('') : ''}${item.code ? `<pre>${esc(item.code)}</pre>` : ''}</section>`;
+ const cli = item => `<pre class="ob-cli" aria-label="คำสั่งพร้อมโหมดและคอมเมนต์ย่อ"><code>${item.notes.map(note=>note.kind==='label'?`<span class="ob-cli-label">// ${esc(note.label)}</span>`:`<span class="ob-cli-prompt">${esc(note.prompt)} </span>${esc(note.command.trim())} <span class="ob-cli-comment">// ${esc(note.brief)}</span>`).join('\n')}</code></pre>`;
+ const block = item => `<section class="ob-block"><h3>${esc(item.title)}</h3>${item.text ? item.text.split('\n').map(p=>`<p>${sentences(p)}</p>`).join('') : ''}${item.code ? cli(item) : ''}</section>`;
  function pages(set) {
   return set.pages.map((page, index) => `<article class="ob-sheet" id="ob-side-${index+1}" aria-label="${esc(set.title)} ด้าน${esc(page.side)}">
    <header class="ob-sheet-head"><div><b>NETWORK / OPENBOOK</b><h2>${esc(set.title)} · ด้าน${esc(page.side)}</h2></div><div><strong>A4 · ${index+1}/2</strong><span>01076040</span></div></header>
@@ -22,7 +23,7 @@
    <div class="ob-toolbar"><nav aria-label="เลือกชีท Openbook"><a href="#/openbook/theory" ${set.id==='theory'?'aria-current="page"':''}>ทฤษฎี · 2 หน้า</a><a href="#/openbook/practical" ${set.id==='practical'?'aria-current="page"':''}>ปฏิบัติ · 2 หน้า</a></nav><div class="ob-actions"><a class="btn" href="${esc(pdf)}" download="network-openbook-${set.id}-a4.pdf">ดาวน์โหลด PDF</a><button class="btn primary" type="button" data-ob-print>พิมพ์ ${esc(set.title)}</button></div></div>
    <aside class="ob-print-note"><strong>${esc(set.description)}</strong><p>หน้าจอขยายตัวอักษรให้อ่านง่าย · PDF และงานพิมพ์จัดแบบตัวเล็ก 3–4 คอลัมน์</p><p>พิมพ์ A4 แนวตั้ง · ขนาดจริง 100% · สองหน้าแบบพลิกขอบยาว · ปิดหัวกระดาษ/ท้ายกระดาษของเบราว์เซอร์</p><div><a href="#ob-side-1" data-ob-side="1">ไปด้านหน้า ↓</a><a href="#ob-side-2" data-ob-side="2">ไปด้านหลัง ↓</a></div></aside>
    <div class="ob-sheets">${pages(set)}</div>
-   <p class="ob-endnote">คำสั่งในกรอบที่ยาวอาจตัดบรรทัดเพื่อจัดหน้า ให้พิมพ์ต่อเป็นคำสั่งเดียว · ชื่อ interface / IP / VLAN ต้องตรงโจทย์ · อ่านคำอธิบายเต็มและฝึกคำสั่งต่อได้ในบทเรียนทั้ง 8 บท</p>
+   <p class="ob-endnote">${set.id==='practical'?'ชื่ออุปกรณ์และโหมดอยู่หน้าแต่ละคำสั่ง · // เป็นคอมเมนต์เพื่ออ่านประกอบ · ตอนพิมพ์จริงใช้เฉพาะคำสั่ง ไม่รวม prompt และคอมเมนต์ · บรรทัดยาวอาจต่อเนื่องในกรอบ · เปลี่ยน interface / IP / VLAN ให้ตรงโจทย์':'ชีทสำหรับทบทวนนิยาม เปรียบเทียบ และสูตร · อ่านคำอธิบายเต็มและฝึกต่อได้ในบทเรียนทั้ง 8 บท'}</p>
   </div>`;
   main.querySelector('[data-ob-print]').addEventListener('click',()=>window.print());
   main.querySelectorAll('[data-ob-side]').forEach(link=>link.addEventListener('click',event=>{

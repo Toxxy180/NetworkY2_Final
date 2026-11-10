@@ -32,13 +32,15 @@ Screen typography is centralized in `dist/typography.css`. Author each lesson `b
 
 `#/openbook/theory` and `#/openbook/practical` each contain two A4 portrait pages (front/back), intended as dense handwriting references. Screen text stays larger and reflows on mobile. The print stylesheet uses four columns for theory and three for CLI practice, with 6 mm margins and long-edge duplex instructions. Print/PDF sizes are independent of the reader's theme and font preference.
 
-Edit `content/openbook.json`; render and print behavior live in `dist/openbook.js` and `dist/openbook.css`. To regenerate the PDFs, make Playwright available to Node (through the local installation or `NODE_PATH`) and use an installed Chrome:
+Edit `content/openbook.json`; practical code blocks also specify `device` and `inputType`. `openbook-notes.mjs` derives the CLI prompts, short // comments, and device/session changes. The builder rejects missing comments. Render and print behavior live in `dist/openbook.js` and `dist/openbook.css`. Practical print code uses 5.5 pt to retain the full front/back sheet; screen fonts stay larger. To regenerate the PDFs, make Playwright available to Node (through the local installation or `NODE_PATH`) and use an installed Chrome:
 
 ```sh
 node validate.mjs
 node generate-openbook.mjs
 node validate.mjs
 ```
+
+To regenerate only the practical PDF, use `node generate-openbook.mjs practical`, then rebuild with `node validate.mjs`.
 
 The generator rejects overflowing columns and writes two PDFs to `../output/pdf/`, with hosting copies under `dist/`. The final validation/build embeds both PDFs as Blob downloads in the root offline page. Serve the whole `dist/` folder for the hosted version. The separate root `index.html` remains self-contained.
 
