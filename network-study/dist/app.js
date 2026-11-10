@@ -70,14 +70,23 @@
  function labSection(s, i) {
   return `<section class="lesson-section" id="section-${i}"><h2>${esc(s.title)}</h2><div class="lab-brief"><h3>เตรียมและทำตามลำดับ</h3><ol>${s.body.map(p=>`<li>${fmt(p)}</li>`).join('')}</ol></div>
    <details class="lab-answer" open><summary>คำสั่งพร้อมความหมายและวิธีตรวจผล</summary>
-    ${s.steps.map(step=>`<div class="command-block"><div class="code-header"><span>${esc(step.device)}</span><button class="btn small" data-copy>${icon('copy',13)}คัดลอกทั้งชุด</button></div><pre><code>${esc(step.code)}</code></pre><details class="command-meaning" open><summary>ความหมายทีละบรรทัด · ${step.notes.length} บรรทัด</summary>${commandNotes(step.notes)}</details></div>`).join('')}
+    ${s.steps.map(step=>commentedCommandBlock(step.notes,step.device)).join('')}
     <div class="example"><h3>${esc(s.example.title)}</h3>${s.example.body.map(p=>`<p>${fmt(p)}</p>`).join('')}</div></details></section>`;
  }
- function commandNotes(notes) {
-  return `<ol class="command-notes" aria-label="ความหมายของคำสั่งทีละบรรทัด">${notes.map(note=>`<li><div class="command-note-code"><span class="command-line-number">บรรทัด ${note.line}</span><code>${esc(note.command)}</code><span class="command-mode">${esc(note.mode)}${note.nextMode!==note.mode?' → '+esc(note.nextMode):''}</span></div><p>${esc(note.meaning)}</p></li>`).join('')}</ol>`;
+ function commentedCommandBlock(notes,title) {
+  const raw=notes.map(note=>note.command).join('\n');
+  const annotated=notes.map(note=>{
+   const prefix=note.inputType==='ios'?'!':'#';
+   const mode=note.mode+(note.mode!==note.nextMode?' → '+note.nextMode:'');
+   return '<span class="code-comment">'+esc(prefix+' ['+mode+'] '+note.meaning)+'</span>\n<span class="code-command">'+esc(note.command)+'</span>';
+  }).join('\n\n');
+  return '<div class="command-block"><div class="code-header"><span>'+esc(title)+'</span><button class="btn small" data-copy>'+icon('copy',13)+'คัดลอกเฉพาะคำสั่ง</button></div><pre class="commented-code" data-raw-command="'+esc(raw)+'" aria-label="คำสั่งพร้อมคอมเมนต์อธิบาย"><code>'+annotated+'</code></pre></div>';
  }
  function commandSolution(question) {
-  return `<p><strong>${question.kind==='fill'?'คำสั่งที่เติมในช่องว่าง':'ชุดคำสั่งเฉลย'}</strong></p><pre><code>${esc(question.answer)}</code></pre>${paragraphs(question.explanation)}<h3>${question.kind==='fill'?'ชุดที่เติมครบ พร้อมความหมาย':'ความหมายทีละบรรทัด'}</h3>${commandNotes(question.notes)}${question.accept.length>1?`<details class="command-alternatives"><summary>คำตอบทางเลือกที่รับได้</summary>${question.accept.slice(1).map(value=>`<pre><code>${esc(value)}</code></pre>`).join('')}</details>`:''}`;
+  return (question.kind==='fill'?'<p><strong>คำสั่งที่เติมในช่องว่าง</strong></p><pre><code>'+esc(question.answer)+'</code></pre>':'')
+   +commentedCommandBlock(question.notes,question.kind==='fill'?'ชุดที่เติมครบ พร้อมคอมเมนต์':'เฉลยพร้อมคอมเมนต์')
+   +paragraphs(question.explanation)
+   +(question.accept.length>1?'<details class="command-alternatives"><summary>คำตอบทางเลือกที่รับได้</summary>'+question.accept.slice(1).map(value=>'<pre><code>'+esc(value)+'</code></pre>').join('')+'</details>':'');
  }
  function commandFeedback(question,answer) {
   const result=window.PracticalTools.check(question,answer);
@@ -266,7 +275,7 @@
   main.innerHTML = `<div class="page-head"><div><p class="chapter-label">บทเรียนภาคปฏิบัติ ${id} / 8</p><h1>${esc(exam.title)}</h1><p class="lead">${esc(exam.scenario)}</p></div>
    <a class="btn primary" href="#/lab-exam/${id}">ทำข้อสอบชุดนี้ ${icon('arrow',16)}</a></div>
    <div class="actions lab-links"><a class="btn small" href="#/labs">บทเรียนปฏิบัติทั้งหมด</a><a class="btn small" href="#/chapter/${id}">อ่านทฤษฎีประกอบ</a></div>
-   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านคำสั่งคู่กับความหมายทีละบรรทัด ดูโหมดก่อนและหลังพิมพ์ แล้วคัดลอกทั้งชุดไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>คำสั่งยาวในกรอบเลื่อนแนวนอนได้; ปุ่มคัดลอกทั้งชุดเก็บคำสั่งครบตามบรรทัด</p></div>
+   <div class="reading-layout"><article class="reading"><div class="objectives"><strong>ฝึกพิมพ์คำสั่งเป็นชุด ก่อนเข้าสอบปฏิบัติ</strong><p>อ่านความหมายและโหมดจากคอมเมนต์ก่อนแต่ละคำสั่ง แล้วคัดลอกไปซ้อมกับอุปกรณ์ตามผัง</p><ul class="cli-mode-legend"><li><code>&gt;</code> ใช้ <code>enable</code> เข้า <code>#</code></li><li><code>#</code> ใช้คำสั่งตรวจผล หรือ <code>configure terminal</code> เพื่อเริ่มตั้งค่า</li><li><code>(config)#</code> เลือก interface/router/line ก่อนใส่ค่าของส่วนนั้น</li><li><code>$</code> คือ terminal ของ Kali; Display Filter ใส่ใน Wireshark</li></ul><p>บรรทัดขึ้นต้นด้วย ! หรือ # เป็นคอมเมนต์ประกอบการอ่าน; ปุ่มคัดลอกเฉพาะคำสั่งจะนำออกให้ และคงคำสั่งครบทุกบรรทัด</p></div>
    ${c.labs.map(labSection).join('')}
    ${id===5?'<a class="btn" href="#/lab/8">ฝึก EIGRP และ redistribution ต่อในบท 8</a>':''}
    <div class="chapter-end"><button class="btn ${labState.done.includes(id)?'success':'primary'}" data-lab-done="${id}">${labState.done.includes(id)?'อ่านบทปฏิบัตินี้แล้ว':'บันทึกว่าอ่านบทปฏิบัติแล้ว'}</button><a class="btn" href="#/lab-exam/${id}">ไปทำข้อสอบ ${exam.questions.length} ข้อ</a></div>
@@ -334,7 +343,7 @@
  if(b.hasAttribute('data-scroll')){e.preventDefault();scrollToReadingSection(b.dataset.scroll);}
  if(b.hasAttribute('data-tab')){const id=Number(b.dataset.chapter);location.hash=`#/chapter/${id}${b.dataset.tab==='lesson'?'':'?'+b.dataset.tab}`;}
  if(b.hasAttribute('data-done')){const id=Number(b.dataset.done);if(!state.done.includes(id))state.done.push(id);save();b.classList.remove('primary');b.classList.add('success');b.innerHTML=icon('check',17)+'อ่านบทนี้แล้ว';sidebar('book',id);toast('บันทึกว่าอ่านบทนี้แล้ว');}
- if(b.hasAttribute('data-copy')){const code=b.closest('.code-header').nextElementSibling.textContent;try{await navigator.clipboard.writeText(code);toast('คัดลอกคำสั่งแล้ว')}catch(err){toast('คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความในช่องคำสั่ง')}}
+ if(b.hasAttribute('data-copy')){const block=b.closest('.code-header').nextElementSibling;const code=block.dataset.rawCommand??block.textContent;try{await navigator.clipboard.writeText(code);toast('คัดลอกคำสั่งแล้ว')}catch(err){toast('คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความในช่องคำสั่ง')}}
  if(b.hasAttribute('data-sim'))Diagrams.update(b.closest('.diagram'),b.dataset.sim);
  if(b.hasAttribute('data-option')){session.choices[session.ids[session.index]]=Number(b.dataset.option);saveSession();const y=window.scrollY;quiz();window.scrollTo({top:y});}
  if(b.hasAttribute('data-check')){const id=session.ids[session.index];if(session.choices[id]!==undefined){session.checked[id]=true;record(id,session.choices[id]);saveSession();const y=window.scrollY;quiz();window.scrollTo({top:y});}}
